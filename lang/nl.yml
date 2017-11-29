@@ -1,0 +1,38 @@
+nl:
+  TheWebmen\Articles\Pages\ArticlePage:
+    PLURALNAME: 'Artikel'
+    PLURALS:
+      one: 'Een artikel'
+      other: '{count} artikelen'
+    SINGULARNAME: 'Artikelen'
+    has_one_Author: 'Auteur'
+    many_many_RelatedArticles: 'Gerelateerde artikelen'
+    RELATED: 'Gerelateerd'
+  TheWebmen\Articles\Pages\ArticlesPage:
+    PLURALNAME: 'Artikelen overzicht paginas'
+    PLURALS:
+      one: 'een artikelen overzicht pagina'
+      other: '{count} artiekelen overzicht paginas'
+    SINGULARNAME: 'Artikelen overzicht pagina'
+    ARTICLES: 'Artikelen'
+    db_PageLength: 'Pagina lengte'
+  TheWebmen\Articles\Pages\AuthorPage:
+    PLURALNAME: 'Auteur'
+    PLURALS:
+      one: 'Een auteur'
+      other: '{count} auteurs'
+    SINGULARNAME: 'Auteurs'
+    has_one_Author: 'Auteur'
+  TheWebmen\Articles\Pages\AuthorsPage:
+    PLURALNAME: 'Auteur overzicht paginas'
+    PLURALS:
+      one: 'Een auteur overzicht pagina'
+      other: '{count} auteur overzicht paginas'
+    SINGULARNAME: 'Auteur overzicht pagina'
+    AUTHORS: 'Auteurs'
+    db_PageLength: 'Pagina lengte'
+  TheWebmen\Articles\Pages\ArticlesPageController:
+    RSS_TITLE: '10 meest recent geupdate artikelen'
+    RSS_DESCRIPTION: 'Toon een lijst van de 10 meest recent geupdate artikelen'
+  TheWebmen\Articles\Extensions:
+    has_many_Articles: 'Artikelen'

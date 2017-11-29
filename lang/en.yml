@@ -1,0 +1,38 @@
+en:
+  TheWebmen\Articles\Pages\ArticlePage:
+    PLURALNAME: 'Article'
+    PLURALS:
+      one: 'A article'
+      other: '{count} articles'
+    SINGULARNAME: 'Articles'
+    has_one_Author: 'Author'
+    many_many_RelatedArticles: 'Related articles'
+    RELATED: 'Related'
+  TheWebmen\Articles\Pages\ArticlesPage:
+    PLURALNAME: 'Article listing pages'
+    PLURALS:
+      one: 'A article listing page'
+      other: '{count} article listing pages'
+    SINGULARNAME: 'Article listing page'
+    ARTICLES: 'Articles'
+    db_PageLength: 'Page length'
+  TheWebmen\Articles\Pages\AuthorPage:
+    PLURALNAME: 'Author'
+    PLURALS:
+      one: 'A author'
+      other: '{count} authors'
+    SINGULARNAME: 'Authors'
+    has_one_Author: 'Author'
+  TheWebmen\Articles\Pages\AuthorsPage:
+    PLURALNAME: 'Author listing pages'
+    PLURALS:
+      one: 'A author listing page'
+      other: '{count} author listing pages'
+    SINGULARNAME: 'Author listing page'
+    AUTHORS: 'Authors'
+    db_PageLength: 'Page length'
+  TheWebmen\Articles\Pages\ArticlesPageController:
+    RSS_TITLE: '10 Most Recently Updated Articles'
+    RSS_DESCRIPTION: 'Shows a list of the 10 most recently updated articles.'
+  TheWebmen\Articles\Extensions:
+    has_many_Articles: 'Articles'
