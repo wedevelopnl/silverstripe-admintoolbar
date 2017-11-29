@@ -5,3 +5,7 @@ Name: admintoolbar
 SilverStripe\CMS\Model\SiteTree:
   extensions:
     - TheWebmen\AdminToolbar\Extensions\SiteTreeExtension
+
+SilverStripe\Security\Member:
+  extensions:
+    - TheWebmen\AdminToolbar\Extensions\MemberExtension

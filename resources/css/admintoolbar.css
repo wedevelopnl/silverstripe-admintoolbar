@@ -1,3 +1,76 @@
+body.has-admin-toolbar {
+    padding-top: 30px;
+}
+
 #admin-toolbar {
-    
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background: #e9f0f4;
+    color: rgb(79, 88, 97);
+    display: block;
+    border-bottom: 1px solid #CCCCCC;
+    padding-right: 30px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+#admin-toolbar a {
+    color: rgb(79, 88, 97);
+    text-decoration: none;
+}
+#admin-toolbar a:hover {
+    background: #d8e4eb;
+}
+#admin-toolbar > div > * {
+    padding: 0 10px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    height: 30px;
+    line-height: 30px;
+    display: block;
+    float: left;
+}
+#admin-toolbar > div > *:last-child {
+    border-right: none;
+}
+#admin-toolbar > #admin-toolbar-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-weight: bold;
+    background: #d8e4eb;
+    font-size: 14px;
+    cursor: pointer;
+}
+#admin-toolbar > #admin-toolbar-toggle:hover {
+    background: #5589a7;
+    color: #FFF;
+}
+
+#admin-toolbar.admin-toolbar-collapsed {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-left: 1px solid #CCCCCC;
+}
+
+#admin-toolbar #admin-toolbar-toggle span.admin-toolbar-visible-collapsed {
+    display: none;
+}
+#admin-toolbar.admin-toolbar-collapsed #admin-toolbar-toggle span.admin-toolbar-visible-collapsed {
+    display: block;
+}
+#admin-toolbar #admin-toolbar-toggle span.admin-toolbar-hidden-collapsed {
+    display: block;
+}
+#admin-toolbar.admin-toolbar-collapsed #admin-toolbar-toggle span.admin-toolbar-hidden-collapsed {
+    display: none;
 }
