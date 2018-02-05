@@ -17,6 +17,7 @@ body.has-admin-toolbar {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    z-index: 9999999999;
 }
 #admin-toolbar a {
     color: rgb(79, 88, 97);
