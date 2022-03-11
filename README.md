@@ -11,19 +11,22 @@ Display a toolbar with admin options on the frontend
 ## Installation
 
 ```
-composer require "thewebmen/silverstripe-admintoolbar" "dev-master"
+composer require "thewebmen/silverstripe-admintoolbar"
 ```
+
+## How to use
+Place `$AdminToolbar` in your Page.ss to display the admin toolbar.
 
 ## Options
 Disable buttons using the config:
 
 ```
-AdminToolbar:
+TheWebmen\AdminToolbar\AdminToolbar:
   hide_cache_button: true
   hide_stage_button: false
   hide_edit_button: false
 ````
 
-Add an extensions on TheWebmen\AdminToolbar\AdminToolbar with the method addExtraButtonsHTML(&$extraButtonsHTML) to add exta buttons
+Add an extensions on `TheWebmen\AdminToolbar\AdminToolbar` with the method `addExtraButtonsHTML(&$extraButtonsHTML)` to add exta buttons
 
 
