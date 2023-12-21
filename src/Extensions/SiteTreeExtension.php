@@ -1,25 +1,29 @@
 <?php
 
-namespace TheWebmen\AdminToolbar\Extensions;
+namespace WeDevelop\AdminToolbar\Extensions;
 
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
-use TheWebmen\AdminToolbar\AdminToolbar;
+use SilverStripe\Security\Security;
+use WeDevelop\AdminToolbar\AdminToolbar;
 
-class SiteTreeExtension extends DataExtension {
+class SiteTreeExtension extends DataExtension
+{
+    public function AdminToolbar(): ?DBHTMLText
+    {
+        if (!Permission::check('ADMIN_TOOLBAR')){
+            return null;
+        }
 
-    public function AdminToolbar(){
-        if(!Permission::check('ADMIN_TOOLBAR')){
-            return false;
+        /** @var Member|MemberExtension $currentUser */
+        $currentUser = Security::getCurrentUser();
+
+        if (!$currentUser->showAdminToolbar()){
+            return null;
         }
-        if(!Member::currentUser()->showAdminToolbar()){
-            return false;
-        }
-        $toolbar = new AdminToolbar();
-        return $toolbar->render();
+
+        return (new AdminToolbar())->render();
     }
-
-
-
 }
