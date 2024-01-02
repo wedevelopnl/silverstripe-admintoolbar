@@ -10,6 +10,8 @@
 
   if (isToggled) {
     button.classList.remove('admin-toolbar-hidden');
+  } else {
+    return false;
   }
 
   const queriesURL = new URL(window.location.href);

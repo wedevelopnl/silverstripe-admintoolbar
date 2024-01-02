@@ -9,6 +9,8 @@
 
   if (isToggled) {
     button.classList.remove('admin-toolbar-hidden');
+  } else {
+    return false;
   }
 
   const iframe = document.createElement('iframe');
