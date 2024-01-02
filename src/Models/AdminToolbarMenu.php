@@ -30,6 +30,10 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
             /** @var AdminToolbarMenuItemProviderInterface $inst */
             $inst = $itemClass::create();
 
+            if (!$inst->isMenuItemSupported()) {
+                continue;
+            }
+
             if ($inst->isForMenu($menuName)) {
                 $this->provideJSAndCSSForItem($inst->provideAdminToolbarMenuItem());
                 $items[] = $inst;

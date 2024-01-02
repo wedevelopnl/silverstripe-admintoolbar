@@ -22,7 +22,7 @@ class EditUserMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuI
 
     public function isMenuItemSupported(): bool
     {
-        return true;
+        return Security::getCurrentUser() !== null;
     }
 
     public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem

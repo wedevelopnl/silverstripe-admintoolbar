@@ -25,7 +25,11 @@ class LastEditedByMenuItem extends AdminToolbarMenuItem implements AdminToolbarM
 
     public function isMenuItemSupported(): bool
     {
-        return true;
+        $page = Controller::curr()->record;
+        $version = Versioned::get_version($page['ClassName'], $page['ID'], $page['Version']);
+        $author = $version->Author();
+
+        return $author !== null;
     }
 
     public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem
