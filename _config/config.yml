@@ -9,3 +9,6 @@ SilverStripe\CMS\Model\SiteTree:
 SilverStripe\Security\Member:
   extensions:
     - WeDevelop\AdminToolbar\Extensions\MemberExtension
+
+WeDevelop\AdminToolbar\AdminToolbar:
+  disabled_menus:

@@ -2,6 +2,7 @@
 
 namespace WeDevelop\AdminToolbar\Extensions;
 
+use SilverStripe\Control\Controller;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Member;
@@ -13,6 +14,16 @@ class SiteTreeExtension extends DataExtension
 {
     public function AdminToolbar(): ?DBHTMLText
     {
+        $request = Controller::curr()?->getRequest();
+
+        if ($request && $request->getVar('CMSPreview') === '1') {
+            return null;
+        }
+
+        if ($request && $request->getVar('AdminToolbarDisabled') === '1') {
+            return null;
+        }
+
         if (!Permission::check('ADMIN_TOOLBAR')){
             return null;
         }
@@ -24,6 +35,6 @@ class SiteTreeExtension extends DataExtension
             return null;
         }
 
-        return (new AdminToolbar())->render();
+        return (Admintoolbar::create())->render();
     }
 }

@@ -1,0 +1,1 @@
+<button $DataTags class="$Icon $ExtraClasses">$HTML.RAW</button>
