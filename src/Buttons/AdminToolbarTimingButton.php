@@ -46,4 +46,9 @@ class AdminToolbarTimingButton extends AdminToolbarButton implements AdminToolba
     {
         return true;
     }
+
+    public function getExtraClasses(): string
+    {
+        return 'admin-toolbar-hidden';
+    }
 }

@@ -46,4 +46,9 @@ class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolb
     {
         return true;
     }
+
+    public function getExtraClasses(): string
+    {
+        return 'admin-toolbar-hidden';
+    }
 }

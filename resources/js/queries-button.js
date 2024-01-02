@@ -1,8 +1,15 @@
 (() => {
+  const configKey = '[data-queries-toggle]';
   const button = document.querySelector('[data-queries-button]');
+
+  const isToggled = localStorage.getItem(configKey) === 'true';
 
   if (!button) {
     return false;
+  }
+
+  if (isToggled) {
+    button.classList.remove('admin-toolbar-hidden');
   }
 
   const queriesURL = new URL(window.location.href);

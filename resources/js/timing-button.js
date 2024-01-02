@@ -1,8 +1,14 @@
 (() => {
+  const configKey = '[data-timing-toggle]';
   const button = document.querySelector('[data-timing-button]');
+  const isToggled = localStorage.getItem(configKey) === 'true';
 
   if (!button) {
     return false;
+  }
+
+  if (isToggled) {
+    button.classList.remove('admin-toolbar-hidden');
   }
 
   const iframe = document.createElement('iframe');

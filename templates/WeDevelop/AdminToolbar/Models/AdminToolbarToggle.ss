@@ -1,1 +1,1 @@
-Toggle
+<input type="checkbox" $DataTags class="$Icon $ExtraClasses">$HTML.RAW</input>

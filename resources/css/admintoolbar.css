@@ -65,6 +65,10 @@ body.has-admin-toolbar {
 
 }
 
+.admin-toolbar-toggle-menu {
+    float:right;
+}
+
 #admin-toolbar a {
     color: rgb(79, 88, 97);
     text-decoration: none;
@@ -111,6 +115,10 @@ body.has-admin-toolbar {
 }
 #admin-toolbar.admin-toolbar-collapsed #admin-toolbar-toggle span.admin-toolbar-hidden-collapsed {
     display: none;
+}
+
+.admin-toolbar-hidden {
+    display:none;
 }
 
 .icon {

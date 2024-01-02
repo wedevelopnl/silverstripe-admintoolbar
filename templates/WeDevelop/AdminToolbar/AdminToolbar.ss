@@ -14,9 +14,14 @@
         $Me
     <% end_loop %>
 
-    <% loop $Toggles %>
-        $Me
-    <% end_loop %>
+    <div class="admin-toolbar-menu admin-toolbar-toggle-menu">
+        <i class="icon font-icon-dot-3"></i>
+        <ul class="admin-toolbar-menu-items">
+            <% loop $Toggles %>
+                <li>$Me</li>
+            <% end_loop %>
+        </ul>
+    </div>
 <%--        <a href="/admin/security/EditForm/field/Members/item/{$CurrentMember.ID}/edit">User: $CurrentMember.Name</a>--%>
 <%--        <a href="/Security/Logout"><%t AdminToolbar.LOGOUT "Logout" %></a>--%>
 <%--        <a href="/admin"><%t AdminToolbar.ADMIN "Admin" %></a>--%>
