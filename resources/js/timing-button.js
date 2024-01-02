@@ -21,6 +21,7 @@
 
   iframe.addEventListener('load', () => {
     button.innerHTML = new Date().getTime() - startTime + 'ms';
+    iframe.remove();
   });
 
   iframe.src = adminDisabledURL.toString();
