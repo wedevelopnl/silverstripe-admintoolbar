@@ -22,7 +22,7 @@ class AdminToolbarTimingToggle extends AdminToolbarToggle implements AdminToolba
 
     public function getIcon(): string
     {
-        return 'font-icon-menu-modaladmin';
+        return 'font-icon-menu-clock';
     }
 
     public function provideJavascript(): array
