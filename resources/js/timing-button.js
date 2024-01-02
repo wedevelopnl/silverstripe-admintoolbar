@@ -17,7 +17,7 @@
   const startTime = new Date().getTime();
   const adminDisabledURL = new URL(window.location.href);
 
-  adminDisabledURL.searchParams.set('AdminToolbarDisabled', 1);
+  adminDisabledURL.searchParams.set('AdminToolbarDisabled', '1');
 
   iframe.addEventListener('load', () => {
     button.innerHTML = new Date().getTime() - startTime + 'ms';

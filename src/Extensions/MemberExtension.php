@@ -33,7 +33,7 @@ class MemberExtension extends DataExtension
 
     public function showAdminToolbar(): bool
     {
-        return !$this->owner->DisableAdminToolbar;
+        return !$this->getOwner()->DisableAdminToolbar;
     }
 
 }

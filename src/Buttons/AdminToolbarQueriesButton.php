@@ -7,8 +7,9 @@ namespace WeDevelop\AdminToolbar\Buttons;
 use WeDevelop\AdminToolbar\Models\AdminToolbarButton;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarButtonProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarJavascriptProviderInterface;
+use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 
-class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolbarJavascriptProviderInterface, AdminToolbarButtonProviderInterface
+class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolbarJavascriptProviderInterface, AdminToolbarButtonProviderInterface, AdminToolbarStylesheetProviderInterface
 {
     public function getName(): string
     {
@@ -50,5 +51,12 @@ class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolb
     public function getExtraClasses(): string
     {
         return 'admin-toolbar-hidden';
+    }
+
+    public function provideStylesheets(): array
+    {
+        return [
+            'wedevelopnl/silverstripe-admintoolbar:resources/css/queries-button.css',
+        ];
     }
 }
