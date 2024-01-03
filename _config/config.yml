@@ -12,3 +12,16 @@ SilverStripe\Security\Member:
 
 WeDevelop\AdminToolbar\AdminToolbar:
   disabled_menus:
+  disabled_buttons:
+  disabled_toggles:
+
+---
+Only:
+  environment: 'live'
+---
+WeDevelop\AdminToolbar\AdminToolbar:
+  disabled_menus:
+  disabled_buttons:
+    - 'Queries'
+  disabled_toggles:
+    - 'Queries'
