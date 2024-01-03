@@ -1,0 +1,1 @@
+(()=>{var n=document.querySelector("[data-flush-cache-button]");null==n||n.addEventListener("click",(function(){var e=new URL(window.location.href);e.searchParams.set("AdminToolbarDisabled","1"),e.searchParams.set("flush","1"),n.classList.remove("font-icon-back-in-time"),n.classList.add("font-icon-spinner"),fetch(e.toString()).then((function(){window.location.reload()}))}))})();

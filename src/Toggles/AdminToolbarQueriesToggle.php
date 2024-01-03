@@ -28,7 +28,7 @@ class AdminToolbarQueriesToggle extends AdminToolbarToggle implements AdminToolb
     public function provideJavascript(): array
     {
         return [
-            'wedevelopnl/silverstripe-admintoolbar:resources/js/queries-toggle.js',
+            'wedevelopnl/silverstripe-admintoolbar:client/dist/queries-toggle.js',
         ];
     }
 

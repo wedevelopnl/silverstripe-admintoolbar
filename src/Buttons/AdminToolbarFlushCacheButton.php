@@ -28,7 +28,7 @@ class AdminToolbarFlushCacheButton extends AdminToolbarButton implements AdminTo
     public function provideJavascript(): array
     {
         return [
-            'wedevelopnl/silverstripe-admintoolbar:resources/js/flush-cache-button.js',
+            'wedevelopnl/silverstripe-admintoolbar:client/dist/flush-cache-button.js',
         ];
     }
 

@@ -1,0 +1,9 @@
+vendor/**/*.js
+vendor/**/*.js
+public/**/*.js
+public/**/*.js
+themes/default/bundles/*.js
+_resources/**/*.js
+_resources/**/*.js
+**/node_modules/*
+webpack.config.js

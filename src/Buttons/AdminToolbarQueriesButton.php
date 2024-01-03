@@ -9,7 +9,7 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarButtonProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarJavascriptProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 
-class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolbarJavascriptProviderInterface, AdminToolbarButtonProviderInterface, AdminToolbarStylesheetProviderInterface
+class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolbarJavascriptProviderInterface, AdminToolbarButtonProviderInterface
 {
     public function getName(): string
     {
@@ -29,7 +29,7 @@ class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolb
     public function provideJavascript(): array
     {
         return [
-            'wedevelopnl/silverstripe-admintoolbar:resources/js/queries-button.js',
+            'wedevelopnl/silverstripe-admintoolbar:client/dist/queries-button.js',
         ];
     }
 
@@ -51,12 +51,5 @@ class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolb
     public function getExtraClasses(): string
     {
         return 'admin-toolbar-hidden';
-    }
-
-    public function provideStylesheets(): array
-    {
-        return [
-            'wedevelopnl/silverstripe-admintoolbar:resources/css/queries-button.css',
-        ];
     }
 }

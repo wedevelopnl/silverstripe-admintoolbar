@@ -1,0 +1,1 @@
+(()=>{var e="[data-queries-toggle]",t=document.querySelector(e);t&&t.checked&&localStorage.getItem(e),null==t||t.addEventListener("change",(function(t){var a;a=t.currentTarget.checked,localStorage.setItem(e,a)}))})();

@@ -30,8 +30,8 @@ class AdminToolbar extends ViewableData implements PermissionProvider
 
     public function render(): DBHTMLText
     {
-        Requirements::css('wedevelopnl/silverstripe-admintoolbar:resources/css/admintoolbar.css');
-        Requirements::javascript('wedevelopnl/silverstripe-admintoolbar:resources/js/admintoolbar.js');
+        Requirements::css('wedevelopnl/silverstripe-admintoolbar:client/dist/main.css');
+        Requirements::javascript('wedevelopnl/silverstripe-admintoolbar:client/dist/app.js');
 
         $toolbarConfig = Config::inst()->get(self::class);
         $member = Security::getCurrentUser();

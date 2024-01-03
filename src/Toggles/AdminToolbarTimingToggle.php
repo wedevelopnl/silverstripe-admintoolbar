@@ -28,7 +28,7 @@ class AdminToolbarTimingToggle extends AdminToolbarToggle implements AdminToolba
     public function provideJavascript(): array
     {
         return [
-            'wedevelopnl/silverstripe-admintoolbar:resources/js/timing-toggle.js',
+            'wedevelopnl/silverstripe-admintoolbar:client/dist/timing-toggle.js',
         ];
     }
 

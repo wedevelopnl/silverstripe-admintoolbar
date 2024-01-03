@@ -28,7 +28,7 @@ class AdminToolbarTimingButton extends AdminToolbarButton implements AdminToolba
     public function provideJavascript(): array
     {
         return [
-            'wedevelopnl/silverstripe-admintoolbar:resources/js/timing-button.js',
+            'wedevelopnl/silverstripe-admintoolbar:client/dist/timing-button.js',
         ];
     }
 
