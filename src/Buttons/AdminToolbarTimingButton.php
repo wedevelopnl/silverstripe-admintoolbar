@@ -37,7 +37,7 @@ class AdminToolbarTimingButton extends AdminToolbarButton implements AdminToolba
         return 'data-timing-button';
     }
 
-    public function provideAdminToolbarButton(): ?AdminToolbarButton
+    public function provideAdminToolbarButton(): AdminToolbarButton
     {
         return self::create();
     }

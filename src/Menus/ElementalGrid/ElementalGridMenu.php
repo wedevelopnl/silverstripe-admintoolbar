@@ -37,7 +37,7 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
         return 'font-icon-block-layout';
     }
 
-    public function provideAdminToolbarMenu(): ?AdminToolbarMenu
+    public function provideAdminToolbarMenu(): AdminToolbarMenu
     {
         return self::create();
     }

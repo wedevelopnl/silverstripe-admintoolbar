@@ -25,9 +25,9 @@ class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
         return true;
     }
 
-    public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem
+    public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
     {
-        return new self();
+        return self::create();
     }
 
     public function isForMenu(string $menuName): bool

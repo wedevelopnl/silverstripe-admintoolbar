@@ -23,9 +23,9 @@ class UsernameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuI
         return true;
     }
 
-    public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem
+    public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
     {
-        return new self();
+        return self::create();
     }
 
     public function isForMenu(string $menuName): bool

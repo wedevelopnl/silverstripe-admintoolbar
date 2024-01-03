@@ -25,9 +25,9 @@ class EditUserMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuI
         return Security::getCurrentUser() !== null;
     }
 
-    public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem
+    public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
     {
-        return new self();
+        return self::create();
     }
 
     public function isForMenu(string $menuName): bool

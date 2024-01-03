@@ -22,7 +22,7 @@ class NameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
         return true;
     }
 
-    public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem
+    public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
     {
         return new self();
     }

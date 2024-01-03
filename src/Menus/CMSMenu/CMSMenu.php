@@ -31,7 +31,7 @@ class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterf
         return 'font-icon-menu';
     }
 
-    public function provideAdminToolbarMenu(): ?AdminToolbarMenu
+    public function provideAdminToolbarMenu(): AdminToolbarMenu
     {
         return self::create();
     }

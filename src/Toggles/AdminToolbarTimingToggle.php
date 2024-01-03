@@ -37,7 +37,7 @@ class AdminToolbarTimingToggle extends AdminToolbarToggle implements AdminToolba
         return 'data-timing-toggle';
     }
 
-    public function provideAdminToolbarToggle(): ?AdminToolbarToggle
+    public function provideAdminToolbarToggle(): AdminToolbarToggle
     {
         return self::create();
     }

@@ -28,7 +28,7 @@ class UserMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         return 'font-icon-torso';
     }
 
-    public function provideAdminToolbarMenu(): ?AdminToolbarMenu
+    public function provideAdminToolbarMenu(): AdminToolbarMenu
     {
         return self::create();
     }

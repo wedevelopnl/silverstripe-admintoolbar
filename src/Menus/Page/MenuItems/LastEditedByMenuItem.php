@@ -32,9 +32,9 @@ class LastEditedByMenuItem extends AdminToolbarMenuItem implements AdminToolbarM
         return $author !== null;
     }
 
-    public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem
+    public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
     {
-        return new self();
+        return self::create();
     }
 
     public function isForMenu(string $menuName): bool

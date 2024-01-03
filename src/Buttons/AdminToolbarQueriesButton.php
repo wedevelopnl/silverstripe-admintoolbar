@@ -38,7 +38,7 @@ class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolb
         return 'data-queries-button';
     }
 
-    public function provideAdminToolbarButton(): ?AdminToolbarButton
+    public function provideAdminToolbarButton(): AdminToolbarButton
     {
         return self::create();
     }

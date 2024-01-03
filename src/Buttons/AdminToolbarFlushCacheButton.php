@@ -37,7 +37,7 @@ class AdminToolbarFlushCacheButton extends AdminToolbarButton implements AdminTo
         return 'data-flush-cache-button';
     }
 
-    public function provideAdminToolbarButton(): ?AdminToolbarButton
+    public function provideAdminToolbarButton(): AdminToolbarButton
     {
         return self::create();
     }

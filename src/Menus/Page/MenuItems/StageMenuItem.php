@@ -47,9 +47,9 @@ class StageMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItem
         return true;
     }
 
-    public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem
+    public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
     {
-        return new self();
+        return self::create();
     }
 
     public function isForMenu(string $menuName): bool

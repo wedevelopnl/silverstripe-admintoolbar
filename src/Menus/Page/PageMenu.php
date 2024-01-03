@@ -26,7 +26,7 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         return 'font-icon-page-multiple';
     }
 
-    public function provideAdminToolbarMenu(): ?AdminToolbarMenu
+    public function provideAdminToolbarMenu(): AdminToolbarMenu
     {
         return self::create();
     }

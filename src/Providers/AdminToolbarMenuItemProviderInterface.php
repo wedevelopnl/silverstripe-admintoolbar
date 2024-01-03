@@ -10,5 +10,5 @@ interface AdminToolbarMenuItemProviderInterface
 {
     public function isForMenu(string $menuName): bool;
     public function isMenuItemSupported(): bool;
-    public function provideAdminToolbarMenuItem(): ?AdminToolbarMenuItem;
+    public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem;
 }

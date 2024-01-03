@@ -37,7 +37,7 @@ class AdminToolbarQueriesToggle extends AdminToolbarToggle implements AdminToolb
         return 'data-queries-toggle';
     }
 
-    public function provideAdminToolbarToggle(): ?AdminToolbarToggle
+    public function provideAdminToolbarToggle(): AdminToolbarToggle
     {
         return self::create();
     }
