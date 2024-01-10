@@ -12,24 +12,24 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 use SilverStripe\Control\Controller;
 use WeDevelop\AdminToolbar\URLTranslator;
 
-class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
+class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
     public function getTitle(): string
     {
-        return "Edit this page";
+        return "Unpublish";
     }
 
     public function getLink(): ArrayData
     {
         return ArrayData::create([
-            'LinkURL' => URLTranslator::getPageEditURL(Controller::curr()->data()),
-            'ExtraClasses' => 'ss-at-text-primary hover:ss-at-text-primary'
+            'LinkURL' => '#',
+            'ExtraClasses' => 'ss-at-text-black hover:ss-at-text-primary'
         ]);
     }
 
     public function getIcon(): string
     {
-        return 'font-icon-edit';
+        return 'font-icon-eye-with-line';
     }
 
     public function isMenuItemSupported(): bool
@@ -49,6 +49,6 @@ class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
 
     public function getOrder(): int
     {
-        return 1;
+        return 3;
     }
 }

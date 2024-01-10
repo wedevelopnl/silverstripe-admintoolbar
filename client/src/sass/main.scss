@@ -2,4 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "admin-toolbar";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+@import "silverstripe-icons";
+
+@layer components {
+    .ss-at-btn {
+        @apply
+            ss-at-flex
+            ss-at-items-center
+            ss-at-flex-nowrap
+            ss-at-p-2
+            ss-at-rounded-lg
+            ss-at-font-medium
+            ss-at-bg-silverstripe-200
+            hover:ss-at-bg-primary
+            ss-at-text-black
+            hover:ss-at-text-white
+            ss-at-cursor-pointer
+            ss-at-outline-0
+            ss-at-leading-none
+            ss-at-text-3.5
+            ss-at-border
+            ss-at-border-transparent;
+
+        &.ss-at-btn-outline {
+            @apply
+                ss-at-border ss-at-border-silverstripe-200 ss-at-bg-transparent hover:ss-at-bg-silverstripe;
+        }
+    }
+}

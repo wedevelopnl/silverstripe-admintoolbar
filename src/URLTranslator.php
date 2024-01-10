@@ -16,7 +16,7 @@ final class URLTranslator
     {
         $adminSegment = Config::forClass(AdminRootController::class)->get('url_base');
 
-        return Director::absoluteBaseURL() . $adminSegment;
+        return Director::absoluteBaseURL() . '/'. $adminSegment;
     }
 
     public static function getUserEditURL(Member $member): string

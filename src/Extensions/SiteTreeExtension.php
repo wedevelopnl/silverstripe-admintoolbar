@@ -35,6 +35,6 @@ class SiteTreeExtension extends DataExtension
             return null;
         }
 
-        return (Admintoolbar::create())->render();
+        return Admintoolbar::create()->render();
     }
 }

@@ -1,12 +1,12 @@
 import {themeSafeList} from './client/src/js/tailwind/theme-safelist';
-import {themeFontSizes} from './client/src/js/tailwind/theme-typography';
-import {themeSpacings} from './client/src/js/tailwind/theme-spacings';
+import {themeFontSizes, themeFontFamily} from './client/src/js/tailwind/theme-typography';
 import {themeColors} from './client/src/js/tailwind/theme-colors';
 import {themeDimensions} from "./client/src/js/tailwind/theme-dimensions";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./templates/**/*.{html,js,ss}"],
+  prefix: 'ss-at-',
   plugins: [
     require('@tailwindcss/typography'),
   ],
@@ -15,7 +15,7 @@ module.exports = {
       colors: themeColors,
     },
     fontSize: themeFontSizes,
-    spacing: themeSpacings,
+    fontFamily: themeFontFamily,
   },
   safelist: themeSafeList,
 }

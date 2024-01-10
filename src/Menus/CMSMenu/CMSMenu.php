@@ -21,6 +21,11 @@ class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterf
         return self::MENU_NAME;
     }
 
+    public function getTitle(): ?string
+    {
+        return _t('AdminToolbar.MENU', 'Menu');
+    }
+
     public function getHTML(): string
     {
         return ' ';
@@ -54,7 +59,7 @@ class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterf
             $link = $mainMenuItem->getField('Link');
             $iconClass = $mainMenuItem->getField('IconClass');
 
-            $item->setCustomHTML("<a href=\"$link\" class=\"$iconClass\" target=\"_blank\">$title</a>");
+            $item->setCustomHTML("<a href=\"$link\" class=\"hover:ss-at-text-primary\" target=\"_blank\"><span class=\"$iconClass mr-3\"></span>$title</a>");
 
             $menuItems[] = $item;
         }

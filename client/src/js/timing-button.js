@@ -13,7 +13,7 @@ const adminDisabledURL = new URL(window.location.href);
 adminDisabledURL.searchParams.set('AdminToolbarDisabled', '1');
 
 iframe.addEventListener('load', () => {
-  button.innerHTML = `${new Date().getTime() - startTime}ms`;
+  button.querySelector('.ss-at-btn-content').innerHTML = `${new Date().getTime() - startTime}ms`;
   iframe.remove();
 });
 

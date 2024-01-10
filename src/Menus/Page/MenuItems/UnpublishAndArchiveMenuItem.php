@@ -5,16 +5,31 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
 use SilverStripe\Security\Security;
+use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 use SilverStripe\Control\Controller;
+use WeDevelop\AdminToolbar\URLTranslator;
 
-class NameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
+class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
-    public function getHTML(): string
+    public function getTitle(): string
     {
-        return '<b>' . Controller::curr()->getTitle() . '</b>';
+        return "Unpublish and archive";
+    }
+
+    public function getLink(): ArrayData
+    {
+        return ArrayData::create([
+            'LinkURL' => '#',
+            'ExtraClasses' => 'ss-at-text-red-600 hover:ss-at-text-red-700'
+        ]);
+    }
+
+    public function getIcon(): string
+    {
+        return 'font-icon-trash';
     }
 
     public function isMenuItemSupported(): bool
@@ -24,7 +39,7 @@ class NameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
 
     public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
     {
-        return new self();
+        return self::create();
     }
 
     public function isForMenu(string $menuName): bool
@@ -34,6 +49,6 @@ class NameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
 
     public function getOrder(): int
     {
-        return -1;
+        return 4;
     }
 }

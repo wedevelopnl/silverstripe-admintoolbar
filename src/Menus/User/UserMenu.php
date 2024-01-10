@@ -18,6 +18,11 @@ class UserMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         return self::MENU_NAME;
     }
 
+    public function getTitle(): ?string
+    {
+        return _t('AdminToolbar.USER', 'User');
+    }
+
     public function getHTML(): string
     {
         return ' ';

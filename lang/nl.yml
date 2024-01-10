@@ -8,6 +8,7 @@ nl:
     SWITCH_TO_LIVE: 'Switch naar live'
     SWITCH_TO_STAGE: 'Switch naar stage'
     LAST_EDITED_ON: 'Laatst bewerkt op'
+    LAST_EDITED_BY: 'Laatst bewerkt door'
     USE_THE_ADMIN_TOOLBAR: 'De admin toolbar gebruiken'
   SilverStripe\Security\Member:
     db_DisableAdminToolbar: 'Schakel admin toolbar uit'
