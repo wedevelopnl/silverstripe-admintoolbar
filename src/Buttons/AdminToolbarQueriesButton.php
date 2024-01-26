@@ -7,7 +7,6 @@ namespace WeDevelop\AdminToolbar\Buttons;
 use WeDevelop\AdminToolbar\Models\AdminToolbarButton;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarButtonProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarJavascriptProviderInterface;
-use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 
 class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolbarJavascriptProviderInterface, AdminToolbarButtonProviderInterface
 {
@@ -50,6 +49,6 @@ class AdminToolbarQueriesButton extends AdminToolbarButton implements AdminToolb
 
     public function getExtraClasses(): string
     {
-        return 'admin-toolbar-hidden';
+        return 'ss-at-hidden';
     }
 }

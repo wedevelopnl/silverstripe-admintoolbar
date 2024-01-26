@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\User\MenuItems;
 
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Security;
 use WeDevelop\AdminToolbar\Menus\User\UserMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
@@ -12,12 +13,12 @@ use WeDevelop\AdminToolbar\URLTranslator;
 
 class EditUserMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
-    public function getHTML(): string
+    public function getEditLink(): string
     {
-        $member = Security::getCurrentUser();
+        $member = UserMenu::getCurrentMember();
         $url = URLTranslator::getUserEditURL($member);
 
-        return "<a href=\"$url\" target=\"_blank\">Edit</a>";
+        return $url;
     }
 
     public function isMenuItemSupported(): bool
@@ -33,5 +34,10 @@ class EditUserMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuI
     public function isForMenu(string $menuName): bool
     {
         return $menuName === UserMenu::MENU_NAME;
+    }
+
+    public function forTemplate(): DBHTMLText
+    {
+        return $this->renderWith(self::class);
     }
 }

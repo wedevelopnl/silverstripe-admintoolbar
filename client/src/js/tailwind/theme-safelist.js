@@ -26,4 +26,5 @@ export const themeSafeList = [
   'ss-at-bg-yellow-800',
   'ss-at-text-red-600',
   'hover:ss-at-text-red-700',
+  'peer-hover:ss-at-opacity-100',
 ];

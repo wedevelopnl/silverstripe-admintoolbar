@@ -7,7 +7,7 @@ var configKey = '[data-timing-toggle]';
 var button = document.querySelector('[data-timing-button]');
 var isToggled = localStorage.getItem(configKey) === 'true';
 if (isToggled) {
-  button.classList.remove('admin-toolbar-hidden');
+  button.classList.remove('ss-at-hidden');
 }
 var iframe = document.createElement('iframe');
 var startTime = new Date().getTime();

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\CMSMenu\MenuItems;
 
-use SilverStripe\Security\Security;
+use DNADesign\Elemental\Models\BaseElement;
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\RedirectedURLs\Support\Arr;
+use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\CMSMenu\CMSMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
-use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
-use SilverStripe\Control\Controller;
-use WeDevelop\AdminToolbar\URLTranslator;
 
 class CMSMenuItem extends AdminToolbarMenuItem
 {
-    private string $customHTML;
+    private ArrayData $menuItem;
 
     public function isMenuItemSupported(): bool
     {
@@ -30,15 +30,20 @@ class CMSMenuItem extends AdminToolbarMenuItem
         return 0;
     }
 
-    public function getHTML(): string
+    public function setMenuItem($menuItem): self
     {
-        return $this->customHTML;
-    }
-
-    public function setCustomHTML(string $html): self
-    {
-        $this->customHTML = $html;
+        $this->menuItem = $menuItem;
 
         return $this;
+    }
+
+    public function getMenuItem(): ArrayData
+    {
+        return $this->menuItem;
+    }
+
+    public function forTemplate(): DBHTMLText
+    {
+        return $this->renderWith(self::class);
     }
 }

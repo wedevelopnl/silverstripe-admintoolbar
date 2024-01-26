@@ -11,11 +11,14 @@ function getState() {
 function setState(state) {
   localStorage.setItem(selector, state);
 }
-if (checkbox && checkbox.checked) {
-  getState();
-}
+document.addEventListener('DOMContentLoaded', function () {
+  if (checkbox) {
+    checkbox.checked = getState();
+  }
+});
 checkbox === null || checkbox === void 0 ? void 0 : checkbox.addEventListener('change', function (e) {
   setState(e.currentTarget.checked);
+  window.location.reload();
 });
 /******/ })()
 ;

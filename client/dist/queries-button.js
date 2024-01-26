@@ -7,7 +7,7 @@ var configKey = '[data-queries-toggle]';
 var button = document.querySelector('[data-queries-button]');
 var isToggled = localStorage.getItem(configKey) === 'true';
 if (isToggled) {
-  button.classList.remove('admin-toolbar-hidden');
+  button.classList.remove('ss-at-hidden');
 }
 var queriesURL = new URL(window.location.href);
 var dialog = document.createElement('dialog');
@@ -17,7 +17,7 @@ queriesURL.searchParams.set('showqueries', 'inline');
 function parseResponse(text) {
   var parser = new DOMParser();
   var doc = parser.parseFromString(text, 'text/html');
-  var timeRegex = /(\\d\\.\\d*)s/;
+  var timeRegex = /(\d+\.\d+)s/;
   var timings = [];
   var queries = [];
   doc.querySelectorAll('p.alert.alert-warning').forEach(function (el) {

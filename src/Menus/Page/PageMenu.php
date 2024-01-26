@@ -11,6 +11,7 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Member;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\ArrayData;
+use WeDevelop\AdminToolbar\Menus\Page\MenuItems\EditMenuItem;
 use WeDevelop\AdminToolbar\Menus\Page\MenuItems\LastEditedByMenuItem;
 use WeDevelop\AdminToolbar\Menus\Page\MenuItems\LastEditedMenuItem;
 use WeDevelop\AdminToolbar\Menus\Page\MenuItems\StageMenuItem;
@@ -20,6 +21,8 @@ use WeDevelop\AdminToolbar\URLTranslator;
 
 class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterface
 {
+    private int $order = 0;
+
     public const MENU_NAME = 'Page';
 
     public function getName(): string
@@ -34,7 +37,7 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
 
     public function getHTML(): string
     {
-        return ' ';
+        return '';
     }
 
     public function getIcon(): string
@@ -104,5 +107,15 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         }
 
         return ArrayList::create($items);
+    }
+
+    public function getEditMenuItem(): EditMenuItem
+    {
+        return EditMenuItem::singleton();
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
     }
 }

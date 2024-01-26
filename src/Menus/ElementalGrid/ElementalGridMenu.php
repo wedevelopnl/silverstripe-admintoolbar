@@ -20,10 +20,11 @@ use WeDevelop\ElementalGrid\Models\ElementRow;
 
 class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterface
 {
+    private int $order = 2;
+
     public const MENU_NAME = 'ElementalGrid';
 
     private const ELEMENTAL_GRID_PAGE_EXTENSION_CLASS = 'DNADesign\\Elemental\\Extensions\\ElementalPageExtension';
-    private static int $order = 11;
 
     public function getName(): string
     {
@@ -92,5 +93,10 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
     public function forTemplate(): DBHTMLText
     {
         return $this->renderWith(self::class);
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
     }
 }

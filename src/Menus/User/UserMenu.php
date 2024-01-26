@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\User;
 
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
@@ -40,6 +42,21 @@ class UserMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
 
     public function isMenuSupported(): bool
     {
-        return true;
+        return false;
+    }
+
+    public function forTemplate(): DBHTMLText
+    {
+        return $this->renderWith(self::class);
+    }
+
+    public static function getCurrentMember(): ?Member
+    {
+        return Security::getCurrentUser();
+    }
+
+    public function getLogoutLink(): string
+    {
+        return Security::logout_url();
     }
 }
