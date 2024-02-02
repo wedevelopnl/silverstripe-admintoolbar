@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
-use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Security;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
@@ -13,27 +12,24 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 use SilverStripe\Control\Controller;
 use WeDevelop\AdminToolbar\URLTranslator;
 
-class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
+class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
     public function getTitle(): string
     {
-        return "Unpublish";
+        return "Edit page";
     }
 
     public function getLink(): ArrayData
     {
-        $page = Controller::curr()->data();
-
         return ArrayData::create([
-            'PageId' => $page->ID,
-            'ExtraClasses' => 'ss-at-text-black hover:ss-at-text-primary',
-            'Action' => 'pageUnpublish',
+            'LinkURL' => URLTranslator::getPageEditURL(Controller::curr()->data()),
+            'ExtraClasses' => 'ss-at-text-primary hover:ss-at-text-primary'
         ]);
     }
 
     public function getIcon(): string
     {
-        return 'font-icon-eye-with-line';
+        return 'font-icon-edit';
     }
 
     public function isMenuItemSupported(): bool
@@ -53,11 +49,6 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
 
     public function getOrder(): int
     {
-        return 3;
-    }
-
-    public function forTemplate(): DBHTMLText
-    {
-        return $this->renderWith(self::class);
+        return 1;
     }
 }

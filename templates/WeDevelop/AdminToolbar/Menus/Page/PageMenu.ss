@@ -24,12 +24,7 @@
             <ul class="ss-at-space-y-4 ss-at-leading-tight">
                 <% loop $Items %>
                     <li>
-                        <a href="$Link.LinkURL" class="ss-at-flex ss-at-items-center ss-at-font-medium $Link.ExtraClasses" target="_blank">
-                            <% if $Icon %>
-                                <span class="ss-at-flex ss-at-items-center ss-at-mr-2 $Icon"></span>
-                            <% end_if %>
-                            $Title
-                        </a>
+                        $Me
                     </li>
                 <% end_loop %>
             </ul>
