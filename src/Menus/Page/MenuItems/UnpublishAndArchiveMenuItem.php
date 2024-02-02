@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Security;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
@@ -14,6 +16,8 @@ use WeDevelop\AdminToolbar\URLTranslator;
 
 class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
+    public const ACTION = 'unpublishAndArchive';
+
     public function getTitle(): string
     {
         return "Unpublish and archive";
@@ -21,9 +25,12 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
 
     public function getLink(): ArrayData
     {
+        $page = Controller::curr()->data();
+
         return ArrayData::create([
-            'LinkURL' => '#',
-            'ExtraClasses' => 'ss-at-text-red-600 hover:ss-at-text-red-700'
+            'PageId' => $page->ID,
+            'ExtraClasses' => 'ss-at-text-red-600 hover:ss-at-text-red-700',
+            'Action' => self::ACTION,
         ]);
     }
 
@@ -34,7 +41,10 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
 
     public function isMenuItemSupported(): bool
     {
-        return true;
+        /** @var SiteTree $page */
+        $page = Controller::curr()->data();
+
+        return $page->canUnpublish() and $page->canArchive() and $page->isPublished();;
     }
 
     public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
@@ -50,5 +60,10 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
     public function getOrder(): int
     {
         return 4;
+    }
+
+    public function forTemplate(): DBHTMLText
+    {
+        return $this->renderWith(self::class);
     }
 }

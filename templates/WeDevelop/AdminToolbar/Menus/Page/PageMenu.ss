@@ -27,7 +27,42 @@
                         $Me
                     </li>
                 <% end_loop %>
+                <input type="hidden" id="SecurityID" name="SecurityID" value="$SecurityID" />
             </ul>
         </div>
     </dialog>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const csrfToken = document.getElementById('SecurityID').value;
+        const url = `/admintoolbaraction/pageAction`;
+        document.querySelectorAll('a[data-action]').forEach(function(element) {
+            element.addEventListener('click', function(event) {
+                event.preventDefault();
+                const pageId = this.getAttribute('data-pageid');
+                const action = this.getAttribute('data-action');
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken
+                    },
+                    body: JSON.stringify({
+                        page_id: pageId,
+                        action: action
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Verwerk de response
+                        console.log('Success:', data);
+                        // Geef hier feedback aan de gebruiker, bijv. door het tonen van een melding of het herladen van de pagina
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        // Geef hier feedback over de fout aan de gebruiker
+                    });
+            });
+        });
+    });
+</script>

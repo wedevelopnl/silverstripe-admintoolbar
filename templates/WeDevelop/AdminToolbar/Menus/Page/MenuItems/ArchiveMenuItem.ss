@@ -9,4 +9,3 @@
         $Title
     </a>
 <% end_if %>
-

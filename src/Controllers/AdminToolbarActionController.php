@@ -9,6 +9,9 @@ use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\Versioned\Versioned;
+use WeDevelop\AdminToolbar\Menus\Page\MenuItems\ArchiveMenuItem;
+use WeDevelop\AdminToolbar\Menus\Page\MenuItems\UnpublishAndArchiveMenuItem;
+use WeDevelop\AdminToolbar\Menus\Page\MenuItems\UnpublishMenuItem;
 
 class AdminToolbarActionController extends Controller
 {
@@ -20,11 +23,20 @@ class AdminToolbarActionController extends Controller
      * @var array<string>
      */
     private static array $allowed_actions = [
-        'pageUnpublish',
+        'pageAction',
     ];
 
+    private static array $unpublishActions = [
+        UnpublishMenuItem::ACTION,
+        UnpublishAndArchiveMenuItem::ACTION,
+    ];
 
-    public function pageUnpublish(HTTPRequest $request): HTTPResponse
+    private static array $archiveActions = [
+        UnpublishAndArchiveMenuItem::ACTION,
+        ArchiveMenuItem::ACTION,
+    ];
+
+    public function pageAction(HTTPRequest $request): HTTPResponse
     {
         $csrfToken = $request->getHeader('X-CSRF-Token');
         if (!SecurityToken::inst()->check($csrfToken)) {
@@ -38,6 +50,7 @@ class AdminToolbarActionController extends Controller
             return $this->httpError(400, 'No page ID provided');
         }
 
+        /** @var SiteTree $page */
         $page = Versioned::get_by_stage(SiteTree::class, 'Stage')->byID($pageId);
 
         if (!$page) {
@@ -45,17 +58,25 @@ class AdminToolbarActionController extends Controller
         }
 
         $response = new HTTPResponse();
+        $action = $params['action'];
 
-        if (!$page->isPublished()) {
+        if (!$page->isPublished() and in_array($action, self::$unpublishActions)) {
             $response->setStatusCode(200);
             $response->setBody(json_encode(['message' => 'Page is already unpublished']));
             return $response;
         }
 
-        $page->doUnpublish();
+        if (in_array($action, self::$unpublishActions)) {
+            $page->doUnpublish();
+        }
+
+        if (in_array($action, self::$archiveActions)) {
+            $page->doArchive();
+        }
 
         $response->setStatusCode(200);
-        $response->setBody(json_encode(['message' => 'Page unpublished successfully']));
+        $response->setBody(json_encode(['message' => 'Action ' . $action . ' successfully ran']));
+
         return $response;
         return $res;
     }
