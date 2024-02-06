@@ -13,6 +13,10 @@
     <dialog id="$Name" class="ss-at-w-5/12 ss-at-bg-transparent p-0 backdrop:ss-at-bg-black backdrop:ss-at-bg-opacity-50">
         <div class="dialog-inner ss-at-relative ss-at-bg-white ss-at-p-6 ss-at-rounded-lg">
             <% include WeDevelop\AdminToolbar\Includes\DialogHeader Title=$CurrentPage.Title, Badge=$PublishState %>
+            <div id="responseMessage" class="response-message hidden" >
+                <span class="ss-at-ml-3 ss-at-font-medium ss-at-px-2 ss-at-py-1 ss-at-rounded-md ss-at-bg-green-200 ss-at-text-greenr-800 ss-at-text-3.5">
+            </span>
+            </div>
             <ul class="ss-at-space-x-4 ss-at-flex ss-at-items-center ss-at-flex-wrap ss-at-opacity-65 ss-at-text-3.5 ss-at-mb-5">
                 <li class="ss-at-relative after:content-[''] after:ss-at-w-0.5 after:ss-at-h-0.5 after:ss-at-absolute after:top-1/2 after:ss-at-bg-black after:ss-at-mx-2 after:ss-at-top-1/2 after:ss-at--translate-y-1/2">
                     <span><%t AdminToolbar.LAST_EDITED_ON 'Last edited on' %> $CurrentPage.LastEdited.Nice</span>
@@ -29,6 +33,7 @@
                 <% end_loop %>
                 <input type="hidden" id="SecurityID" name="SecurityID" value="$SecurityID" />
             </ul>
+
         </div>
     </dialog>
 </div>
@@ -54,9 +59,14 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        // Verwerk de response
-                        console.log('Success:', data);
-                        // Geef hier feedback aan de gebruiker, bijv. door het tonen van een melding of het herladen van de pagina
+                        const responseMessageContainer = document.getElementById('responseMessage');
+                        if (responseMessageContainer && data.message) {
+                            const messageSpan = responseMessageContainer.querySelector('span');
+                            if (messageSpan) {
+                                messageSpan.textContent = data.message;
+                                responseMessageContainer.classList.remove('hidden'); // Toon het message container
+                            }
+                        }
                     })
                     .catch((error) => {
                         console.error('Error:', error);

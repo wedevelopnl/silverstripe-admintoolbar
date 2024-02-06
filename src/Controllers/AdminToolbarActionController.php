@@ -36,6 +36,12 @@ class AdminToolbarActionController extends Controller
         ArchiveMenuItem::ACTION,
     ];
 
+    private static $successMessages = [
+        UnpublishMenuItem::ACTION => 'Page succesfully unpublished',
+        ArchiveMenuItem::ACTION => 'Page succesfully archived',
+        UnpublishAndArchiveMenuItem::ACTION => 'Page succesfully unpublished and archived',
+    ];
+
     public function pageAction(HTTPRequest $request): HTTPResponse
     {
         $csrfToken = $request->getHeader('X-CSRF-Token');
@@ -75,7 +81,7 @@ class AdminToolbarActionController extends Controller
         }
 
         $response->setStatusCode(200);
-        $response->setBody(json_encode(['message' => 'Action ' . $action . ' successfully ran']));
+        $response->setBody(json_encode(['message' => self::$successMessages[$action]]));
 
         return $response;
         return $res;
