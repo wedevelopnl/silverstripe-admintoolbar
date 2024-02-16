@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeDevelop\AdminToolbar\Controllers;
 
 use SilverStripe\CMS\Model\SiteTree;
@@ -26,16 +28,25 @@ class AdminToolbarActionController extends Controller
         'pageAction',
     ];
 
+    /**
+     * @var array<string>
+     */
     private static array $unpublishActions = [
         UnpublishMenuItem::ACTION,
         UnpublishAndArchiveMenuItem::ACTION,
     ];
 
+    /**
+     * @var array<string>
+     */
     private static array $archiveActions = [
         UnpublishAndArchiveMenuItem::ACTION,
         ArchiveMenuItem::ACTION,
     ];
 
+    /**
+     * @var array<string, string>
+     */
     private static $successMessages = [
         UnpublishMenuItem::ACTION => 'Page succesfully unpublished',
         ArchiveMenuItem::ACTION => 'Page succesfully archived',
@@ -44,8 +55,7 @@ class AdminToolbarActionController extends Controller
 
     public function pageAction(HTTPRequest $request): HTTPResponse
     {
-        $csrfToken = $request->getHeader('X-CSRF-Token');
-        if (!SecurityToken::inst()->check($csrfToken)) {
+        if (!SecurityToken::inst()->checkRequest($request)) {
             return $this->httpError(400, 'CSRF token mismatch');
         }
 
@@ -66,6 +76,10 @@ class AdminToolbarActionController extends Controller
         $response = new HTTPResponse();
         $action = $params['action'];
 
+        if (!in_array($action, array_merge(self::$unpublishActions, self::$archiveActions))) {
+            return $this->httpError(404, 'ACtion not allowed');
+        }
+
         if (!$page->isPublished() and in_array($action, self::$unpublishActions)) {
             $response->setStatusCode(200);
             $response->setBody(json_encode(['message' => 'Page is already unpublished']));
@@ -84,6 +98,5 @@ class AdminToolbarActionController extends Controller
         $response->setBody(json_encode(['message' => self::$successMessages[$action]]));
 
         return $response;
-        return $res;
     }
 }

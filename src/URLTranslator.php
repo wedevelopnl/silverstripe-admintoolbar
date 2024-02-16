@@ -31,6 +31,10 @@ final class URLTranslator
             $siteTree = Versioned::get_by_stage(SiteTree::class, 'Stage')->byID($pageId);
         }
 
+        if (!$siteTree instanceof SiteTree) {
+            return '';
+        }
+
         return $siteTree->CMSEditLink();
     }
 }
