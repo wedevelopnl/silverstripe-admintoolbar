@@ -9,6 +9,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Admin\AdminRootController;
 use SilverStripe\Control\Director;
 use SilverStripe\Security\Member;
+use SilverStripe\Versioned\Versioned;
 
 final class URLTranslator
 {
@@ -24,12 +25,16 @@ final class URLTranslator
         return self::getAdminURL() . "/security/users/EditForm/field/users/item/{$member->ID}/edit";
     }
 
-    public static function getPageEditURL(SiteTree|int $siteTreeOrID): string
+    public static function getPageEditURL(SiteTree|int $siteTree): string
     {
-        if (!is_int($siteTreeOrID)) {
-            $siteTreeOrID = $siteTreeOrID->ID;
+        if (is_int($siteTree)) {
+            $siteTree = Versioned::get_by_stage(SiteTree::class, 'Stage')->byID($pageId);
         }
 
-        return self::getAdminURL() . "/pages/edit/show/$siteTreeOrID/";
+        if (!$siteTree instanceof SiteTree) {
+            return '';
+        }
+
+        return $siteTree->CMSEditLink();
     }
 }

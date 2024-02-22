@@ -14,13 +14,13 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 use SilverStripe\Control\Controller;
 use WeDevelop\AdminToolbar\URLTranslator;
 
-class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
+class ArchiveMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
-    public const ACTION = 'unpublish';
+    public const ACTION = 'archive';
 
     public function getTitle(): string
     {
-        return "Unpublish";
+        return "Archive";
     }
 
     public function getLink(): ArrayData
@@ -29,14 +29,14 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
 
         return ArrayData::create([
             'PageId' => $page->ID,
-            'ExtraClasses' => 'ss-at-text-black hover:ss-at-text-primary',
+            'ExtraClasses' => 'ss-at-text-red-600 hover:ss-at-text-red-700',
             'Action' => self::ACTION,
         ]);
     }
 
     public function getIcon(): string
     {
-        return 'font-icon-eye-with-line';
+        return 'font-icon-trash';
     }
 
     public function isMenuItemSupported(): bool
@@ -44,7 +44,7 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
         /** @var SiteTree $page */
         $page = Controller::curr()->data();
 
-        return $page->canUnpublish() and $page->isPublished();
+        return $page->canArchive() and !$page->isPublished();
     }
 
     public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem
@@ -59,7 +59,7 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
 
     public function getOrder(): int
     {
-        return 3;
+        return 4;
     }
 
     public function forTemplate(): DBHTMLText
