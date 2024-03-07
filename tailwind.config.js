@@ -10,6 +10,9 @@ module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
   ],
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: { // this will add extra classes, if you want to overwrite the default classes for a specific "property", move it outside the "extend"
       colors: themeColors,
