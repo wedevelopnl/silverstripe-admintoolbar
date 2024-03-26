@@ -1,0 +1,1 @@
+<a href="$EditLink" class="ss-at-btn" target="_blank">Edit user</a>

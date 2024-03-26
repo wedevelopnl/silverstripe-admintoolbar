@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\User\MenuItems;
 
+use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use WeDevelop\AdminToolbar\Menus\User\UserMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
@@ -11,11 +13,9 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 
 class UsernameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
-    public function getHTML(): string
+    public function getCurrentMember(): ?Member
     {
-        $username = Security::getCurrentUser()->getName();
-
-        return "<b>$username</b>";
+        return UserMenu::getCurrentMember();
     }
 
     public function isMenuItemSupported(): bool
@@ -36,5 +36,10 @@ class UsernameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuI
     public function getOrder(): int
     {
         return -1;
+    }
+
+    public function forTemplate(): DBHTMLText
+    {
+        return $this->renderWith(self::class);
     }
 }

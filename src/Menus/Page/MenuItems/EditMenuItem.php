@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
 use SilverStripe\Security\Security;
+use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
@@ -13,11 +14,22 @@ use WeDevelop\AdminToolbar\URLTranslator;
 
 class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
-    public function getHTML(): string
+    public function getTitle(): string
     {
-        $editURL = URLTranslator::getPageEditURL(Controller::curr()->ID);
+        return _t('Page.EDIT', 'Edit page');
+    }
 
-        return "<a href=\"$editURL\" target='_blank'>Edit</a>";
+    public function getLink(): ArrayData
+    {
+        return ArrayData::create([
+            'LinkURL' => URLTranslator::getPageEditURL(Controller::curr()->data()),
+            'ExtraClasses' => 'ss-at-text-primary hover:ss-at-text-primary'
+        ]);
+    }
+
+    public function getIcon(): string
+    {
+        return 'font-icon-edit';
     }
 
     public function isMenuItemSupported(): bool

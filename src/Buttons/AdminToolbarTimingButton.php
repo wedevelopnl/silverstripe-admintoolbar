@@ -49,6 +49,6 @@ class AdminToolbarTimingButton extends AdminToolbarButton implements AdminToolba
 
     public function getExtraClasses(): string
     {
-        return 'admin-toolbar-hidden';
+        return 'ss-at-hidden';
     }
 }

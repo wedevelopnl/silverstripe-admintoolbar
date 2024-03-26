@@ -1,10 +1,17 @@
 <div class="admin-toolbar-menu">
-    <i class="icon $Icon"></i>
-    <span><% if $HTML %>$HTML.HTML<% else %>$Name<% end_if %></span>
-    <ul class="admin-toolbar-menu-items">
-        <% loop $Items %>
-            <li>$Me</li>
-        <% end_loop %>
-    </ul>
+    <button class="ss-at-btn" data-toggle-dialog="$Name">
+        <span class="ss-at-h-3.5 $Icon"></span>
+        <span class="ss-at-btn-content max-lg:ss-at-hidden ss-at-ms-2">$Title</span>
+    </button>
+    <dialog id="$Name" class="ss-at-w-6/12 ss-at-bg-transparent">
+        <div class="dialog-inner ss-at-relative ss-at-bg-white ss-at-p-6 ss-at-rounded-lg">
+            <% include WeDevelop\AdminToolbar\Includes\DialogHeader Title=$Name %>
+            <ul class="ss-at-space-y-3">
+                <% loop $Items %>
+                    <li>$Me</li>
+                <% end_loop %>
+            </ul>
+        </div>
+    </dialog>
 </div>
 

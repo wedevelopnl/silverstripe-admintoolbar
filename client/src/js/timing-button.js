@@ -3,7 +3,7 @@ const button = document.querySelector('[data-timing-button]');
 const isToggled = localStorage.getItem(configKey) === 'true';
 
 if (isToggled) {
-  button.classList.remove('admin-toolbar-hidden');
+  button.classList.remove('ss-at-hidden');
 }
 
 const iframe = document.createElement('iframe');
@@ -13,7 +13,7 @@ const adminDisabledURL = new URL(window.location.href);
 adminDisabledURL.searchParams.set('AdminToolbarDisabled', '1');
 
 iframe.addEventListener('load', () => {
-  button.innerHTML = `${new Date().getTime() - startTime}ms`;
+  button.querySelector('.ss-at-btn-content').innerHTML = `${new Date().getTime() - startTime}ms`;
   iframe.remove();
 });
 

@@ -4,7 +4,7 @@ const button = document.querySelector('[data-queries-button]');
 const isToggled = localStorage.getItem(configKey) === 'true';
 
 if (isToggled) {
-  button.classList.remove('admin-toolbar-hidden');
+  button.classList.remove('ss-at-hidden');
 }
 
 const queriesURL = new URL(window.location.href);
@@ -18,7 +18,7 @@ queriesURL.searchParams.set('showqueries', 'inline');
 function parseResponse(text) {
   const parser = new DOMParser();
   const doc = parser.parseFromString(text, 'text/html');
-  const timeRegex = /(\\d\\.\\d*)s/;
+  const timeRegex = /(\d+\.\d+)s/;
   const timings = [];
   const queries = [];
 

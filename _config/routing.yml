@@ -1,0 +1,8 @@
+---
+Name: admin-toolbar-routes
+After:
+  - '#rootroutes'
+---
+SilverStripe\Control\Director:
+  rules:
+    'admintoolbaraction//$Action/$ID': 'WeDevelop\AdminToolbar\Controllers\AdminToolbarActionController'

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\ElementalGrid\MenuItems;
 
+use DNADesign\Elemental\Models\BaseElement;
+use DNADesign\Elemental\Models\ElementContent;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use WeDevelop\AdminToolbar\Menus\CMSMenu\CMSMenu;
 use WeDevelop\AdminToolbar\Menus\ElementalGrid\ElementalGridMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 
 class ElementalGridMenuItem extends AdminToolbarMenuItem
 {
-    private string $customHTML;
+    private BaseElement $element;
 
     public function isMenuItemSupported(): bool
     {
@@ -27,15 +30,20 @@ class ElementalGridMenuItem extends AdminToolbarMenuItem
         return 0;
     }
 
-    public function getHTML(): string
+    public function setElement(BaseElement $element): self
     {
-        return $this->customHTML;
-    }
-
-    public function setCustomHTML(string $html): self
-    {
-        $this->customHTML = $html;
+        $this->element = $element;
 
         return $this;
+    }
+
+    public function getElement(): BaseElement
+    {
+        return $this->element;
+    }
+
+    public function forTemplate(): DBHTMLText
+    {
+        return $this->renderWith(self::class);
     }
 }

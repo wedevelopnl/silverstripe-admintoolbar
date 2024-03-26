@@ -9,10 +9,13 @@ function setState(state) {
   localStorage.setItem(selector, state);
 }
 
-if (checkbox && checkbox.checked) {
-  getState();
-}
+document.addEventListener('DOMContentLoaded', () => {
+  if (checkbox) {
+    checkbox.checked = getState();
+  }
+});
 
 checkbox?.addEventListener('change', (e) => {
   setState(e.currentTarget.checked);
+  window.location.reload();
 });

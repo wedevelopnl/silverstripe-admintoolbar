@@ -6,19 +6,25 @@ namespace WeDevelop\AdminToolbar\Menus\CMSMenu;
 
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\ORM\ArrayList;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 use WeDevelop\AdminToolbar\Menus\CMSMenu\MenuItems\CMSMenuItem;
 
 class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterface
 {
-    private static int $order = 0;
+    private int $order = 1;
 
     public const MENU_NAME = 'CMSMenu';
 
     public function getName(): string
     {
         return self::MENU_NAME;
+    }
+
+    public function getTitle(): ?string
+    {
+        return _t('AdminToolbar.MENU', 'Menu');
     }
 
     public function getHTML(): string
@@ -43,22 +49,28 @@ class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterf
 
     public function getItems(): ArrayList
     {
-        $menuItems = [
-            CMSMenuItem::create()->setCustomHTML("<b>CMS Menu</b>"),
-        ];
+        $menus = LeftAndMain::create()->MainMenu();
 
-        foreach (LeftAndMain::create()->MainMenu() as $mainMenuItem) {
+        $menuItems = [];
+
+        /** @var ArrayList $menu */
+        foreach ($menus as $menu) {
             $item = CMSMenuItem::create();
-
-            $title = $mainMenuItem->getField('Title');
-            $link = $mainMenuItem->getField('Link');
-            $iconClass = $mainMenuItem->getField('IconClass');
-
-            $item->setCustomHTML("<a href=\"$link\" class=\"$iconClass\" target=\"_blank\">$title</a>");
+            $item->setMenuItem($menu);
 
             $menuItems[] = $item;
         }
 
         return ArrayList::create($menuItems);
+    }
+
+    public function forTemplate(): DBHTMLText
+    {
+        return $this->renderWith(self::class);
+    }
+
+    public function getOrder(): int
+    {
+        return $this->order;
     }
 }

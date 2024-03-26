@@ -13,6 +13,8 @@ use SilverStripe\Security\Security;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\ViewableData;
+use WeDevelop\AdminToolbar\Menus\Page\MenuItems\EditMenuItem;
+use WeDevelop\AdminToolbar\Menus\User\UserMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarButtonInterface;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuInterface;
 use WeDevelop\AdminToolbar\Models\AdminToolbarToggleInterface;
@@ -76,6 +78,11 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         });
 
         return $menus;
+    }
+
+    public function getUserMenu(): UserMenu
+    {
+        return UserMenu::singleton();
     }
 
     public function getToggles(): array
