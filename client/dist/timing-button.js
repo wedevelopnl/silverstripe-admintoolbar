@@ -1,1 +1,25 @@
-(()=>{var e=document.querySelector("[data-timing-button]");"true"===localStorage.getItem("[data-timing-toggle]")&&e.classList.remove("ss-at-hidden");var t=document.createElement("iframe"),n=(new Date).getTime(),a=new URL(window.location.href);a.searchParams.set("AdminToolbarDisabled","1"),t.addEventListener("load",(function(){e.querySelector(".ss-at-btn-content").innerHTML="".concat((new Date).getTime()-n,"ms"),t.remove()})),t.src=a.toString(),t.style.display="none",document.body.appendChild(t)})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!****************************************!*\
+  !*** ./client/src/js/timing-button.js ***!
+  \****************************************/
+var configKey = '[data-timing-toggle]';
+var button = document.querySelector('[data-timing-button]');
+var isToggled = localStorage.getItem(configKey) === 'true';
+if (isToggled) {
+  button.classList.remove('ss-at-hidden');
+}
+var iframe = document.createElement('iframe');
+var startTime = new Date().getTime();
+var adminDisabledURL = new URL(window.location.href);
+adminDisabledURL.searchParams.set('AdminToolbarDisabled', '1');
+iframe.addEventListener('load', function () {
+  button.querySelector('.ss-at-btn-content').innerHTML = "".concat(new Date().getTime() - startTime, "ms");
+  iframe.remove();
+});
+iframe.src = adminDisabledURL.toString();
+iframe.style.display = 'none';
+document.body.appendChild(iframe);
+/******/ })()
+;
+//# sourceMappingURL=timing-button.js.map

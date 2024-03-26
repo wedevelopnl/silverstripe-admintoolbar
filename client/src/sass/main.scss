@@ -28,7 +28,12 @@
 
         &.ss-at-btn-outline {
             @apply
-                ss-at-border ss-at-border-silverstripe-200 ss-at-bg-transparent hover:ss-at-bg-silverstripe;
+                ss-at-border ss-at-border-solid ss-at-border-silverstripe-200 ss-at-bg-transparent hover:ss-at-bg-silverstripe;
         }
+    }
+
+    dialog#toggles {
+        inset-block-end: unset;
+        inset-inline-end: unset;
     }
 }

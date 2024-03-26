@@ -1,6 +1,6 @@
 <% if $isMenuItemSupported %>
     <a href="#"
-       class="test ss-at-flex ss-at-items-center ss-at-font-medium $Link.ExtraClasses"
+       class="ss-at-flex ss-at-items-center ss-at-font-medium $Link.ExtraClasses"
        data-pageid="$Link.PageId"
        data-action="$Link.Action">
         <% if $Icon %>

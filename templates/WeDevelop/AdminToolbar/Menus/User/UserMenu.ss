@@ -1,8 +1,8 @@
 <div class="admin-toolbar-menu">
     <div class="ss-at-flex ss-at-items-center">
         <button class="ss-at-btn ss-at-rounded-r-none" data-toggle-dialog="$Name">
-            <span class="ss-at-h-3.5 ss-at-me-2 $Icon"></span>
-            <span class="ss-at-btn-content">$CurrentMember.Name</span>
+            <span class="ss-at-h-3.5 $Icon"></span>
+            <span class="ss-at-btn-content max-lg:ss-at-hidden ss-at-ms-2">$CurrentMember.Name</span>
         </button>
         <a href="$LogoutLink" class="ss-at-btn ss-at-bg-silverstripe ss-at-text-white ss-at-rounded-l-none">
             <span class="ss-at-h-3.5 font-icon-logout"></span>

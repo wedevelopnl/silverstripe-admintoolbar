@@ -22,4 +22,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     localStorage.setItem('ss-at-admin-toolbar-active', !toolbar.classList.contains(inactiveClass));
   });
+
+  const csrfToken = document.querySelector('.admin-toolbar-menu #SecurityID');
+
+  const url = '/admintoolbaraction/pageAction';
+
+  document.querySelectorAll('a[data-action]').forEach((element) => {
+    element.addEventListener('click', (e) => {
+      e.preventDefault();
+      const { pageid, action } = e.target.dataset;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Securityid': csrfToken.value,
+        },
+        body: JSON.stringify({
+          page_id: pageid,
+          action,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const responseMessageContainer = document.getElementById('response-message');
+          if (responseMessageContainer && data.message) {
+            const messageSpan = responseMessageContainer.querySelector('span');
+            if (messageSpan) {
+              messageSpan.textContent = data.message;
+              responseMessageContainer.classList.remove('ss-at-hidden'); // Toon het message container
+            }
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          // Geef hier feedback over de fout aan de gebruiker
+        });
+    });
+  });
 });

@@ -9,6 +9,13 @@ dialogs.forEach((dialog) => {
       if (dialog.open) {
         dialog.close();
       } else {
+        if (dialog.id === 'toggles') {
+          const wrapper = document.querySelector('[data-contains-relative-dialog]');
+
+          const toggleDialog = dialog;
+          toggleDialog.style.top = `${wrapper.getBoundingClientRect().top}px`;
+          toggleDialog.style.left = `${wrapper.getBoundingClientRect().left}px`;
+        }
         dialog.showModal();
       }
     });
