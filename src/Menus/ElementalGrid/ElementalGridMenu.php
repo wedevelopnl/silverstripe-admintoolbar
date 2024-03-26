@@ -6,6 +6,7 @@ namespace WeDevelop\AdminToolbar\Menus\ElementalGrid;
 
 use Composer\InstalledVersions;
 use DNADesign\Elemental\Models\BaseElement;
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -16,6 +17,7 @@ use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 use WeDevelop\ElementalGrid\CSSFramework\BulmaCSSFramework;
 use WeDevelop\ElementalGrid\ElementalConfig;
+use WeDevelop\ElementalGrid\Extensions\ElementalPageExtension;
 use WeDevelop\ElementalGrid\Models\ElementRow;
 
 class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterface
@@ -24,7 +26,7 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
 
     public const MENU_NAME = 'ElementalGrid';
 
-    private const ELEMENTAL_GRID_PAGE_EXTENSION_CLASS = 'DNADesign\\Elemental\\Extensions\\ElementalPageExtension';
+    private const ELEMENTAL_GRID_PAGE_EXTENSION_CLASS = \DNADesign\Elemental\Extensions\ElementalPageExtension::class;
 
     public function getName(): string
     {
@@ -39,9 +41,9 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
     public function getHTML(): string
     {
         $page = Controller::curr()?->data();
-        $elements = $page?->ElementalArea?->Elements();
 
-        // @TODO: Empty out and move count to a badge
+        $elements = $page?->ElementalArea?->Elements() ?? [];
+
         return count($elements) . ' elements';
     }
 
@@ -57,9 +59,10 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
 
     public function isMenuSupported(): bool
     {
+        /** @var SiteTree $page */
         $page = Controller::curr()->data();
 
-        return (InstalledVersions::isInstalled('dnadesign/silverstripe-elemental') && $page->hasExtension(self::ELEMENTAL_GRID_PAGE_EXTENSION_CLASS));
+        return InstalledVersions::isInstalled('dnadesign/silverstripe-elemental') && $page->hasExtension(self::ELEMENTAL_GRID_PAGE_EXTENSION_CLASS) && $page->UseElementalGrid && $page->ElementalArea()->Elements()->count() > 0;
     }
 
     public function getElementalConfig(): ElementalConfig

@@ -20,7 +20,7 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
 
     public function getTitle(): string
     {
-        return "Unpublish";
+        return _t('Page.UNPUBLISH', 'Unpublish');
     }
 
     public function getLink(): ArrayData
@@ -44,7 +44,7 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
         /** @var SiteTree $page */
         $page = Controller::curr()->data();
 
-        return $page->canUnpublish() and $page->isPublished();
+        return $page->canUnpublish() && $page->isPublished();
     }
 
     public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem

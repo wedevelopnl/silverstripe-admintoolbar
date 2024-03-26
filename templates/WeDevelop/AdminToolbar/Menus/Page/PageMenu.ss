@@ -17,9 +17,11 @@
                 <li class="ss-at-opacity-65 ss-at-relative after:content-[''] after:ss-at-w-0.5 after:ss-at-h-0.5 after:ss-at-absolute after:top-1/2 after:ss-at-bg-black after:ss-at-mx-2 after:ss-at-top-1/2 after:ss-at--translate-y-1/2">
                     <span><%t AdminToolbar.LAST_EDITED_ON 'Last edited on' %> $CurrentPage.LastEdited.Nice</span>
                 </li>
-                <li>
-                    <a href="$AuthorEditLink" target="_blank" class="hover:ss-at-text-black ss-at-text-primary"><%t AdminToolbar.LAST_EDITED_BY 'Last edited by' %> $Author.Name</a>
-                </li>
+                <% if $AuthorEditLink %>
+                    <li>
+                        <a href="$AuthorEditLink" target="_blank" class="hover:ss-at-text-black ss-at-text-primary"><%t AdminToolbar.LAST_EDITED_BY 'Last edited by' %> $AuthorName</a>
+                    </li>
+                <% end_if %>
             </ul>
             <div id="response-message" class="ss-at-hidden">
                 <span class="ss-at-font-medium ss-at-px-2 ss-at-py-1 ss-at-rounded-md ss-at-bg-blue-300 ss-at-text-blue-800 ss-at-text-3.5"></span>

@@ -29,7 +29,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<string>
+     * @var array<class-string>
      */
     private static array $unpublishActions = [
         UnpublishMenuItem::ACTION,
@@ -37,7 +37,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<string>
+     * @var array<class-string>
      */
     private static array $archiveActions = [
         UnpublishAndArchiveMenuItem::ACTION,
@@ -45,7 +45,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<string, string>
+     * @var array<class-string, string>
      */
     private static $successMessages = [
         UnpublishMenuItem::ACTION => 'Page succesfully unpublished',
@@ -77,10 +77,10 @@ class AdminToolbarActionController extends Controller
         $action = $params['action'];
 
         if (!in_array($action, array_merge(self::$unpublishActions, self::$archiveActions))) {
-            return $this->httpError(404, 'ACtion not allowed');
+            return $this->httpError(404, 'This action is not allowed');
         }
 
-        if (!$page->isPublished() and in_array($action, self::$unpublishActions)) {
+        if (!$page->isPublished() && in_array($action, self::$unpublishActions)) {
             $response->setStatusCode(200);
             $response->setBody(json_encode(['message' => 'Page is already unpublished']));
             return $response;

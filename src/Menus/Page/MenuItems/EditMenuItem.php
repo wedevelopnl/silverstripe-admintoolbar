@@ -16,7 +16,7 @@ class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
 {
     public function getTitle(): string
     {
-        return "Edit page";
+        return _t('Page.EDIT', 'Edit page');
     }
 
     public function getLink(): ArrayData

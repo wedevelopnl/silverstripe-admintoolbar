@@ -8,8 +8,12 @@
             <% include WeDevelop\AdminToolbar\Includes\DialogHeader Title='Elemental Grid' %>
             <% loop $Items %>
                 <% if $Element.ClassName.ShortName != 'ElementRow' && $IsFirst %>
-                    <div class="ss-at-grid ss-at-grid-cols-12 ss-at-p-4 ss-at-gap-4 ss-at-rounded-lg ss-at-border">
-                        <div class="ss-at-col-span-{$Element.Size} ss-at-border ss-at-border-primary">$Element.ClassName.ShortName</div>
+                    <div class="ss-at-grid ss-at-grid-cols-12 ss-at-gap-4 ss-at-p-4 ss-at-rounded-lg ss-at-border ss-at-mb-4 hover:ss-at-shadow-md ss-at-transition-all">
+                        <div class="ss-at-col-span-{$Element.Size} ss-at-border ss-at-border-primary">
+                            <div class="ss-at-flex ss-at-items-center">
+                                <% include WeDevelop\AdminToolbar\Includes\GridElement %>
+                            </div>
+                        </div>
                 <% else_if $Element.ClassName.ShortName == 'ElementRow' %>
                     <% if not $IsFirst %></div><% end_if %>
                     <div class="ss-at-grid ss-at-grid-cols-12 ss-at-gap-4 ss-at-p-4 ss-at-rounded-lg ss-at-border ss-at-mb-4 hover:ss-at-shadow-md ss-at-transition-all">

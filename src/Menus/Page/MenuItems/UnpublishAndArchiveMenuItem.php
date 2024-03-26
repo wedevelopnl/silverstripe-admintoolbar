@@ -20,7 +20,7 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
 
     public function getTitle(): string
     {
-        return "Unpublish and archive";
+        return _t('Page.UNPUBLISH_ARCHIVE', 'Unpublish and archive');
     }
 
     public function getLink(): ArrayData
@@ -44,7 +44,7 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
         /** @var SiteTree $page */
         $page = Controller::curr()->data();
 
-        return $page->canUnpublish() and $page->canArchive() and $page->isPublished();;
+        return $page->canUnpublish() && $page->canArchive() && $page->isPublished();;
     }
 
     public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem

@@ -44,7 +44,7 @@ class ArchiveMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuIt
         /** @var SiteTree $page */
         $page = Controller::curr()->data();
 
-        return $page->canArchive() and !$page->isPublished();
+        return $page->canArchive() && !$page->isPublished();
     }
 
     public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem

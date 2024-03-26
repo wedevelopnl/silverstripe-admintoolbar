@@ -64,9 +64,9 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
     {
         $version = $this->getPageVersion();
 
-        $isPublished = $version->isPublished();
-        $isArchived = $version->isArchived();
-        $isDraft = $version->isModifiedOnDraft();
+        $isPublished = $version?->isPublished() ?? false;
+        $isArchived = $version?->isArchived() ?? false;
+        $isDraft = $version?->isModifiedOnDraft() ?? false;
 
         $state = match (true) {
             $isPublished => ['Label' => 'Published', 'Color' => 'green'],
@@ -78,21 +78,26 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         return ArrayData::create($state);
     }
 
-    public function getAuthorEditLink(): string
+    public function getAuthorEditLink(): ?string
     {
-        $author = $this->getPageVersion()->Author();
+        $author = $this->getPageVersion()?->Author();
+
+        if (!$author) {
+            return null;
+        }
 
         return URLTranslator::getUserEditURL($author);
     }
 
-    public function getAuthor(): Member
+    public function getAuthorName(): string
     {
-        return $this->getPageVersion()->Author();
+        return $this->getPageVersion()?->Author()->Name ?? _t('Author.UNKNOWN', 'Unknown author');
     }
 
-    private function getPageVersion(): DataObject
+    private function getPageVersion(): ?DataObject
     {
         $page = Controller::curr()->record;
+
         return Versioned::get_version($page['ClassName'], $page['ID'], $page['Version']);
     }
 
