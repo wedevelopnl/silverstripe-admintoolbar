@@ -1,13 +1,19 @@
-import {themeSafeList} from './client/src/js/tailwind/theme-safelist';
+import themeSafeList from './client/src/js/tailwind/theme-safelist';
 import {themeFontSizes, themeFontFamily} from './client/src/js/tailwind/theme-typography';
 import {themeColors} from './client/src/js/tailwind/theme-colors';
-import {themeDimensions} from "./client/src/js/tailwind/theme-dimensions";
+import {
+  scopedPreflightStyles,
+  isolateInsideOfContainer,
+} from 'tailwindcss-scoped-preflight';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./templates/**/*.{html,js,ss}"],
   prefix: 'ss-at-',
   plugins: [
+    scopedPreflightStyles({
+      isolationStrategy: isolateInsideOfContainer('#admin-toolbar'),
+    }),
     require('@tailwindcss/typography'),
   ],
   corePlugins: {

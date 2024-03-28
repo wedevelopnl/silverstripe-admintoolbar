@@ -1,4 +1,4 @@
-export const themeSafeList = [
+const themeSafeList = [
   'ss-at-text-priamry',
   'hover:ss-at-text-primary',
   'ss-at-col-span-1',
@@ -28,3 +28,7 @@ export const themeSafeList = [
   'hover:ss-at-text-red-700',
   'peer-hover:ss-at-opacity-100',
 ];
+
+export default {
+  themeSafeList,
+};
