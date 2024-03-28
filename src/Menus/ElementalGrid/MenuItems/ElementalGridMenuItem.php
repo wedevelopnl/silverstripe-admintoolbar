@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Menus\ElementalGrid\MenuItems;
 
 use DNADesign\Elemental\Models\BaseElement;
-use DNADesign\Elemental\Models\ElementContent;
 use SilverStripe\ORM\FieldType\DBHTMLText;
-use WeDevelop\AdminToolbar\Menus\CMSMenu\CMSMenu;
 use WeDevelop\AdminToolbar\Menus\ElementalGrid\ElementalGridMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 

@@ -8,7 +8,6 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
-use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\Versioned\Versioned;
 use WeDevelop\AdminToolbar\Menus\Page\MenuItems\ArchiveMenuItem;
@@ -76,21 +75,21 @@ class AdminToolbarActionController extends Controller
         $response = new HTTPResponse();
         $action = $params['action'];
 
-        if (!in_array($action, array_merge(self::$unpublishActions, self::$archiveActions))) {
+        if (!in_array($action, array_merge(self::$unpublishActions, self::$archiveActions), true)) {
             return $this->httpError(404, 'This action is not allowed');
         }
 
-        if (!$page->isPublished() && in_array($action, self::$unpublishActions)) {
+        if (!$page->isPublished() && in_array($action, self::$unpublishActions, true)) {
             $response->setStatusCode(200);
             $response->setBody(json_encode(['message' => 'Page is already unpublished']));
             return $response;
         }
 
-        if (in_array($action, self::$unpublishActions)) {
+        if (in_array($action, self::$unpublishActions, true)) {
             $page->doUnpublish();
         }
 
-        if (in_array($action, self::$archiveActions)) {
+        if (in_array($action, self::$archiveActions, true)) {
             $page->doArchive();
         }
 

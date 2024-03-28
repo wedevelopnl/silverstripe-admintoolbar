@@ -6,7 +6,6 @@ namespace WeDevelop\AdminToolbar\Menus\User\MenuItems;
 
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Member;
-use SilverStripe\Security\Security;
 use WeDevelop\AdminToolbar\Menus\User\UserMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\CMSMenu\MenuItems;
 
-use DNADesign\Elemental\Models\BaseElement;
 use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\RedirectedURLs\Support\Arr;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\CMSMenu\CMSMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
