@@ -28,7 +28,7 @@ final class URLTranslator
     public static function getPageEditURL(SiteTree|int $siteTree): string
     {
         if (is_int($siteTree)) {
-            $siteTree = Versioned::get_by_stage(SiteTree::class, 'Stage')->byID($pageId);
+            $siteTree = Versioned::get_by_stage(SiteTree::class, 'Stage')->byID($siteTree);
         }
 
         if (!$siteTree instanceof SiteTree) {
