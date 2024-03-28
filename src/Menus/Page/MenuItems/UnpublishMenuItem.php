@@ -6,13 +6,11 @@ namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\Security\Security;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 use SilverStripe\Control\Controller;
-use WeDevelop\AdminToolbar\URLTranslator;
 
 class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {

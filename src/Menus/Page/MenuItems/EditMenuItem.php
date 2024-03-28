@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
-use SilverStripe\Security\Security;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
@@ -23,7 +22,7 @@ class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
     {
         return ArrayData::create([
             'LinkURL' => URLTranslator::getPageEditURL(Controller::curr()->data()),
-            'ExtraClasses' => 'ss-at-text-primary hover:ss-at-text-primary'
+            'ExtraClasses' => 'ss-at-text-primary hover:ss-at-text-primary',
         ]);
     }
 

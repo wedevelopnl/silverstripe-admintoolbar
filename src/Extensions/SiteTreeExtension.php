@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeDevelop\AdminToolbar\Extensions;
 
 use SilverStripe\Control\Controller;
@@ -24,14 +26,14 @@ class SiteTreeExtension extends DataExtension
             return null;
         }
 
-        if (!Permission::check('ADMIN_TOOLBAR')){
+        if (!Permission::check('ADMIN_TOOLBAR')) {
             return null;
         }
 
         /** @var Member|MemberExtension $currentUser */
         $currentUser = Security::getCurrentUser();
 
-        if (!$currentUser->showAdminToolbar()){
+        if (!$currentUser->showAdminToolbar()) {
             return null;
         }
 

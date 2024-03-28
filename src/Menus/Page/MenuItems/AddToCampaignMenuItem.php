@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
-use SilverStripe\Security\Security;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
-use SilverStripe\Control\Controller;
-use WeDevelop\AdminToolbar\URLTranslator;
 
 class AddToCampaignMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
@@ -23,7 +20,7 @@ class AddToCampaignMenuItem extends AdminToolbarMenuItem implements AdminToolbar
     {
         return ArrayData::create([
             'LinkURL' => '#',
-            'ExtraClasses' => 'ss-at-text-primary hover:ss-at-text-primary'
+            'ExtraClasses' => 'ss-at-text-primary hover:ss-at-text-primary',
         ]);
     }
 

@@ -25,8 +25,7 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
         $items = [];
         $menuName = $this->getName();
 
-        foreach(ClassInfo::implementorsOf(AdminToolbarMenuItemProviderInterface::class) as $itemClass)
-        {
+        foreach(ClassInfo::implementorsOf(AdminToolbarMenuItemProviderInterface::class) as $itemClass) {
             /** @var AdminToolbarMenuItemProviderInterface $inst */
             $inst = $itemClass::create();
 
@@ -40,7 +39,7 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
             }
         }
 
-        usort($items, static function(
+        usort($items, static function (
             AdminToolbarMenuItemProviderInterface $itemA,
             AdminToolbarMenuItemProviderInterface $itemB,
         ) {

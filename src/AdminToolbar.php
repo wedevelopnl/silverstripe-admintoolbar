@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace WeDevelop\AdminToolbar;
 
 use SilverStripe\Admin\LeftAndMain;
@@ -13,14 +15,12 @@ use SilverStripe\Security\Security;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\ViewableData;
-use WeDevelop\AdminToolbar\Menus\Page\MenuItems\EditMenuItem;
 use WeDevelop\AdminToolbar\Menus\User\UserMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarButtonInterface;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuInterface;
 use WeDevelop\AdminToolbar\Models\AdminToolbarToggleInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarButtonProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
-use WeDevelop\AdminToolbar\Providers\AdminToolbarProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarJavascriptProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarToggleProviderInterface;
@@ -48,7 +48,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             'ShowCacheButton' => !isset($toolbarConfig['hide_cache_button']) || !$toolbarConfig['hide_cache_button'],
             'ShowStageButton' => !isset($toolbarConfig['hide_stage_button']) || !$toolbarConfig['hide_stage_button'],
             'ShowEditButton' => Controller::curr()->canEdit() && (!isset($toolbarConfig['hide_edit_button']) || !$toolbarConfig['hide_edit_button']),
-            'StartCollapsed' => $member && $member->AdminToolbarDefaultCollapsed && $member->AdminToolbarDefaultCollapsed != '0',
+            'StartCollapsed' => $member && $member->AdminToolbarDefaultCollapsed && $member->AdminToolbarDefaultCollapsed !== '0',
         ])->renderWith(self::class);
     }
 
@@ -63,14 +63,14 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             if ($inst->isMenuSupported()) {
                 $menu = $inst->provideAdminToolbarMenu();
 
-                if (!in_array($menu->getName(), self::config()->get('disabled_menus') ?? [])) {
+                if (!in_array($menu->getName(), self::config()->get('disabled_menus') ?? [], true)) {
                     $this->provideJSandCSS($menu);
                     $menus[] = $menu;
                 }
             }
         }
 
-        usort($menus, static function(
+        usort($menus, static function (
             AdminToolbarMenuInterface $menuA,
             AdminToolbarMenuInterface $menuB,
         ) {
@@ -96,14 +96,14 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             if ($inst->isToggleSupported()) {
                 $toggle = $inst->provideAdminToolbarToggle();
 
-                if (!in_array($toggle->getName(), self::config()->get('disabled_toggles') ?? [])) {
+                if (!in_array($toggle->getName(), self::config()->get('disabled_toggles') ?? [], true)) {
                     $this->provideJSandCSS($toggle);
                     $toggles[] = $toggle;
                 }
             }
         }
 
-        usort($toggles, static function(
+        usort($toggles, static function (
             AdminToolbarToggleInterface $toggleA,
             AdminToolbarToggleInterface $toggleB,
         ) {
@@ -124,14 +124,14 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             if ($inst->isButtonSupported()) {
                 $button = $inst->provideAdminToolbarButton();
 
-                if (!in_array($button->getName(), self::config()->get('disabled_buttons') ?? [])) {
+                if (!in_array($button->getName(), self::config()->get('disabled_buttons') ?? [], true)) {
                     $this->provideJSandCSS($button);
                     $buttons[] = $button;
                 }
             }
         }
 
-        usort($buttons, static function(
+        usort($buttons, static function (
             AdminToolbarButtonInterface $buttonA,
             AdminToolbarButtonInterface $buttonB,
         ) {
@@ -148,13 +148,13 @@ class AdminToolbar extends ViewableData implements PermissionProvider
 
     public function getCMSVersion(): string
     {
-       return LeftAndMain::create()->CMSVersionNumber();
+        return LeftAndMain::create()->CMSVersionNumber();
     }
 
     public function providePermissions(): array
     {
         return [
-            'ADMIN_TOOLBAR' => _t('AdminToolbar.USE_THE_ADMIN_TOOLBAR', 'Use the admin toolbar')
+            'ADMIN_TOOLBAR' => _t('AdminToolbar.USE_THE_ADMIN_TOOLBAR', 'Use the admin toolbar'),
         ];
     }
 
