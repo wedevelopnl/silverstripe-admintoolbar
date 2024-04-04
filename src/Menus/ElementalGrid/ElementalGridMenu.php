@@ -62,7 +62,7 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
             ||
             (
                 InstalledVersions::isInstalled('dnadesign/silverstripe-elemental')
-                && $page->hasExtension(\WeDevelop\ElementalGrid\Extensions\ElementalPageExtension::class)
+                && $page->hasExtension(\DNADesign\Elemental\Extensions\ElementalPageExtension::class)
             )
         ) {
             return $page->ElementalArea()?->Elements()?->count() > 0 ?? false;
