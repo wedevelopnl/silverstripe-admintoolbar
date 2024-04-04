@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Menus\ElementalGrid;
 
 use Composer\InstalledVersions;
+use DNADesign\Elemental\Extensions\ElementalPageExtension as DNADesignElementalPageExtension;
 use DNADesign\Elemental\Models\BaseElement;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
@@ -14,14 +15,13 @@ use WeDevelop\AdminToolbar\Menus\ElementalGrid\MenuItems\ElementalGridMenuItem;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 use WeDevelop\ElementalGrid\ElementalConfig;
+use WeDevelop\ElementalGrid\Extensions\ElementalPageExtension as WeDevelopElementalPageExtension;
 
 class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterface
 {
     private int $order = 2;
 
     public const MENU_NAME = 'ElementalGrid';
-
-    private const ELEMENTAL_GRID_PAGE_EXTENSION_CLASS = \DNADesign\Elemental\Extensions\ElementalPageExtension::class;
 
     public function getName(): string
     {
@@ -57,7 +57,22 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
         /** @var SiteTree $page */
         $page = Controller::curr()->data();
 
-        return InstalledVersions::isInstalled('dnadesign/silverstripe-elemental') && $page->hasExtension(self::ELEMENTAL_GRID_PAGE_EXTENSION_CLASS) && $page->UseElementalGrid && $page->ElementalArea()->Elements()->count() > 0;
+        if (
+            (
+                InstalledVersions::isInstalled('wedevelopnl/silverstripe-elemental-grid')
+                && $page->hasExtension(WeDevelopElementalPageExtension::class)
+                && $page->UseElementalGrid
+            )
+            ||
+            (
+                InstalledVersions::isInstalled('dnadesign/silverstripe-elemental')
+                && $page->hasExtension(DNADesignElementalPageExtension::class)
+            )
+        ) {
+            return $page->ElementalArea()?->Elements()?->count() > 0 ?? false;
+        }
+
+        return false;
     }
 
     public function getElementalConfig(): ElementalConfig
