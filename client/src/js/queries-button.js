@@ -1,55 +1,56 @@
 const configKey = '[data-queries-toggle]';
-const button = document.querySelector('[data-queries-button]');
-
 const isToggled = localStorage.getItem(configKey) === 'true';
-
-if (isToggled) {
-  button.classList.remove('ss-at-hidden');
-}
-
+const button = document.querySelector('[data-queries-button]');
 const queriesURL = new URL(window.location.href);
 const dialog = document.createElement('dialog');
 
-dialog.classList.add('admin-toolbar-queries-button');
+(() => {
+  if (!isToggled) {
+    return;
+  }
 
-queriesURL.searchParams.set('AdminToolbarDisabled', '1');
-queriesURL.searchParams.set('showqueries', 'inline');
+  button.classList.remove('ss-at-hidden');
+  dialog.classList.add('admin-toolbar-queries-button');
 
-function parseResponse(text) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, 'text/html');
-  const timeRegex = /(\d+\.\d+)s/;
-  const timings = [];
-  const queries = [];
+  queriesURL.searchParams.set('AdminToolbarDisabled', '1');
+  queriesURL.searchParams.set('showqueries', 'inline');
 
-  doc.querySelectorAll('p.alert.alert-warning').forEach((el) => {
-    const matches = timeRegex.exec(el.innerHTML);
-    queries.push(el.innerHTML);
-    timings.push(parseFloat(matches[1], 10));
-  });
+  function parseResponse(text) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    const timeRegex = /(\d+\.\d+)s/;
+    const timings = [];
+    const queries = [];
 
-  const queryTimeMS = timings.length
-    ? (timings.reduce((prev, cur) => prev + cur, 0) * 1000).toFixed(0)
-    : 0;
+    doc.querySelectorAll('p.alert.alert-warning').forEach((el) => {
+      const matches = timeRegex.exec(el.innerHTML);
+      queries.push(el.innerHTML);
+      timings.push(parseFloat(matches[1], 10));
+    });
 
-  button.innerHTML = `${queryTimeMS}ms (${timings.length} queries)`;
-  dialog.innerHTML = `<ul>${queries.reduce((acc, item) => `${acc}<li><code>${item}</code></li>`, '')}</ul>`;
+    const queryTimeMS = timings.length
+      ? (timings.reduce((prev, cur) => prev + cur, 0) * 1000).toFixed(0)
+      : 0;
 
-  button.addEventListener('click', () => {
-    dialog.showModal();
-  });
+    button.innerHTML = `${queryTimeMS}ms (${timings.length} queries)`;
+    dialog.innerHTML = `<ul>${queries.reduce((acc, item) => `${acc}<li><code>${item}</code></li>`, '')}</ul>`;
 
-  dialog.addEventListener('click', (e) => {
-    const rect = dialog.getBoundingClientRect();
+    button.addEventListener('click', () => {
+      dialog.showModal();
+    });
 
-    if ((e.clientY < rect.top || e.clientY > rect.bottom) || (e.clientX < rect.left || e.clientX > rect.right)) {
-      dialog.close();
-    }
-  });
+    dialog.addEventListener('click', (e) => {
+      const rect = dialog.getBoundingClientRect();
 
-  document.body.appendChild(dialog);
-}
+      if ((e.clientY < rect.top || e.clientY > rect.bottom) || (e.clientX < rect.left || e.clientX > rect.right)) {
+        dialog.close();
+      }
+    });
 
-fetch(queriesURL.toString())
-  .then((res) => res.text())
-  .then(parseResponse);
+    document.body.appendChild(dialog);
+  }
+
+  fetch(queriesURL.toString())
+    .then((res) => res.text())
+    .then(parseResponse);
+})();
