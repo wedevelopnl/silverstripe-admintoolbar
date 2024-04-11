@@ -78,6 +78,9 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         ])->renderWith(self::class);
     }
 
+    /**
+     * @return array<AdminToolbarMenuInterface>
+     */
     public function getMenus(): array
     {
         $menus = [];
@@ -106,6 +109,9 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         return UserMenu::singleton();
     }
 
+    /**
+     * @return array<AdminToolbarToggleInterface>
+     */
     public function getToggles(): array
     {
         $toggles = [];
@@ -129,6 +135,9 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         return $toggles;
     }
 
+    /**
+     * @return array<AdminToolbarButtonInterface>
+     */
     public function getButtons(): array
     {
         $buttons = [];
@@ -162,6 +171,9 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         return LeftAndMain::create()->CMSVersionNumber();
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function providePermissions(): array
     {
         return [
