@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar;
 
 use SilverStripe\Admin\LeftAndMain;
+use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
@@ -58,6 +59,10 @@ class AdminToolbar extends ViewableData implements PermissionProvider
 
         $toolbarConfig = Config::inst()->get(self::class);
         $member = Security::getCurrentUser();
+        $page = null;
+        if (Controller::has_curr() && ($controller = Controller::curr()) instanceof ContentController) {
+            $page = $controller->data();
+        }
 
         return $this->customise([
             'Menus' => ArrayList::create($this->getMenus()),
@@ -68,11 +73,14 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             'ReadingMode' => Versioned::get_reading_mode(),
             'ShowCacheButton' => !isset($toolbarConfig['hide_cache_button']) || !$toolbarConfig['hide_cache_button'],
             'ShowStageButton' => !isset($toolbarConfig['hide_stage_button']) || !$toolbarConfig['hide_stage_button'],
-            'ShowEditButton' => Controller::curr()->canEdit() && (!isset($toolbarConfig['hide_edit_button']) || !$toolbarConfig['hide_edit_button']),
+            'ShowEditButton' => $page?->canEdit() && (!isset($toolbarConfig['hide_edit_button']) || !$toolbarConfig['hide_edit_button']),
             'StartCollapsed' => $member && $member->AdminToolbarDefaultCollapsed && $member->AdminToolbarDefaultCollapsed !== '0',
         ])->renderWith(self::class);
     }
 
+    /**
+     * @return array<AdminToolbarMenuInterface>
+     */
     public function getMenus(): array
     {
         $menus = [];
@@ -91,12 +99,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($menus, static function (
-            AdminToolbarMenuInterface $menuA,
-            AdminToolbarMenuInterface $menuB,
-        ) {
-            return $menuA->getOrder() <=> $menuB->getOrder();
-        });
+        usort($menus, static fn (AdminToolbarMenuInterface $menuA, AdminToolbarMenuInterface $menuB) => $menuA->getOrder() <=> $menuB->getOrder());
 
         return $menus;
     }
@@ -106,6 +109,9 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         return UserMenu::singleton();
     }
 
+    /**
+     * @return array<AdminToolbarToggleInterface>
+     */
     public function getToggles(): array
     {
         $toggles = [];
@@ -124,16 +130,14 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($toggles, static function (
-            AdminToolbarToggleInterface $toggleA,
-            AdminToolbarToggleInterface $toggleB,
-        ) {
-            return $toggleA->getOrder() <=> $toggleB->getOrder();
-        });
+        usort($toggles, static fn (AdminToolbarToggleInterface $toggleA, AdminToolbarToggleInterface $toggleB) => $toggleA->getOrder() <=> $toggleB->getOrder());
 
         return $toggles;
     }
 
+    /**
+     * @return array<AdminToolbarButtonInterface>
+     */
     public function getButtons(): array
     {
         $buttons = [];
@@ -152,12 +156,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($buttons, static function (
-            AdminToolbarButtonInterface $buttonA,
-            AdminToolbarButtonInterface $buttonB,
-        ) {
-            return $buttonA->getOrder() <=> $buttonB->getOrder();
-        });
+        usort($buttons, static fn (AdminToolbarButtonInterface $buttonA, AdminToolbarButtonInterface $buttonB) => $buttonA->getOrder() <=> $buttonB->getOrder());
 
         return $buttons;
     }
@@ -172,6 +171,9 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         return LeftAndMain::create()->CMSVersionNumber();
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function providePermissions(): array
     {
         return [

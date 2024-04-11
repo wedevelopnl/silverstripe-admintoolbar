@@ -33,7 +33,7 @@ class CMSMenuItem extends AdminToolbarMenuItem
         return 0;
     }
 
-    public function setMenuItem($menuItem): self
+    public function setMenuItem(ArrayData $menuItem): self
     {
         $this->menuItem = $menuItem;
 

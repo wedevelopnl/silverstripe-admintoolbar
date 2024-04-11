@@ -7,9 +7,10 @@ namespace WeDevelop\AdminToolbar\Menus\CMSMenu;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\View\ArrayData;
+use WeDevelop\AdminToolbar\Menus\CMSMenu\MenuItems\CMSMenuItem;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
-use WeDevelop\AdminToolbar\Menus\CMSMenu\MenuItems\CMSMenuItem;
 
 class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterface
 {
@@ -49,11 +50,11 @@ class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterf
 
     public function getItems(): ArrayList
     {
+        /** @var ArrayList<ArrayData> $menus */
         $menus = LeftAndMain::create()->MainMenu();
 
         $menuItems = [];
 
-        /** @var ArrayList $menu */
         foreach ($menus as $menu) {
             $item = CMSMenuItem::create();
             $item->setMenuItem($menu);

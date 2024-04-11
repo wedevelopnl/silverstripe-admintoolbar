@@ -6,5 +6,8 @@ namespace WeDevelop\AdminToolbar\Providers;
 
 interface AdminToolbarStylesheetProviderInterface
 {
+    /**
+     * @return array<string>
+     */
     public function provideStylesheets(): array;
 }

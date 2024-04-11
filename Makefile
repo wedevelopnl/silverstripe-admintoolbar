@@ -29,6 +29,13 @@ sh: ##@develop Open shell in container
 
 test: ##@develop Run code tests
 	${docker} ./vendor/bin/php-cs-fixer fix --diff --dry-run
+	${docker} ./vendor/bin/phpstan analyse
 
 fix-cs: ##@develop Fix code styling
 	${docker} ./vendor/bin/php-cs-fixer fix
+
+rector: ##@develop Run rector
+	${docker} ./vendor/bin/rector process
+
+rector-diff: ##@develop Run rector dry mode
+	${docker} ./vendor/bin/rector process --dry-run

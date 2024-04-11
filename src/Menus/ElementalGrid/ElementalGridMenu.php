@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Menus\ElementalGrid;
 
 use Composer\InstalledVersions;
-use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
@@ -31,9 +31,13 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
 
     public function getHTML(): string
     {
-        $page = Controller::curr()?->data();
+        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+            return '';
+        }
 
-        $elements = $page?->ElementalArea?->Elements() ?? [];
+        $page = $controller->data();
+
+        $elements = $page->ElementalArea?->Elements() ?? [];
 
         return count($elements) . ' elements';
     }
@@ -50,8 +54,11 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
 
     public function isMenuSupported(): bool
     {
-        /** @var SiteTree $page */
-        $page = Controller::curr()->data();
+        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+            return false;
+        }
+
+        $page = $controller->data();
 
         if (
             (
@@ -65,7 +72,7 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
                 && $page->hasExtension(\DNADesign\Elemental\Extensions\ElementalPageExtension::class)
             )
         ) {
-            return $page->ElementalArea()?->Elements()?->count() > 0 ?? false;
+            return $page->ElementalArea()->Elements()->count() > 0;
         }
 
         return false;
@@ -78,18 +85,22 @@ class ElementalGridMenu extends AdminToolbarMenu implements AdminToolbarMenuProv
 
     public function getItems(): ArrayList
     {
-        $page = Controller::curr()?->data();
+        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+            return ArrayList::create();
+        }
+
+        $page = $controller->data();
 
         $menuItems = [];
 
-        $elements = $page?->ElementalArea?->Elements();
+        $elements = $page->ElementalArea()->Elements() ?? [];
 
         /** @var \DNADesign\Elemental\Models\BaseElement $element */
         foreach ($elements as $element) {
             $item = ElementalGridMenuItem::create();
 
             $sizeKey = sprintf('Size%s', \WeDevelop\ElementalGrid\ElementalConfig::getDefaultViewport());
-            $element->Title = $element->getTitle() ?? 'Untitled ' . $element->i18n_singular_name();
+            $element->Title = $element->getTitle();
             $element->Size = $element->$sizeKey ?: 12;
             $item->setElement($element);
 

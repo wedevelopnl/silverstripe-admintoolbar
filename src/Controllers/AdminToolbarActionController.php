@@ -28,7 +28,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<class-string>
+     * @var array<string>
      */
     private static array $unpublishActions = [
         UnpublishMenuItem::ACTION,
@@ -36,7 +36,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<class-string>
+     * @var array<string>
      */
     private static array $archiveActions = [
         UnpublishAndArchiveMenuItem::ACTION,
@@ -44,7 +44,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<class-string, string>
+     * @var array<string, string>
      */
     private static $successMessages = [
         UnpublishMenuItem::ACTION => 'Page succesfully unpublished',
@@ -58,21 +58,20 @@ class AdminToolbarActionController extends Controller
             return $this->httpError(400, 'CSRF token mismatch');
         }
 
-        $params = json_decode($request->getBody(), true);
+        $params = json_decode((string)$request->getBody(), true);
         $pageId = $params['page_id'] ?? null;
 
         if (!$pageId) {
             return $this->httpError(400, 'No page ID provided');
         }
 
-        /** @var SiteTree $page */
         $page = Versioned::get_by_stage(SiteTree::class, 'Stage')->byID($pageId);
 
-        if (!$page) {
+        if (!$page instanceof SiteTree) {
             return $this->httpError(404, 'Page not found');
         }
 
-        $response = new HTTPResponse();
+        $response = HTTPResponse::create();
         $action = $params['action'];
 
         if (!in_array($action, array_merge(self::$unpublishActions, self::$archiveActions), true)) {
@@ -81,7 +80,7 @@ class AdminToolbarActionController extends Controller
 
         if (!$page->isPublished() && in_array($action, self::$unpublishActions, true)) {
             $response->setStatusCode(200);
-            $response->setBody(json_encode(['message' => 'Page is already unpublished']));
+            $response->setBody(json_encode(['message' => 'Page is already unpublished']) ?: '');
             return $response;
         }
 
@@ -94,7 +93,7 @@ class AdminToolbarActionController extends Controller
         }
 
         $response->setStatusCode(200);
-        $response->setBody(json_encode(['message' => self::$successMessages[$action]]));
+        $response->setBody(json_encode(['message' => self::$successMessages[$action]]) ?: '');
 
         return $response;
     }

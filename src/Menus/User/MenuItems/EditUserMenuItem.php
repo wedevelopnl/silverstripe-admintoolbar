@@ -21,9 +21,8 @@ class EditUserMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuI
     public function getEditLink(): string
     {
         $member = UserMenu::getCurrentMember();
-        $url = URLTranslator::getUserEditURL($member);
 
-        return $url;
+        return URLTranslator::getUserEditURL($member);
     }
 
     public function isMenuItemSupported(): bool

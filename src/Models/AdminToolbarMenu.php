@@ -34,7 +34,7 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
 
             if (
                 !$inst->isMenuItemSupported()
-                || in_array($inst->provideAdminToolbarMenuItem->getName(), Config::forClass(AdminToolbar::class)->get('disabled_menu_items') ?? [], true)
+                || in_array($inst->provideAdminToolbarMenuItem()->getName(), Config::forClass(AdminToolbar::class)->get('disabled_menu_items') ?? [], true)
             ) {
                 continue;
             }
@@ -45,12 +45,7 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
             }
         }
 
-        usort($items, static function (
-            AdminToolbarMenuItemProviderInterface $itemA,
-            AdminToolbarMenuItemProviderInterface $itemB,
-        ) {
-            return $itemA->getOrder() <=> $itemB->getOrder();
-        });
+        usort($items, static fn (AdminToolbarMenuItemProviderInterface $itemA, AdminToolbarMenuItemProviderInterface $itemB) => $itemA->provideAdminToolbarMenuItem()->getOrder() <=> $itemB->provideAdminToolbarMenuItem()->getOrder());
 
         return ArrayList::create($items);
     }

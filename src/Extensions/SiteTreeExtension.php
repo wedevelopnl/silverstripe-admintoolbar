@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Extensions;
 
 use SilverStripe\Control\Controller;
+use SilverStripe\Control\NullHTTPRequest;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Member;
@@ -16,17 +17,18 @@ class SiteTreeExtension extends DataExtension
 {
     public function AdminToolbar(): ?DBHTMLText
     {
-        $request = Controller::curr()?->getRequest();
-
-        if ($request && $request->getVar('CMSPreview') === '1') {
+        if (
+            !Controller::has_curr()
+            || ($request = Controller::curr()->getRequest()) instanceof NullHTTPRequest
+        ) {
             return null;
         }
 
-        if ($request && $request->getVar('AdminToolbarDisabled') === '1') {
-            return null;
-        }
-
-        if (!Permission::check('ADMIN_TOOLBAR')) {
+        if (
+            $request->getVar('CMSPreview') === '1'
+            || $request->getVar('AdminToolbarDisabled') === '1'
+            || !Permission::check('ADMIN_TOOLBAR')
+        ) {
             return null;
         }
 

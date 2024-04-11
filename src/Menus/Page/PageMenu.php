@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page;
 
+use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\MenuItems\EditMenuItem;
-use WeDevelop\AdminToolbar\Menus\Page\MenuItems\LastEditedByMenuItem;
-use WeDevelop\AdminToolbar\Menus\Page\MenuItems\LastEditedMenuItem;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 use WeDevelop\AdminToolbar\URLTranslator;
@@ -92,24 +89,19 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         return $this->getPageVersion()?->Author()->Name ?? _t('Author.UNKNOWN', 'Unknown author');
     }
 
-    private function getPageVersion(): ?DataObject
+    private function getPageVersion(): ?\Page
     {
-        $page = Controller::curr()->record;
-
-        return Versioned::get_version($page['ClassName'], $page['ID'], $page['Version']);
-    }
-
-    public function getEditInfoItems(): ArrayList
-    {
-        $items = [];
-
-        foreach ($this->getItems() as $item) {
-            if ($item instanceof LastEditedByMenuItem || $item instanceof LastEditedMenuItem) {
-                $items[] = $item;
-            }
+        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+            return null;
         }
 
-        return ArrayList::create($items);
+        if (!isset($controller->ClassName, $controller->ID, $controller->Version)) {
+            return null;
+        }
+
+        /** @var \Page|null $versioned */
+        $versioned = Versioned::get_version($controller->ClassName, $controller->ID, $controller->Version);
+        return $versioned;
     }
 
     public function getEditMenuItem(): EditMenuItem

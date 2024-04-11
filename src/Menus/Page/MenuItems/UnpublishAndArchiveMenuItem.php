@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
-use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\ArrayData;
@@ -28,7 +28,11 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
 
     public function getLink(): ArrayData
     {
-        $page = Controller::curr()->data();
+        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+            return ArrayData::create();
+        }
+
+        $page = $controller->data();
 
         return ArrayData::create([
             'PageId' => $page->ID,
@@ -44,8 +48,11 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
 
     public function isMenuItemSupported(): bool
     {
-        /** @var SiteTree $page */
-        $page = Controller::curr()->data();
+        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+            return false;
+        }
+
+        $page = $controller->data();
 
         return $page->canUnpublish() && $page->canArchive() && $page->isPublished();
     }
