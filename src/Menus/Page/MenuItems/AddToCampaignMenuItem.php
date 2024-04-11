@@ -11,6 +11,11 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 
 class AddToCampaignMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
+    public function getName(): string
+    {
+        return 'AddToCampaign';
+    }
+
     public function getTitle(): string
     {
         return "Add to campaign";

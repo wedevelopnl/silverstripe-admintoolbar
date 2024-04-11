@@ -12,6 +12,7 @@ abstract class AdminToolbarButton extends ViewableData implements AdminToolbarBu
 {
     use Configurable;
 
+    /** @config */
     private static int $order = 10;
 
     public function getExtraClasses(): string

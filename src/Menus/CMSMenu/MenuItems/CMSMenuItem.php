@@ -13,6 +13,11 @@ class CMSMenuItem extends AdminToolbarMenuItem
 {
     private ArrayData $menuItem;
 
+    public function getName(): string
+    {
+        return 'CMSMenuItem';
+    }
+
     public function isMenuItemSupported(): bool
     {
         return true;

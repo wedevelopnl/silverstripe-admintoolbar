@@ -20,15 +20,36 @@ use WeDevelop\AdminToolbar\Models\AdminToolbarButtonInterface;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuInterface;
 use WeDevelop\AdminToolbar\Models\AdminToolbarToggleInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarButtonProviderInterface;
-use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarJavascriptProviderInterface;
+use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarToggleProviderInterface;
 
 class AdminToolbar extends ViewableData implements PermissionProvider
 {
-    /** @config */
+    /**
+     * @config
+     * @var array<string>
+     */
     private static array $disabled_menus = [];
+
+    /**
+     * @config
+     * @var array<string>
+     */
+    private static array $disabled_menu_items = [];
+
+    /**
+     * @config
+     * @var array<string>
+     */
+    private static array $disabled_buttons = [];
+
+    /**
+     * @config
+     * @var array<string>
+     */
+    private static array $disabled_toggles = [];
 
     public function render(): DBHTMLText
     {

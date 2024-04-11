@@ -10,8 +10,16 @@ use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
 
+/**
+ * @property bool $DisableAdminToolbar
+ * @property bool $AdminToolbarDefaultCollapsed
+ */
 class MemberExtension extends DataExtension
 {
+    /**
+     * @config
+     * @var array<string, string>
+     */
     private static array $db = [
         'DisableAdminToolbar' => 'Boolean',
         'AdminToolbarDefaultCollapsed' => 'Boolean',
