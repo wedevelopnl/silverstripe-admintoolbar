@@ -20,10 +20,12 @@
         "silverstripe/cms": "^5.0@stable"
     },
     "require-dev": {
+        "dnadesign/silverstripe-elemental": "^5",
         "friendsofphp/php-cs-fixer": "^3.20",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/extension-installer": "^1.0",
         "syntro/silverstripe-phpstan": "^5.0",
+        "wedevelopnl/silverstripe-elemental-grid": "^5",
         "wernerkrauss/silverstripe-rector": "dev-main"
     },
     "extra": {

@@ -28,7 +28,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<class-string>
+     * @var array<string>
      */
     private static array $unpublishActions = [
         UnpublishMenuItem::ACTION,
@@ -36,7 +36,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<class-string>
+     * @var array<string>
      */
     private static array $archiveActions = [
         UnpublishAndArchiveMenuItem::ACTION,
@@ -44,7 +44,7 @@ class AdminToolbarActionController extends Controller
     ];
 
     /**
-     * @var array<class-string, string>
+     * @var array<string, string>
      */
     private static $successMessages = [
         UnpublishMenuItem::ACTION => 'Page succesfully unpublished',
@@ -65,14 +65,13 @@ class AdminToolbarActionController extends Controller
             return $this->httpError(400, 'No page ID provided');
         }
 
-        /** @var SiteTree $page */
         $page = Versioned::get_by_stage(SiteTree::class, 'Stage')->byID($pageId);
 
-        if (!$page) {
+        if (!$page instanceof SiteTree) {
             return $this->httpError(404, 'Page not found');
         }
 
-        $response = \SilverStripe\Control\HTTPResponse::create();
+        $response = HTTPResponse::create();
         $action = $params['action'];
 
         if (!in_array($action, array_merge(self::$unpublishActions, self::$archiveActions), true)) {
