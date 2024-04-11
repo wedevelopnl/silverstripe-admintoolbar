@@ -22,7 +22,7 @@ final class URLTranslator
 
     public static function getUserEditURL(Member $member): string
     {
-        return self::getAdminURL() . "/security/users/EditForm/field/users/item/{$member->ID}/edit";
+        return self::getAdminURL() . sprintf('/security/users/EditForm/field/users/item/%d/edit', $member->ID);
     }
 
     public static function getPageEditURL(SiteTree|int $siteTree): string

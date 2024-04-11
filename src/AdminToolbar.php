@@ -91,12 +91,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($menus, static function (
-            AdminToolbarMenuInterface $menuA,
-            AdminToolbarMenuInterface $menuB,
-        ) {
-            return $menuA->getOrder() <=> $menuB->getOrder();
-        });
+        usort($menus, static fn (AdminToolbarMenuInterface $menuA, AdminToolbarMenuInterface $menuB) => $menuA->getOrder() <=> $menuB->getOrder());
 
         return $menus;
     }
@@ -124,12 +119,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($toggles, static function (
-            AdminToolbarToggleInterface $toggleA,
-            AdminToolbarToggleInterface $toggleB,
-        ) {
-            return $toggleA->getOrder() <=> $toggleB->getOrder();
-        });
+        usort($toggles, static fn (AdminToolbarToggleInterface $toggleA, AdminToolbarToggleInterface $toggleB) => $toggleA->getOrder() <=> $toggleB->getOrder());
 
         return $toggles;
     }
@@ -152,12 +142,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($buttons, static function (
-            AdminToolbarButtonInterface $buttonA,
-            AdminToolbarButtonInterface $buttonB,
-        ) {
-            return $buttonA->getOrder() <=> $buttonB->getOrder();
-        });
+        usort($buttons, static fn (AdminToolbarButtonInterface $buttonA, AdminToolbarButtonInterface $buttonB) => $buttonA->getOrder() <=> $buttonB->getOrder());
 
         return $buttons;
     }

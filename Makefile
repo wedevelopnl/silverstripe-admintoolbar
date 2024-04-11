@@ -32,3 +32,9 @@ test: ##@develop Run code tests
 
 fix-cs: ##@develop Fix code styling
 	${docker} ./vendor/bin/php-cs-fixer fix
+
+rector: ##@develop Run rector
+	${docker} ./vendor/bin/rector process
+
+rector-diff: ##@develop Run rector dry mode
+	${docker} ./vendor/bin/rector process --dry-run

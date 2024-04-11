@@ -58,7 +58,7 @@ class AdminToolbarActionController extends Controller
             return $this->httpError(400, 'CSRF token mismatch');
         }
 
-        $params = json_decode($request->getBody(), true);
+        $params = json_decode((string)$request->getBody(), true);
         $pageId = $params['page_id'] ?? null;
 
         if (!$pageId) {
@@ -72,7 +72,7 @@ class AdminToolbarActionController extends Controller
             return $this->httpError(404, 'Page not found');
         }
 
-        $response = new HTTPResponse();
+        $response = \SilverStripe\Control\HTTPResponse::create();
         $action = $params['action'];
 
         if (!in_array($action, array_merge(self::$unpublishActions, self::$archiveActions), true)) {

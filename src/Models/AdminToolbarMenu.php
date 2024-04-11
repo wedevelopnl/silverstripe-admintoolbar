@@ -45,12 +45,7 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
             }
         }
 
-        usort($items, static function (
-            AdminToolbarMenuItemProviderInterface $itemA,
-            AdminToolbarMenuItemProviderInterface $itemB,
-        ) {
-            return $itemA->getOrder() <=> $itemB->getOrder();
-        });
+        usort($items, static fn (AdminToolbarMenuItemProviderInterface $itemA, AdminToolbarMenuItemProviderInterface $itemB) => $itemA->getOrder() <=> $itemB->getOrder());
 
         return ArrayList::create($items);
     }

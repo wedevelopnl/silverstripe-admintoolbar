@@ -9,5 +9,6 @@ use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 interface AdminToolbarMenuProviderInterface
 {
     public function isMenuSupported(): bool;
+
     public function provideAdminToolbarMenu(): AdminToolbarMenu;
 }

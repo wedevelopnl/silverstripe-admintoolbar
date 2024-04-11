@@ -9,5 +9,6 @@ use WeDevelop\AdminToolbar\Models\AdminToolbarToggle;
 interface AdminToolbarToggleProviderInterface
 {
     public function isToggleSupported(): bool;
+
     public function provideAdminToolbarToggle(): AdminToolbarToggle;
 }

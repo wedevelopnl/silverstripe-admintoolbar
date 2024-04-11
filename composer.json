@@ -20,7 +20,11 @@
         "silverstripe/cms": "^5.0@stable"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.20"
+        "friendsofphp/php-cs-fixer": "^3.20",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/extension-installer": "^1.0",
+        "syntro/silverstripe-phpstan": "^5.0",
+        "wernerkrauss/silverstripe-rector": "dev-main"
     },
     "extra": {
         "installer-name": "silverstripe-admintoolbar",
