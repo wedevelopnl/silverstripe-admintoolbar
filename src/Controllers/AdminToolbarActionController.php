@@ -80,7 +80,7 @@ class AdminToolbarActionController extends Controller
 
         if (!$page->isPublished() && in_array($action, self::$unpublishActions, true)) {
             $response->setStatusCode(200);
-            $response->setBody(json_encode(['message' => 'Page is already unpublished']));
+            $response->setBody(json_encode(['message' => 'Page is already unpublished']) ?: '');
             return $response;
         }
 
@@ -93,7 +93,7 @@ class AdminToolbarActionController extends Controller
         }
 
         $response->setStatusCode(200);
-        $response->setBody(json_encode(['message' => self::$successMessages[$action]]));
+        $response->setBody(json_encode(['message' => self::$successMessages[$action]]) ?: '');
 
         return $response;
     }
