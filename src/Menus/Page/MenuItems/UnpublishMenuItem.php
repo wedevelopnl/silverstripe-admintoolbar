@@ -5,16 +5,21 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
-use SilverStripe\Control\Controller;
 
 class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
     public const ACTION = 'unpublish';
+
+    public function getName(): string
+    {
+        return 'UnpublishMenuItem';
+    }
 
     public function getTitle(): string
     {

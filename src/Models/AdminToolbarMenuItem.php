@@ -12,6 +12,7 @@ abstract class AdminToolbarMenuItem extends ViewableData implements AdminToolbar
 {
     use Configurable;
 
+    /** @config */
     private static int $order = 10;
 
     public static string $forMenu = '';

@@ -12,6 +12,11 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 
 class UsernameMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
+    public function getName(): string
+    {
+        return 'Username';
+    }
+
     public function getCurrentMember(): ?Member
     {
         return UserMenu::getCurrentMember();

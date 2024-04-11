@@ -5,19 +5,22 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Models;
 
 use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
 use SilverStripe\View\ViewableData;
-use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
+use WeDevelop\AdminToolbar\AdminToolbar;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarJavascriptProviderInterface;
+use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 
 abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenuInterface
 {
     use Configurable;
 
+    /** @config */
     private static int $order = 10;
 
     public function getItems(): ArrayList
@@ -29,7 +32,10 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
             /** @var AdminToolbarMenuItemProviderInterface $inst */
             $inst = $itemClass::create();
 
-            if (!$inst->isMenuItemSupported()) {
+            if (
+                !$inst->isMenuItemSupported()
+                || in_array($inst->provideAdminToolbarMenuItem->getName(), Config::forClass(AdminToolbar::class)->get('disabled_menu_items') ?? [], true)
+            ) {
                 continue;
             }
 

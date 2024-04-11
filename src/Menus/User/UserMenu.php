@@ -12,7 +12,9 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 
 class UserMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterface
 {
+    /** @config */
     private static int $order = 9;
+
     public const MENU_NAME = 'User';
 
     public function getName(): string

@@ -12,6 +12,7 @@ SilverStripe\Security\Member:
 
 WeDevelop\AdminToolbar\AdminToolbar:
   disabled_menus:
+  disabled_menu_items:
   disabled_buttons:
   disabled_toggles:
 
@@ -21,6 +22,7 @@ Only:
 ---
 WeDevelop\AdminToolbar\AdminToolbar:
   disabled_menus:
+  disabled_menu_items:
   disabled_buttons:
     - 'Queries'
   disabled_toggles:

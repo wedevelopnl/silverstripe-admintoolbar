@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\ElementalGrid\MenuItems;
 
-use DNADesign\Elemental\Models\BaseElement;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use WeDevelop\AdminToolbar\Menus\ElementalGrid\ElementalGridMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 
 class ElementalGridMenuItem extends AdminToolbarMenuItem
 {
-    private BaseElement $element;
+    private \DNADesign\Elemental\Models\BaseElement $element;
+
+    public function getName(): string
+    {
+        return 'ElementalGrid';
+    }
 
     public function isMenuItemSupported(): bool
     {
@@ -28,14 +32,14 @@ class ElementalGridMenuItem extends AdminToolbarMenuItem
         return 0;
     }
 
-    public function setElement(BaseElement $element): self
+    public function setElement(\DNADesign\Elemental\Models\BaseElement $element): self
     {
         $this->element = $element;
 
         return $this;
     }
 
-    public function getElement(): BaseElement
+    public function getElement(): \DNADesign\Elemental\Models\BaseElement
     {
         return $this->element;
     }

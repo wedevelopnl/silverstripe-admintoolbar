@@ -5,16 +5,21 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
-use SilverStripe\Control\Controller;
 
 class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
     public const ACTION = 'unpublishAndArchive';
+
+    public function getName(): string
+    {
+        return 'UnpublishAndArchivePage';
+    }
 
     public function getTitle(): string
     {
@@ -43,7 +48,6 @@ class UnpublishAndArchiveMenuItem extends AdminToolbarMenuItem implements AdminT
         $page = Controller::curr()->data();
 
         return $page->canUnpublish() && $page->canArchive() && $page->isPublished();
-        ;
     }
 
     public function provideAdminToolbarMenuItem(): AdminToolbarMenuItem

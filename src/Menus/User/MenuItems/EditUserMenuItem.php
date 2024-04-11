@@ -13,6 +13,11 @@ use WeDevelop\AdminToolbar\URLTranslator;
 
 class EditUserMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemProviderInterface
 {
+    public function getName(): string
+    {
+        return 'EditUser';
+    }
+
     public function getEditLink(): string
     {
         $member = UserMenu::getCurrentMember();
