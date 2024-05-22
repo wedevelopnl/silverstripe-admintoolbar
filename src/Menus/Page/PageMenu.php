@@ -7,6 +7,7 @@ namespace WeDevelop\AdminToolbar\Menus\Page;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
 use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\Security\Member;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\MenuItems\EditMenuItem;
@@ -77,7 +78,7 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
     {
         $author = $this->getPageVersion()?->Author();
 
-        if (!$author) {
+        if (!($author instanceof Member)) {
             return null;
         }
 
@@ -86,7 +87,9 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
 
     public function getAuthorName(): string
     {
-        return $this->getPageVersion()?->Author()->Name ?? _t('Author.UNKNOWN', 'Unknown author');
+        $author = $this->getPageVersion()?->Author();
+
+        return ($author instanceof Member) ? $author->getName() : _t('Author.UNKNOWN', 'Unknown author');
     }
 
     private function getPageVersion(): ?\Page
@@ -101,6 +104,7 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
 
         /** @var \Page|null $versioned */
         $versioned = Versioned::get_version($controller->ClassName, $controller->ID, $controller->Version);
+
         return $versioned;
     }
 
