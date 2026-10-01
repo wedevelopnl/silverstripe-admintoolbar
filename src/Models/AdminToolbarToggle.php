@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Models;
 
-use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\View\ViewableData;
+use SilverStripe\Model\ModelData;
 
-abstract class AdminToolbarToggle extends ViewableData implements AdminToolbarToggleInterface
+abstract class AdminToolbarToggle extends ModelData implements AdminToolbarToggleInterface
 {
     public function getExtraClasses(): string
     {
         return '';
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 
     public function getOrder(): int

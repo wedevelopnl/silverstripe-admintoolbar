@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar;
 
+use SilverStripe\Model\ModelData;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
-use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\PermissionProvider;
 use SilverStripe\Security\Security;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\View\Requirements;
-use SilverStripe\View\ViewableData;
 use WeDevelop\AdminToolbar\Menus\User\UserMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarButtonInterface;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuInterface;
@@ -26,7 +26,7 @@ use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarToggleProviderInterface;
 
-class AdminToolbar extends ViewableData implements PermissionProvider
+class AdminToolbar extends ModelData implements PermissionProvider
 {
     /**
      * @config
@@ -60,7 +60,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
         $toolbarConfig = Config::inst()->get(self::class);
         $member = Security::getCurrentUser();
         $page = null;
-        if (Controller::has_curr() && ($controller = Controller::curr()) instanceof ContentController) {
+        if (Controller::curr() !== null && ($controller = Controller::curr()) instanceof ContentController) {
             $page = $controller->data();
         }
 
@@ -99,7 +99,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($menus, static fn (AdminToolbarMenuInterface $menuA, AdminToolbarMenuInterface $menuB) => $menuA->getOrder() <=> $menuB->getOrder());
+        usort($menus, static fn (AdminToolbarMenuInterface $menuA, AdminToolbarMenuInterface $menuB): int => $menuA->getOrder() <=> $menuB->getOrder());
 
         return $menus;
     }
@@ -130,7 +130,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($toggles, static fn (AdminToolbarToggleInterface $toggleA, AdminToolbarToggleInterface $toggleB) => $toggleA->getOrder() <=> $toggleB->getOrder());
+        usort($toggles, static fn (AdminToolbarToggleInterface $toggleA, AdminToolbarToggleInterface $toggleB): int => $toggleA->getOrder() <=> $toggleB->getOrder());
 
         return $toggles;
     }
@@ -156,7 +156,7 @@ class AdminToolbar extends ViewableData implements PermissionProvider
             }
         }
 
-        usort($buttons, static fn (AdminToolbarButtonInterface $buttonA, AdminToolbarButtonInterface $buttonB) => $buttonA->getOrder() <=> $buttonB->getOrder());
+        usort($buttons, static fn (AdminToolbarButtonInterface $buttonA, AdminToolbarButtonInterface $buttonB): int => $buttonA->getOrder() <=> $buttonB->getOrder());
 
         return $buttons;
     }

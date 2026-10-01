@@ -46,7 +46,7 @@ class AdminToolbarActionController extends Controller
     /**
      * @var array<string, string>
      */
-    private static $successMessages = [
+    private static array $successMessages = [
         UnpublishMenuItem::ACTION => 'Page succesfully unpublished',
         ArchiveMenuItem::ACTION => 'Page succesfully archived',
         UnpublishAndArchiveMenuItem::ACTION => 'Page succesfully unpublished and archived',

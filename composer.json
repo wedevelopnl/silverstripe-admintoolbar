@@ -1,38 +1,37 @@
 {
     "name": "wedevelopnl/silverstripe-admintoolbar",
-    "description": "Admin toolbar for silverstripe",
+    "description": "Frontend admin toolbar for Silverstripe CMS: page actions, CMS menu, user menu and diagnostics",
     "type": "silverstripe-vendormodule",
+    "license": "BSD-3-Clause",
     "keywords": [
         "silverstripe",
         "admin",
         "toolbar",
         "frontend"
     ],
-    "license": "BSD-3-Clause",
-    "authors": [{
-        "name": "WeDevelop",
-        "email": "development@wedevelop.nl"
-    }],
+    "authors": [
+        {
+            "name": "WeDevelop",
+            "email": "development@wedevelop.nl"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.1",
-        "silverstripe/cms": "^5.0@stable"
+        "php": "^8.3",
+        "silverstripe/admin": "^3.0",
+        "silverstripe/cms": "^6.0",
+        "silverstripe/framework": "^6.0",
+        "silverstripe/vendor-plugin": "^3.0",
+        "silverstripe/versioned": "^3.0"
     },
-    "require-dev": {
-        "dnadesign/silverstripe-elemental": "^5",
-        "friendsofphp/php-cs-fixer": "^3.20",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/extension-installer": "^1.0",
-        "syntro/silverstripe-phpstan": "^5.0",
-        "wedevelopnl/silverstripe-elemental-grid": "^5",
-        "wernerkrauss/silverstripe-rector": "dev-main"
+    "conflict": {
+        "wedevelopnl/silverstripe-grid": "<6.0.0-beta.4"
+    },
+    "suggest": {
+        "wedevelopnl/silverstripe-grid": "Adds the Grid menu showing the page's section/row/column tree"
     },
     "extra": {
-        "installer-name": "silverstripe-admintoolbar",
-        "branch-alias": {
-            "dev-master": "2.x-dev"
-        },
         "expose": [
             "client/dist"
         ]
@@ -40,6 +39,11 @@
     "autoload": {
         "psr-4": {
             "WeDevelop\\AdminToolbar\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WeDevelop\\AdminToolbar\\Tests\\": "tests/"
         }
     },
     "config": {

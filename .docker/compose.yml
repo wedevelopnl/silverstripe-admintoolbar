@@ -1,0 +1,71 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PHP_VERSION: ${PHP_VERSION:-8.3}
+    ports:
+      # Loopback only: SS_ENVIRONMENT_TYPE is dev, so the whole unauthenticated
+      # /dev/* surface is live. Docker publishes on 0.0.0.0 by default and its
+      # iptables rules bypass most host firewalls.
+      - "127.0.0.1:${WEB_PORT}:443"
+    volumes:
+      - ../composer.json:/module/composer.json:ro
+      - ../src:/module/src
+      - ../tests:/module/tests:ro
+      - ../_config:/module/_config:ro
+      - ../phpstan:/module/phpstan
+      - ../client/dist:/module/client/dist:ro
+      - ../lang:/module/lang
+      - ../templates:/module/templates:ro
+      - ../coverage:/app/coverage
+      - vendor:/app/vendor
+    # Bring a crashed app back so one fault does not fail every later request;
+    # capped so a container that cannot start still fails the job promptly.
+    restart: on-failure:3
+    healthcheck:
+      # The marker says the bootstrap finished; the curl says frankenphp is
+      # accepting connections. The marker alone reports healthy while Caddy is
+      # still issuing its local certificate.
+      test: test -f /tmp/.app-ready && curl -sSk -o /dev/null https://localhost/
+      interval: 3s
+      start_period: 60s
+      retries: 20
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SS_DATABASE_SERVER: db
+      SS_DATABASE_NAME: silverstripe
+      SS_DATABASE_USERNAME: silverstripe
+      SS_DATABASE_PASSWORD: silverstripe
+      SS_DEFAULT_ADMIN_USERNAME: admin
+      SS_DEFAULT_ADMIN_PASSWORD: admin
+      SS_ENVIRONMENT_TYPE: dev
+      SS_PHPUNIT_FLUSH: 1
+      # silverstripe-grid (installed for the Grid menu integration) throws at
+      # container boot when this is unset.
+      SS_GRID_ADAPTER: ${SS_GRID_ADAPTER}
+
+  db:
+    image: mysql:8
+    ports:
+      # Loopback only — the credentials below are fixed dev defaults.
+      - "127.0.0.1:${DB_PORT}:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d:ro
+    environment:
+      MYSQL_DATABASE: silverstripe
+      MYSQL_USER: silverstripe
+      MYSQL_PASSWORD: silverstripe
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: mysqladmin ping -h localhost
+      interval: 5s
+      retries: 10
+
+volumes:
+  vendor:
+  db-data:

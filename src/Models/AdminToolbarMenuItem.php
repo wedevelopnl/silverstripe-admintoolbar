@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Models;
 
+use SilverStripe\Model\ModelData;
 use SilverStripe\Core\Config\Configurable;
-use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\View\ViewableData;
 
-abstract class AdminToolbarMenuItem extends ViewableData implements AdminToolbarMenuItemInterface
+abstract class AdminToolbarMenuItem extends ModelData implements AdminToolbarMenuItemInterface
 {
     use Configurable;
 
@@ -27,9 +26,9 @@ abstract class AdminToolbarMenuItem extends ViewableData implements AdminToolbar
         return false;
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 
     public function getSubMenu(): ?AdminToolbarMenu

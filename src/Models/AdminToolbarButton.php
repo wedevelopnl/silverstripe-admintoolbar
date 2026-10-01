@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Models;
 
+use SilverStripe\Model\ModelData;
 use SilverStripe\Core\Config\Configurable;
-use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\View\ViewableData;
 
-abstract class AdminToolbarButton extends ViewableData implements AdminToolbarButtonInterface
+abstract class AdminToolbarButton extends ModelData implements AdminToolbarButtonInterface
 {
     use Configurable;
 
@@ -20,9 +19,9 @@ abstract class AdminToolbarButton extends ViewableData implements AdminToolbarBu
         return '';
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 
     public function getOrder(): int
