@@ -2,39 +2,4 @@
 # src/ and deletes this file together with its include in phpstan.neon.dist.
 # Never add entries to it.
 parameters:
-	ignoreErrors:
-		-
-			message: '#^Cannot access offset ''action'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/Controllers/AdminToolbarActionController.php
-
-		-
-			message: '#^Cannot access offset ''page_id'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/Controllers/AdminToolbarActionController.php
-
-		-
-			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Controllers\\AdminToolbarActionController\:\:\$archiveActions through self\:\:\. Use self\:\:config\(\)\-\>get\(''archiveActions''\) instead\.$#'
-			identifier: silverstan.configurationProperty.unsafe
-			count: 2
-			path: ../src/Controllers/AdminToolbarActionController.php
-
-		-
-			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Controllers\\AdminToolbarActionController\:\:\$successMessages through self\:\:\. Use self\:\:config\(\)\-\>get\(''successMessages''\) instead\.$#'
-			identifier: silverstan.configurationProperty.unsafe
-			count: 1
-			path: ../src/Controllers/AdminToolbarActionController.php
-
-		-
-			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Controllers\\AdminToolbarActionController\:\:\$unpublishActions through self\:\:\. Use self\:\:config\(\)\-\>get\(''unpublishActions''\) instead\.$#'
-			identifier: silverstan.configurationProperty.unsafe
-			count: 3
-			path: ../src/Controllers/AdminToolbarActionController.php
-
-		-
-			message: '#^Class WeDevelop\\AdminToolbar\\Extensions\\MemberExtension extends generic class SilverStripe\\Core\\Extension but does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/Extensions/MemberExtension.php
+	ignoreErrors: []

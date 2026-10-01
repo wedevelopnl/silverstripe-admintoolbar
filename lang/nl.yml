@@ -45,3 +45,11 @@ nl:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Toggle\TimingToggle:
     TITLE: 'Timing'
+  WeDevelop\AdminToolbar\Controller\PageActionController:
+    CONFLICT: 'De pagina is intussen gewijzigd. Herlaad de pagina en probeer het opnieuw.'
+    FORBIDDEN: 'Je hebt hier geen rechten voor.'
+    MALFORMED: 'Het verzoek kon niet worden verwerkt.'
+    METHOD: 'Pagina-acties moeten als POST verstuurd worden.'
+    NOT_FOUND: 'De pagina bestaat niet meer.'
+    TOKEN: 'Je sessie is verlopen. Herlaad de pagina en probeer het opnieuw.'
+    UNKNOWN_ACTION: 'Deze actie is niet beschikbaar.'

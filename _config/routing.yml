@@ -5,4 +5,4 @@ After:
 ---
 SilverStripe\Control\Director:
   rules:
-    'admintoolbaraction//$Action/$ID': 'WeDevelop\AdminToolbar\Controllers\AdminToolbarActionController'
+    'admintoolbaraction//$Action/$ID': 'WeDevelop\AdminToolbar\Controller\PageActionController'

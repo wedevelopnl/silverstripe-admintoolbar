@@ -7,7 +7,7 @@ SilverStripe\CMS\Controllers\ContentController:
 
 SilverStripe\Security\Member:
   extensions:
-    - WeDevelop\AdminToolbar\Extensions\MemberExtension
+    - WeDevelop\AdminToolbar\Extension\MemberExtension
 
 ---
 Name: admintoolbar-live

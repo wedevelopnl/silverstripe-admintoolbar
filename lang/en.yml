@@ -46,3 +46,11 @@ en:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Toggle\TimingToggle:
     TITLE: 'Timing'
+  WeDevelop\AdminToolbar\Controller\PageActionController:
+    CONFLICT: 'The page changed in the meantime. Reload the page and try again.'
+    FORBIDDEN: 'You are not allowed to do this.'
+    MALFORMED: 'The request could not be understood.'
+    METHOD: 'Page actions must be sent as POST.'
+    NOT_FOUND: 'The page no longer exists.'
+    TOKEN: 'Your session expired. Reload the page and try again.'
+    UNKNOWN_ACTION: 'This action is not available.'
