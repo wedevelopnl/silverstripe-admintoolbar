@@ -1,0 +1,44 @@
+name: Dump container diagnostics
+description: >-
+  Print everything CI needs to explain why a Docker service failed, then exit
+  0 so it never masks the original failure.
+
+  `docker compose up --wait` reports a boot failure as nothing but
+  `container <name> exited (100)`, and a container that dies mid-run leaves no
+  trace at all — the job just starts refusing connections.
+
+  The exit code and OOMKilled flag are the two facts that separate the
+  candidate causes: 137 means the kernel reclaimed it, 139 is a segfault, 100
+  is composer losing the network.
+
+inputs:
+  compose:
+    description: The `docker compose` invocation, including every -f flag and profile.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set +e
+        echo "::group::Service state"
+        ${{ inputs.compose }} ps --all
+        echo "::endgroup::"
+
+        echo "::group::Container exit codes"
+        for id in $(${{ inputs.compose }} ps --all --quiet); do
+          docker inspect "$id" --format \
+            '{{.Name}} status={{.State.Status}} exit={{.State.ExitCode}} oom={{.State.OOMKilled}} restarts={{.RestartCount}} error={{.State.Error}}'
+        done
+        echo "::endgroup::"
+
+        echo "::group::Service logs"
+        ${{ inputs.compose }} logs --no-color --timestamps --tail=500
+        echo "::endgroup::"
+
+        echo "::group::Runner resources"
+        df -h /
+        free -m
+        echo "::endgroup::"
+        exit 0

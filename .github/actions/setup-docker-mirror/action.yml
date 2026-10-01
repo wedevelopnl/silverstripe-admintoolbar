@@ -1,0 +1,30 @@
+name: Setup buildx with Docker Hub mirror
+description: >-
+  Configure buildx so build-time docker.io pulls go through mirror.gcr.io
+  (Google's public pull-through cache for Docker Hub), avoiding Docker Hub's
+  anonymous rate limit. The buildx docker-container driver pulls base images
+  (frankenphp, composer) and its own buildkit image independently of the
+  daemon's authenticated session; across the CI matrix that trips HTTP 429.
+
+  Daemon-side pulls (the db/mysql service at `compose up`) are pointed at the
+  mirror via an explicit image ref in compose.ci.yml instead — applying
+  registry-mirrors to daemon.json via a runtime `systemctl restart docker`
+  proved not to take effect on hosted runners.
+
+runs:
+  using: composite
+  steps:
+    # Export ACTIONS_CACHE_URL / ACTIONS_RUNTIME_TOKEN into the job env. GitHub
+    # only exposes these to JavaScript actions, not to `run:` steps — so without
+    # this, the `type=gha` cache used by `docker compose build` (a run step)
+    # silently no-ops (cache_to ignore-error swallows it) and every build is cold.
+    - uses: crazy-max/ghaction-github-runtime@3cb05d89e1f492524af3d41a1c98c83bc3025124 # v3.1.0
+    - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
+      with:
+        # Pull the buildkit container image from the mirror too (it lives on
+        # docker.io as moby/buildkit and would otherwise be an unmirrored pull).
+        driver-opts: image=mirror.gcr.io/moby/buildkit:buildx-stable-1
+        # Route the FROM/COPY --from docker.io pulls inside buildkit via the mirror.
+        buildkitd-config-inline: |
+          [registry."docker.io"]
+            mirrors = ["mirror.gcr.io"]
