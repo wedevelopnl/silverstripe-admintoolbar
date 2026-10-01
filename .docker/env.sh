@@ -3,23 +3,26 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 WORKTREE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-DIR_NAME="$(basename "$WORKTREE_DIR")"
+# Compose accepts an explicit project name only in its normalized form, so apply
+# the same rule it uses for a directory-derived one: lowercase, drop everything
+# outside [a-z0-9_-], strip leading '-' and '_'.
+PROJECT_NAME="$(basename "$WORKTREE_DIR" | tr '[:upper:]' '[:lower:]' | tr -cd 'a-z0-9_-' | sed 's/^[-_]*//')"
 
-HASH=$(printf '%s' "$DIR_NAME" | cksum | awk '{print $1}')
+HASH=$(printf '%s' "$PROJECT_NAME" | cksum | awk '{print $1}')
 OFFSET=$((HASH % 1000))
 
 WEB_PORT=$((8000 + OFFSET))
 DB_PORT=$((13000 + OFFSET))
 
 cat > "$SCRIPT_DIR/.env" <<EOF
-COMPOSE_PROJECT_NAME=${DIR_NAME}
+COMPOSE_PROJECT_NAME=${PROJECT_NAME}
 WEB_PORT=${WEB_PORT}
 DB_PORT=${DB_PORT}
 SS_GRID_ADAPTER=tailwind
 EOF
 
 echo "Generated .docker/.env:"
-echo "  COMPOSE_PROJECT_NAME=${DIR_NAME}"
+echo "  COMPOSE_PROJECT_NAME=${PROJECT_NAME}"
 echo "  WEB_PORT=${WEB_PORT}"
 echo "  DB_PORT=${DB_PORT}"
 echo "  SS_GRID_ADAPTER=tailwind"
