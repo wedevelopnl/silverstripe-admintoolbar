@@ -9,7 +9,20 @@ nl:
     SWITCH_TO_STAGE: 'Switch naar stage'
     LAST_EDITED_ON: 'Laatst bewerkt op'
     LAST_EDITED_BY: 'Laatst bewerkt door'
-    USE_THE_ADMIN_TOOLBAR: 'De admin toolbar gebruiken'
+    TOGGLES: 'Toggles'
+    COLLAPSE: 'Toolbar tonen of verbergen'
   SilverStripe\Security\Member:
     db_DisableAdminToolbar: 'Schakel admin toolbar uit'
     db_AdminToolbarDefaultCollapsed: 'Admin toolbar standaard ingeklaped'
+  WeDevelop\AdminToolbar\AdminToolbar:
+    PERMISSION: 'De admin toolbar gebruiken'
+  WeDevelop\AdminToolbar\Button\FlushCacheButton:
+    TITLE: 'Cache legen'
+  WeDevelop\AdminToolbar\Button\QueriesButton:
+    TITLE: 'Queries'
+  WeDevelop\AdminToolbar\Button\TimingButton:
+    TITLE: 'Timing'
+  WeDevelop\AdminToolbar\Toggle\QueriesToggle:
+    TITLE: 'Queries'
+  WeDevelop\AdminToolbar\Toggle\TimingToggle:
+    TITLE: 'Timing'

@@ -13,7 +13,20 @@ en:
     SWITCH_TO_STAGE: 'Switch to stage'
     LAST_EDITED_ON: 'Last edited on'
     LAST_EDITED_BY: 'Last edited by'
-    USE_THE_ADMIN_TOOLBAR: 'Use the admin toolbar'
+    TOGGLES: 'Toggles'
+    COLLAPSE: 'Show or hide the toolbar'
   SilverStripe\Security\Member:
     db_DisableAdminToolbar: 'Disable admin toolbar'
     db_AdminToolbarDefaultCollapsed: 'Admin toolbar default collapsed'
+  WeDevelop\AdminToolbar\AdminToolbar:
+    PERMISSION: 'Use the admin toolbar'
+  WeDevelop\AdminToolbar\Button\FlushCacheButton:
+    TITLE: 'Flush cache'
+  WeDevelop\AdminToolbar\Button\QueriesButton:
+    TITLE: 'Queries'
+  WeDevelop\AdminToolbar\Button\TimingButton:
+    TITLE: 'Timing'
+  WeDevelop\AdminToolbar\Toggle\QueriesToggle:
+    TITLE: 'Queries'
+  WeDevelop\AdminToolbar\Toggle\TimingToggle:
+    TITLE: 'Timing'

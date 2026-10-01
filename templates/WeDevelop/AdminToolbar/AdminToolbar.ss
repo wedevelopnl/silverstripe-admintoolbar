@@ -8,7 +8,7 @@
                 </a>
             </div>
             <ul class="ss-at-flex ss-at-items-center ss-at-flex-wrap ss-at-space-x-2">
-                <% loop $Menus %>
+                <% loop $StartMenus %>
                     <li>
                         $Me
                     </li>
@@ -30,17 +30,15 @@
                             <% end_loop %>
                         </ul>
                     </dialog>
-                    <button class="ss-at-btn peer-open:ss-at-bg-silverstripe peer-open:ss-at-text-white" data-toggle-dialog="toggles">
+                    <button type="button" class="ss-at-btn peer-open:ss-at-bg-silverstripe peer-open:ss-at-text-white" data-toggle-dialog="toggles" aria-label="<%t AdminToolbar.TOGGLES 'Toggles' %>">
                         <span class="font-icon-dot-3"></span>
                     </button>
                 </div>
-                <% with $UserMenu %>
-                    <% include WeDevelop\AdminToolbar\Menus\User\UserMenu %>
-                <% end_with %>
+                <% loop $EndMenus %>$Me<% end_loop %>
             </div>
         </div>
     </div>
-    <button class="ss-at-btn ss-at-fixed ss-at-right-3 ss-at-bottom-2 ss-at-z-20" data-toggle-admin-toolbar>
+    <button type="button" class="ss-at-btn ss-at-fixed ss-at-right-3 ss-at-bottom-2 ss-at-z-20" data-toggle-admin-toolbar aria-label="<%t AdminToolbar.COLLAPSE 'Show or hide the toolbar' %>">
         <span class="font-icon-angle-right"></span>
     </button>
 </div>

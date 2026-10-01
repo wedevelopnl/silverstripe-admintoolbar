@@ -10,6 +10,9 @@
          failOnRisky="true"
          failOnWarning="true">
     <testsuites>
+        <testsuite name="unit">
+            <directory>/app/vendor/wedevelopnl/silverstripe-admintoolbar/tests/Unit</directory>
+        </testsuite>
         <testsuite name="functional">
             <directory>/app/vendor/wedevelopnl/silverstripe-admintoolbar/tests/Functional</directory>
         </testsuite>

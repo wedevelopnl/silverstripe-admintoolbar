@@ -5,7 +5,7 @@
             $Badge.Label
         </span>
     <% end_if %>
-    <div class="ss-at-ml-auto ss-at-text-5 ss-at-flex ss-at-items-center hover:ss-at-rotate-90 ss-at-origin-center ss-at-transition-all ss-at-cursor-pointer" data-toggle-dialog="$Name">
+    <div class="ss-at-ml-auto ss-at-text-5 ss-at-flex ss-at-items-center hover:ss-at-rotate-90 ss-at-origin-center ss-at-transition-all ss-at-cursor-pointer" data-toggle-dialog="$DialogId">
         <span class="font-icon-cross-mark"></span>
     </div>
 </div>
