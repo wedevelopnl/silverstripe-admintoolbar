@@ -97,6 +97,30 @@ final class ToolbarRenderTest extends FunctionalTest
         $this->assertStringNotContainsString('data-flush-cache-button', $body);
     }
 
+    public function testPageMenuRendersTheActionsAndToken(): void
+    {
+        $this->logInAsMemberWith('ADMIN');
+
+        $body = $this->assertToolbarPresent($this->get($this->page->Link()));
+
+        $this->assertStringContainsString('data-action="unpublish"', $body);
+        $this->assertStringContainsString('data-action="unpublishAndArchive"', $body);
+        $this->assertStringContainsString(sprintf('data-pageid="%d"', $this->page->ID), $body);
+        $this->assertStringContainsString('id="SecurityID"', $body);
+        $this->assertStringContainsString('data-toggle-dialog="PageMenu"', $body);
+    }
+
+    public function testToolbarOnlyMemberSeesNoEditLinkOrCMSMenu(): void
+    {
+        $this->logInAsMemberWith('ADMIN_TOOLBAR');
+
+        $body = $this->assertToolbarPresent($this->get($this->page->Link()));
+
+        $this->assertStringNotContainsString('data-toggle-dialog="CMSMenu"', $body);
+        $this->assertStringNotContainsString('font-icon-edit', $body);
+        $this->assertStringContainsString('data-toggle-dialog="UserMenu"', $body);
+    }
+
     private function logInAsMemberWith(string $permission): int
     {
         $memberId = $this->logInWithPermission($permission);

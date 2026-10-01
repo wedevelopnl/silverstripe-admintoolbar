@@ -1,0 +1,12 @@
+# YAML fixtures only write the draft stage; FixturePages::publishFixturePages()
+# publishes `published` and `modified` and gives `modified` a draft change.
+Page:
+  published:
+    Title: Published
+    URLSegment: published
+  draft:
+    Title: Draft
+    URLSegment: draft
+  modified:
+    Title: Modified
+    URLSegment: modified

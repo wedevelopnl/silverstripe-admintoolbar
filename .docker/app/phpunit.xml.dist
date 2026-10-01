@@ -13,6 +13,9 @@
         <testsuite name="unit">
             <directory>/app/vendor/wedevelopnl/silverstripe-admintoolbar/tests/Unit</directory>
         </testsuite>
+        <testsuite name="integration">
+            <directory>/app/vendor/wedevelopnl/silverstripe-admintoolbar/tests/Integration</directory>
+        </testsuite>
         <testsuite name="functional">
             <directory>/app/vendor/wedevelopnl/silverstripe-admintoolbar/tests/Functional</directory>
         </testsuite>
