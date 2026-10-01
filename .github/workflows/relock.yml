@@ -41,7 +41,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: ./.github/actions/setup-docker-mirror
       - run: task docker-env
-      - run: task relock
+      # Hand the job's COMPOSE (with the CI overlay) to Task so the relock build
+      # reads and fills the same GHA layer cache as ci.yml.
+      - run: task relock COMPOSE="$COMPOSE"
 
       - name: Open a pull request if anything moved
         env:
