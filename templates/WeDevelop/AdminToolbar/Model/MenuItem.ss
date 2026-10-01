@@ -1,1 +1,1 @@
-<% if $Link %><a href="$Link" class="ss-at-text-black hover:ss-at-text-primary">$Title</a><% else %>$Title<% end_if %>
+<% if $Link %><a href="$Link" class="ssat:text-black ssat:hover:text-primary">$Title</a><% else %>$Title<% end_if %>

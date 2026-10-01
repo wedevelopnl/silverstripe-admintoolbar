@@ -20,8 +20,8 @@ class FixtureButton extends Button implements TestOnly
     private static string $hook = 'data-fixture-button';
 
     /** @var list<string> */
-    private static array $javascript = ['wedevelopnl/silverstripe-admintoolbar:client/dist/app.js'];
+    private static array $javascript = ['wedevelopnl/silverstripe-admintoolbar:client/dist/js/toolbar.js'];
 
     /** @var list<string> */
-    private static array $stylesheets = ['wedevelopnl/silverstripe-admintoolbar:client/dist/main.css'];
+    private static array $stylesheets = ['wedevelopnl/silverstripe-admintoolbar:client/dist/css/toolbar.css'];
 }

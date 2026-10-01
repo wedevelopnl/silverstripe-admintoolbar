@@ -33,6 +33,17 @@ final class ToolbarRenderTest extends FunctionalTest
         $this->assertToolbarPresent($this->get($this->page->Link()));
     }
 
+    public function testToolbarRequiresTheBuiltAssets(): void
+    {
+        $this->logInAsMemberWith('ADMIN');
+
+        $body = $this->assertToolbarPresent($this->get($this->page->Link()));
+
+        $this->assertStringContainsString('client/dist/js/toolbar.js', $body);
+        $this->assertStringContainsString('client/dist/css/toolbar.css', $body);
+        $this->assertStringNotContainsString('client/dist/app.js', $body);
+    }
+
     public function testToolbarIsAbsentForAnAnonymousVisitor(): void
     {
         $this->assertToolbarAbsent($this->get($this->page->Link()));
@@ -105,8 +116,10 @@ final class ToolbarRenderTest extends FunctionalTest
 
         $this->assertStringContainsString('data-action="unpublish"', $body);
         $this->assertStringContainsString('data-action="unpublishAndArchive"', $body);
-        $this->assertStringContainsString(sprintf('data-pageid="%d"', $this->page->ID), $body);
-        $this->assertStringContainsString('id="SecurityID"', $body);
+        $this->assertStringContainsString(sprintf('data-page-id="%d"', $this->page->ID), $body);
+        $this->assertStringContainsString('data-page-actions', $body);
+        $this->assertStringContainsString('data-endpoint=', $body);
+        $this->assertStringContainsString('name="SecurityID"', $body);
         $this->assertStringContainsString('data-toggle-dialog="PageMenu"', $body);
     }
 

@@ -1,0 +1,192 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "client/src/ts/**/*.ts",
+      "client/src/styles/**/*.css",
+      "!client/src/styles/icons.css",
+      "vite.config.mts",
+      "vitest.setup.ts",
+      "stryker.config.mjs"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "all",
+      "arrowParentheses": "always",
+      "bracketSpacing": true
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    },
+    "formatter": {
+      "quoteStyle": "single"
+    },
+    "linter": {
+      "enabled": true
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "a11y": {
+        "useGenericFontNames": "error"
+      },
+      "complexity": {
+        "noUselessUndefined": "error",
+        "noUselessReturn": "error",
+        "noImportantStyles": "error"
+      },
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "noUnusedFunctionParameters": "error",
+        "noInvalidDirectionInLinearGradient": "error",
+        "noInvalidGridAreas": "error",
+        "noInvalidPositionAtImportRule": "error",
+        "noMissingVarFunction": "error",
+        "noUnknownFunction": "error",
+        "noUnknownMediaFeatureName": "error",
+        "noUnknownProperty": "error",
+        "noUnknownPseudoClass": "error",
+        "noUnknownPseudoElement": "error",
+        "noUnknownTypeSelector": "error",
+        "noUnknownUnit": "error",
+        "noUnmatchableAnbSelector": "error"
+      },
+      "performance": {
+        "noAwaitInLoops": "error",
+        "noReExportAll": "error"
+      },
+      "style": {
+        "useImportType": "error",
+        "useExportType": "error",
+        "useConsistentArrowReturn": "error",
+        "noEnum": "error",
+        "noNestedTernary": "error",
+        "noParameterAssign": "error",
+        "noProcessEnv": "error",
+        "useThrowOnlyError": "error",
+        "noDescendingSpecificity": "error",
+        "noHexColors": "error",
+        "noValueAtRule": "error"
+      },
+      "suspicious": {
+        "noExplicitAny": "error",
+        "noImportCycles": "error",
+        "noDeprecatedImports": "error",
+        "noUnusedExpressions": "error",
+        "noDuplicateDependencies": "error",
+        "noConstantBinaryExpressions": "error",
+        "noEvolvingTypes": "error",
+        "useAwait": "error",
+        "noSkippedTests": "error",
+        "noExportsInTest": "error",
+        "noMisplacedAssertion": "error",
+        "noConsole": "warn",
+        "noProto": "error",
+        "noUnnecessaryConditions": "warn",
+        "noShadow": "error",
+        "useArraySortCompare": "error",
+        "noDeprecatedMediaType": "error",
+        "noDuplicateAtImportRules": "error",
+        "noDuplicateCustomProperties": "error",
+        "noDuplicateFontNames": "error",
+        "noDuplicateProperties": "error",
+        "noDuplicateSelectorsKeyframeBlock": "error",
+        "noEmptyBlock": "error",
+        "noImportantInKeyframe": "error",
+        "noShorthandPropertyOverrides": "error",
+        "noUnknownAtRules": "error"
+      },
+      "nursery": {
+        "noFloatingPromises": "error",
+        "noMisusedPromises": "error",
+        "noUnsafePlusOperands": "error",
+        "noUselessTypeConversion": "error",
+        "noUnnecessaryTemplateExpression": "error",
+        "noImpliedEval": "error",
+        "noIdenticalTestTitle": "error",
+        "noConditionalExpect": "error",
+        "useAwaitThenable": "error",
+        "useNullishCoalescing": "error",
+        "noDuplicateSelectors": "error",
+        "noExcessiveSelectorClasses": "error",
+        "noInvalidPropertyInitValue": "error",
+        "useBaseline": {
+          "level": "error",
+          "options": {
+            "available": "newly"
+          }
+        }
+      },
+      "security": {
+        "noScriptUrl": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["client/src/styles/tokens.css", "client/src/styles/fonts.css"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noHexColors": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.test.ts", "client/src/ts/testing/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "performance": {
+            "noAwaitInLoops": "off"
+          },
+          "suspicious": {
+            "noMisplacedAssertion": "off",
+            "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["vite.config.mts", "vitest.setup.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noProcessEnv": "off"
+          }
+        }
+      }
+    }
+  ],
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}

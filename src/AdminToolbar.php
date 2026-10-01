@@ -22,8 +22,8 @@ class AdminToolbar extends ModelData implements PermissionProvider
 
     public function render(ToolbarContext $context): DBHTMLText
     {
-        Requirements::css('wedevelopnl/silverstripe-admintoolbar:client/dist/main.css');
-        Requirements::javascript('wedevelopnl/silverstripe-admintoolbar:client/dist/app.js');
+        Requirements::css('wedevelopnl/silverstripe-admintoolbar:client/dist/css/toolbar.css');
+        Requirements::javascript('wedevelopnl/silverstripe-admintoolbar:client/dist/js/toolbar.js');
 
         $menus = Component::discover(Menu::class, $context);
 

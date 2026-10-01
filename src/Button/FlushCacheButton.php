@@ -15,9 +15,4 @@ class FlushCacheButton extends Button
     private static string $icon = 'font-icon-back-in-time';
 
     private static string $hook = 'data-flush-cache-button';
-
-    /** @var list<string> */
-    private static array $javascript = [
-        'wedevelopnl/silverstripe-admintoolbar:client/dist/flush-cache-button.js',
-    ];
 }

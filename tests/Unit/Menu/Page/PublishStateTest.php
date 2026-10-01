@@ -31,11 +31,22 @@ final class PublishStateTest extends SapphireTest
         $this->assertSame($expected, PublishState::of($published, $modified, $archived));
     }
 
-    public function testLabelsAndColours(): void
+    /**
+     * @return iterable<string, array{PublishState, string, string}>
+     */
+    public static function labelsAndColours(): iterable
     {
-        $this->assertSame(['Published', 'green'], [PublishState::Published->getLabel(), PublishState::Published->getColor()]);
-        $this->assertSame(['Modified', 'orange'], [PublishState::Modified->getLabel(), PublishState::Modified->getColor()]);
-        $this->assertSame(['Draft', 'blue'], [PublishState::Draft->getLabel(), PublishState::Draft->getColor()]);
-        $this->assertSame(['Archived', 'yellow'], [PublishState::Archived->getLabel(), PublishState::Archived->getColor()]);
+        yield 'published' => [PublishState::Published, 'Published', 'green'];
+        yield 'modified' => [PublishState::Modified, 'Modified', 'orange'];
+        yield 'draft' => [PublishState::Draft, 'Draft', 'blue'];
+        yield 'archived' => [PublishState::Archived, 'Archived', 'yellow'];
+    }
+
+    #[DataProvider('labelsAndColours')]
+    public function testLabelsAndColours(PublishState $state, string $label, string $colour): void
+    {
+        $this->assertSame($label, $state->getLabel());
+        $this->assertStringContainsString(sprintf('ssat:bg-%s-200', $colour), $state->getBadgeClasses());
+        $this->assertStringContainsString(sprintf('ssat:text-%s-800', $colour), $state->getBadgeClasses());
     }
 }

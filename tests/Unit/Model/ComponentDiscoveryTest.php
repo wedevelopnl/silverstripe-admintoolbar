@@ -121,8 +121,8 @@ final class ComponentDiscoveryTest extends SapphireTest
 
         FixtureButton::create()->setContext($this->context())->forTemplate();
 
-        $this->assertContainsPathEndingWith('client/dist/app.js', array_keys(Requirements::backend()->getJavascript()));
-        $this->assertContainsPathEndingWith('client/dist/main.css', array_keys(Requirements::backend()->getCSS()));
+        $this->assertContainsPathEndingWith('client/dist/js/toolbar.js', array_keys(Requirements::backend()->getJavascript()));
+        $this->assertContainsPathEndingWith('client/dist/css/toolbar.css', array_keys(Requirements::backend()->getCSS()));
     }
 
     public function testButtonRendersHookTitleAndIcon(): void
@@ -132,12 +132,12 @@ final class ComponentDiscoveryTest extends SapphireTest
         $this->assertStringContainsString('data-fixture-button', $html);
         $this->assertStringContainsString('Fixture', $html);
         $this->assertStringContainsString('font-icon-edit', $html);
-        $this->assertStringContainsString('ss-at-btn-content', $html);
-        $this->assertStringNotContainsString('ss-at-hidden', $html);
+        $this->assertStringContainsString('data-button-label', $html);
+        $this->assertStringNotContainsString('ssat:hidden', $html);
 
         Config::modify()->set(FixtureButton::class, 'hidden_until_enabled', true);
 
-        $this->assertStringContainsString('ss-at-hidden', FixtureButton::create()->setContext($this->context())->forTemplate());
+        $this->assertStringContainsString('ssat:hidden', FixtureButton::create()->setContext($this->context())->forTemplate());
     }
 
     public function testMenuPlacementDefaultsToStart(): void

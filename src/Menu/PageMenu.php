@@ -6,6 +6,8 @@ namespace WeDevelop\AdminToolbar\Menu;
 
 use SilverStripe\Admin\SecurityAdmin;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
 use SilverStripe\Model\ArrayData;
 use SilverStripe\Security\Member;
 use SilverStripe\Versioned\Versioned;
@@ -46,7 +48,12 @@ class PageMenu extends Menu
             (bool) $page?->isArchived(),
         );
 
-        return ArrayData::create(['Label' => $state->getLabel(), 'Color' => $state->getColor()]);
+        return ArrayData::create(['Label' => $state->getLabel(), 'Classes' => $state->getBadgeClasses()]);
+    }
+
+    public function getActionEndpoint(): string
+    {
+        return Controller::join_links(Director::baseURL(), 'admintoolbaraction', 'pageAction');
     }
 
     public function getAuthorName(): string

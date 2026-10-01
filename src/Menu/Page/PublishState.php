@@ -31,14 +31,14 @@ enum PublishState: string
         };
     }
 
-    /** Tailwind colour family; the Phase 1 CSS safelists `ss-at-bg-<colour>-200` / `ss-at-text-<colour>-800`. */
-    public function getColor(): string
+    /** Literal class strings, so the Tailwind scanner finds them. */
+    public function getBadgeClasses(): string
     {
         return match ($this) {
-            self::Published => 'green',
-            self::Modified => 'orange',
-            self::Draft => 'blue',
-            self::Archived => 'yellow',
+            self::Published => 'ssat:bg-green-200 ssat:text-green-800',
+            self::Modified => 'ssat:bg-orange-200 ssat:text-orange-800',
+            self::Draft => 'ssat:bg-blue-200 ssat:text-blue-800',
+            self::Archived => 'ssat:bg-yellow-200 ssat:text-yellow-800',
         };
     }
 }

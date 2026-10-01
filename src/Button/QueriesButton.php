@@ -17,9 +17,4 @@ class QueriesButton extends Button
     private static string $hook = 'data-queries-button';
 
     private static bool $hidden_until_enabled = true;
-
-    /** @var list<string> */
-    private static array $javascript = [
-        'wedevelopnl/silverstripe-admintoolbar:client/dist/queries-button.js',
-    ];
 }

@@ -1,1 +1,0 @@
-(()=>{var e="[data-timing-toggle]",t=document.querySelector(e);document.addEventListener("DOMContentLoaded",(function(){t&&(t.checked="true"===localStorage.getItem(e))})),null==t||t.addEventListener("change",(function(t){var n;n=t.currentTarget.checked,localStorage.setItem(e,n),window.location.reload()}))})();

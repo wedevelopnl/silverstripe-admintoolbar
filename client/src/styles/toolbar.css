@@ -1,0 +1,46 @@
+@import './fonts.css';
+@import './icons.css';
+@import 'tailwindcss/theme.css' prefix(ssat);
+@import './tokens.css';
+@import 'tailwindcss/utilities.css';
+@import './reset.css';
+
+@source '../../../templates';
+@source '../../../src';
+@source '../ts';
+
+@utility btn {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: calc(var(--ssat-spacing) * 2);
+  border: 1px solid transparent;
+  border-radius: var(--ssat-radius-lg);
+  background-color: var(--ssat-color-silverstripe-200);
+  color: var(--ssat-color-black);
+  font-weight: var(--ssat-font-weight-medium);
+  font-size: var(--ssat-text-sm);
+  line-height: 1;
+  outline: 0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--ssat-color-primary);
+    color: var(--ssat-color-white);
+  }
+}
+
+@utility btn-outline {
+  border-color: var(--ssat-color-silverstripe-200);
+  background-color: transparent;
+
+  /* biome-ignore lint/nursery/noDuplicateSelectors: each @utility is its own rule; Biome compares nested selectors across them */
+  &:hover {
+    background-color: var(--ssat-color-silverstripe);
+  }
+}
+
+#admin-toolbar dialog#toggles {
+  inset-block-end: unset;
+  inset-inline-end: unset;
+}
