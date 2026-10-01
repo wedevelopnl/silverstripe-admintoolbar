@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page;
 
+use SilverStripe\Model\ArrayData;
+use Page;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
-use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Member;
 use SilverStripe\Versioned\Versioned;
-use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\MenuItems\EditMenuItem;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
@@ -51,9 +51,9 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         return true;
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 
     public function getPublishState(): ArrayData
@@ -92,9 +92,9 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
         return ($author instanceof Member) ? $author->getName() : _t('Author.UNKNOWN', 'Unknown author');
     }
 
-    private function getPageVersion(): ?\Page
+    private function getPageVersion(): ?Page
     {
-        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+        if (Controller::curr() === null || !($controller = Controller::curr()) instanceof ContentController) {
             return null;
         }
 
@@ -102,7 +102,7 @@ class PageMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInter
             return null;
         }
 
-        /** @var \Page|null $versioned */
+        /** @var Page|null $versioned */
         $versioned = Versioned::get_version($controller->ClassName, $controller->ID, $controller->Version);
 
         return $versioned;

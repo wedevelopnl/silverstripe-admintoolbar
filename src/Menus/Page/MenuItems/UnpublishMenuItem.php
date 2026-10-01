@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
+use SilverStripe\Model\ArrayData;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
-use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
@@ -28,7 +27,7 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
 
     public function getLink(): ArrayData
     {
-        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+        if (Controller::curr() === null || !($controller = Controller::curr()) instanceof ContentController) {
             return ArrayData::create();
         }
 
@@ -48,7 +47,7 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
 
     public function isMenuItemSupported(): bool
     {
-        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+        if (Controller::curr() === null || !($controller = Controller::curr()) instanceof ContentController) {
             return false;
         }
 
@@ -72,8 +71,8 @@ class UnpublishMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenu
         return 3;
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 }

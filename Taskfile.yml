@@ -1,0 +1,200 @@
+version: '3'
+
+# Build/dev task runner for the Silverstripe Admin Toolbar module.
+# Install Task: https://taskfile.dev/installation
+#
+# Non-interactive targets exec with -T: the agent shell and CI have no TTY, and
+# older Compose releases fail instantly without it. Only `sh` keeps a TTY.
+# The `qa-*` tasks print `==> [name] ...` markers so parallel QA stays followable.
+
+vars:
+  COMPOSE: docker compose -f .docker/compose.yml
+  EXEC: docker compose -f .docker/compose.yml exec -T app
+  EXEC_TTY: docker compose -f .docker/compose.yml exec app
+  # class-leak only parses PHP, so every class SilverStripe reaches by config
+  # (YAML routes, extensions) or by type discovery (ClassInfo::implementorsOf)
+  # reads as unused. Skip types are resolved with is_a(), so this must run where
+  # the framework autoloads — inside the container.
+  CLASS_LEAK: >-
+    vendor/bin/class-leak check /module/src
+    --skip-type='SilverStripe\Control\Controller'
+    --skip-type='SilverStripe\Core\Extension'
+    --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarButtonProviderInterface'
+    --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface'
+    --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface'
+    --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarToggleProviderInterface'
+
+tasks:
+  # --- Docker environment ---------------------------------------------------
+
+  docker-env:
+    desc: Generate .docker/.env with deterministic ports (only if missing)
+    cmds:
+      - sh .docker/env.sh
+    status:
+      - test -f .docker/.env
+
+  up:
+    desc: Start services (build if needed)
+    deps: [docker-env]
+    cmds:
+      - "{{.COMPOSE}} up -d --build --wait app"
+      - 'port=$(grep WEB_PORT .docker/.env | cut -d= -f2); printf "\n  Testbed running at https://localhost:%s\n\n" "$port"'
+
+  down:
+    desc: Stop services
+    cmds:
+      - "{{.COMPOSE}} down"
+
+  destroy:
+    desc: Stop services and remove volumes
+    cmds:
+      - "{{.COMPOSE}} down -v"
+
+  build:
+    desc: Build images without starting
+    deps: [docker-env]
+    cmds:
+      - "{{.COMPOSE}} build"
+
+  sh:
+    desc: Open a shell in the app container
+    deps: [ensure-up]
+    interactive: true
+    cmds:
+      - "{{.EXEC_TTY}} sh"
+
+  ensure-up:
+    desc: Ensure services are running and ready
+    deps: [docker-env]
+    cmds:
+      - "{{.EXEC}} true 2>/dev/null || {{.COMPOSE}} up -d --build --wait app"
+
+  # --- Tests ----------------------------------------------------------------
+
+  test:
+    desc: Run all PHP test suites
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/phpunit"
+
+  # --- Dependency lock ------------------------------------------------------
+
+  relock:
+    desc: Regenerate the container composer lock (follows SS6.x)
+    deps: [docker-env]
+    # Resolution happens inside the built image so the platform (PHP version and
+    # extension set) matches what runs the tests. The image COPYs the lock, so
+    # the file must exist for the build — restore it from git if damaged.
+    # --entrypoint sh bypasses the boot install; -v carries the lock to the host.
+    cmds:
+      - "{{.COMPOSE}} build app"
+      - >-
+        {{.COMPOSE}} run --rm --no-deps -T
+        -v "$PWD/.docker/app:/lock"
+        --entrypoint sh app
+        -c "composer update --no-install --no-scripts --no-interaction && cp composer.lock /lock/composer.lock"
+
+  verify-lock:
+    desc: Fail if the committed lock no longer covers the module's requirements
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} /app/verify-lock.sh"
+
+  # --- Static analysis ------------------------------------------------------
+
+  analyse:
+    desc: Run PHPStan static analysis
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan.neon.dist --memory-limit=512M"
+
+  analyse-php85:
+    desc: Run PHPStan with the analysis target pinned to PHP 8.5
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan-php85.neon.dist --memory-limit=512M"
+
+  rector:
+    desc: Run Rector refactoring (applies changes)
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/rector process"
+
+  rector-dry:
+    desc: Run Rector in dry-run mode (preview only)
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/rector process --dry-run --no-progress-bar"
+
+  class-leak:
+    desc: Find classes in src/ that nothing references (class-leak)
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} {{.CLASS_LEAK}}"
+
+  # --- SilverStripe helpers -------------------------------------------------
+
+  flush:
+    desc: Clear SilverStripe cache
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/sake flush"
+
+  dev-build:
+    desc: Run dev/build to rebuild the database and manifest
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/sake dev/build flush=1"
+
+  # --- QA -------------------------------------------------------------------
+
+  qa:
+    desc: Run the full QA suite (all checks in parallel)
+    cmds:
+      - task: ensure-up
+      - task: qa-checks
+
+  qa-checks:
+    internal: true
+    deps:
+      - qa-analyse
+      - qa-analyse-php85
+      - qa-rector
+      - qa-class-leak
+      - qa-test
+
+  qa-analyse:
+    internal: true
+    cmds:
+      - 'echo "==> [analyse] running PHPStan..."'
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan.neon.dist --memory-limit=512M --no-progress"
+      - 'echo "==> [analyse] done"'
+
+  qa-analyse-php85:
+    internal: true
+    cmds:
+      - 'echo "==> [analyse-php85] running PHPStan (PHP 8.5 analysis target)..."'
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan-php85.neon.dist --memory-limit=512M --no-progress"
+      - 'echo "==> [analyse-php85] done"'
+
+  qa-rector:
+    internal: true
+    cmds:
+      - 'echo "==> [rector] running Rector (dry-run)..."'
+      - "{{.EXEC}} vendor/bin/rector process --dry-run --no-progress-bar"
+      - 'echo "==> [rector] done"'
+
+  qa-class-leak:
+    internal: true
+    cmds:
+      - 'echo "==> [class-leak] checking for unreferenced classes..."'
+      - "{{.EXEC}} {{.CLASS_LEAK}}"
+      - 'echo "==> [class-leak] done"'
+
+  qa-test:
+    internal: true
+    cmds:
+      - 'echo "==> [test] running PHPUnit..."'
+      - "{{.EXEC}} vendor/bin/phpunit"
+      - 'echo "==> [test] done"'

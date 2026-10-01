@@ -1,0 +1,71 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "silverstripe/recipe-cms": "^6.0",
+        "wedevelopnl/silverstripe-admintoolbar": "*",
+        "wedevelopnl/silverstripe-grid": "6.0.0-beta.4"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/module",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "_comment_require_dev": "QA toolchain is pinned to exact versions so a relock cannot silently float into a rule/behaviour change that breaks the build. Runtime deps (recipe-cms) stay on ranges so the module keeps testing against the latest SS6.x. Pins must resolve on php 8.3 (the module's floor): tomasvotruba/type-coverage is held at 2.2.1 because 2.2.2 requires php ^8.4, and phpunit/phpcov is held on the 11.x line that matches phpunit 12.",
+    "require-dev": {
+        "cambis/silverstan": "2.2.0",
+        "infection/infection": "0.35.0",
+        "phpstan/extension-installer": "1.4.3",
+        "phpstan/phpstan": "2.2.8",
+        "phpstan/phpstan-deprecation-rules": "2.0.5",
+        "phpunit/phpcov": "11.0.4",
+        "phpunit/phpunit": "12.5.33",
+        "rregeer/phpunit-coverage-check": "0.3.1",
+        "tomasvotruba/class-leak": "2.3.0",
+        "tomasvotruba/type-coverage": "2.2.1",
+        "wedevelopnl/silverstripe-e2e": "0.2.0",
+        "wernerkrauss/silverstripe-rector": "1.3.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WeDevelop\\AdminToolbar\\Tests\\": "vendor/wedevelopnl/silverstripe-admintoolbar/tests/"
+        }
+    },
+    "extra": {
+        "project-files-installed": [
+            ".htaccess",
+            "app/.htaccess",
+            "app/_config/mimevalidator.yml",
+            "app/_config/mysite.yml",
+            "app/src/Page.php",
+            "app/src/PageController.php"
+        ],
+        "public-files-installed": [
+            ".htaccess",
+            "index.php",
+            "web.config"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "infection/extension-installer": true,
+            "phpstan/extension-installer": true,
+            "silverstripe/recipe-plugin": true,
+            "silverstripe/vendor-plugin": true
+        },
+        "_comment_platform": "Resolve against the module's declared PHP floor. All matrix legs (8.3/8.4/8.5) install from this one lock, so it must hold a set installable on the lowest. It also makes `task relock` reproducible regardless of the host PHP.",
+        "platform": {
+            "php": "8.3.0"
+        }
+    }
+}

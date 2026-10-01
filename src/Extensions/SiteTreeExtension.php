@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Extensions;
 
+use SilverStripe\Core\Extension;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\NullHTTPRequest;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
 use WeDevelop\AdminToolbar\AdminToolbar;
 
-class SiteTreeExtension extends DataExtension
+class SiteTreeExtension extends Extension
 {
     public function AdminToolbar(): ?DBHTMLText
     {
         if (
-            !Controller::has_curr()
+            Controller::curr() === null
             || ($request = Controller::curr()->getRequest()) instanceof NullHTTPRequest
         ) {
             return null;
@@ -39,6 +39,6 @@ class SiteTreeExtension extends DataExtension
             return null;
         }
 
-        return Admintoolbar::create()->render();
+        return AdminToolbar::create()->render();
     }
 }

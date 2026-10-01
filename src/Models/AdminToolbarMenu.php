@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Models;
 
+use SilverStripe\Model\ModelData;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Config\Configurable;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\View\Requirements;
-use SilverStripe\View\ViewableData;
 use WeDevelop\AdminToolbar\AdminToolbar;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarJavascriptProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarStylesheetProviderInterface;
 
-abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenuInterface
+abstract class AdminToolbarMenu extends ModelData implements AdminToolbarMenuInterface
 {
     use Configurable;
 
@@ -45,7 +44,7 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
             }
         }
 
-        usort($items, static fn (AdminToolbarMenuItemProviderInterface $itemA, AdminToolbarMenuItemProviderInterface $itemB) => $itemA->provideAdminToolbarMenuItem()->getOrder() <=> $itemB->provideAdminToolbarMenuItem()->getOrder());
+        usort($items, static fn (AdminToolbarMenuItemProviderInterface $itemA, AdminToolbarMenuItemProviderInterface $itemB): int => $itemA->provideAdminToolbarMenuItem()->getOrder() <=> $itemB->provideAdminToolbarMenuItem()->getOrder());
 
         return ArrayList::create($items);
     }
@@ -55,9 +54,9 @@ abstract class AdminToolbarMenu extends ViewableData implements AdminToolbarMenu
         return '';
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 
     public function getOrder(): int

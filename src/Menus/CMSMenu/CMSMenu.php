@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\CMSMenu;
 
+use SilverStripe\Model\List\ArrayList;
+use SilverStripe\Model\ArrayData;
 use SilverStripe\Admin\LeftAndMain;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\CMSMenu\MenuItems\CMSMenuItem;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenu;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface;
@@ -65,9 +64,9 @@ class CMSMenu extends AdminToolbarMenu implements AdminToolbarMenuProviderInterf
         return ArrayList::create($menuItems);
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 
     public function getOrder(): int

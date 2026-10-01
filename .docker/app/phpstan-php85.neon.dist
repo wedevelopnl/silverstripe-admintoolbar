@@ -1,0 +1,11 @@
+# Secondary PHPStan pass with the analysis target pinned to PHP 8.5.
+#
+# Some PHPStan checks are gated on the configured analysis target rather than
+# the PHP runtime (e.g. #[\NoDiscard] enforcement, which only runs at >= 8.5).
+# The primary pass keeps verifying the 8.3 floor.
+includes:
+    - phpstan.neon.dist
+parameters:
+    phpVersion:
+        min: 80500
+        max: 80599

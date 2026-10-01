@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Extensions;
 
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
@@ -14,7 +14,7 @@ use SilverStripe\Security\Security;
  * @property bool $DisableAdminToolbar
  * @property bool $AdminToolbarDefaultCollapsed
  */
-class MemberExtension extends DataExtension
+class MemberExtension extends Extension
 {
     /**
      * @config

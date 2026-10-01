@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\CMSMenu\MenuItems;
 
-use SilverStripe\ORM\FieldType\DBHTMLText;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 use WeDevelop\AdminToolbar\Menus\CMSMenu\CMSMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 
@@ -45,8 +44,8 @@ class CMSMenuItem extends AdminToolbarMenuItem
         return $this->menuItem;
     }
 
-    public function forTemplate(): DBHTMLText
+    public function forTemplate(): string
     {
-        return $this->renderWith(self::class);
+        return $this->renderWith(self::class)->forTemplate();
     }
 }

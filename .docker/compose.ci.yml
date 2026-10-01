@@ -1,0 +1,22 @@
+# CI-only overlay that adds GitHub Actions layer caching to the image build.
+#
+# Used by .github/workflows/*.yml, layered after compose.yml:
+#   COMPOSE_BAKE=true docker compose -f .docker/compose.yml -f .docker/compose.ci.yml build app
+#
+# COMPOSE_BAKE delegates the build to buildx, which honours cache_from/cache_to.
+# CACHE_SCOPE namespaces the cache per PHP version. cache_to uses
+# ignore-error=true so fork/Dependabot PRs (no cache write access) degrade to an
+# uncached build instead of failing.
+#
+# The db image is pulled from mirror.gcr.io (same image, identical digest) so
+# the daemon-side pull does not hit Docker Hub's rate limit.
+services:
+  db:
+    image: mirror.gcr.io/library/mysql:8
+
+  app:
+    build:
+      cache_from:
+        - type=gha,scope=${CACHE_SCOPE:-app}
+      cache_to:
+        - type=gha,mode=max,scope=${CACHE_SCOPE:-app},ignore-error=true

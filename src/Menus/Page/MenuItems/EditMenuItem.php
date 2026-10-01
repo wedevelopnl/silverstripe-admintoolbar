@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Menus\Page\MenuItems;
 
+use SilverStripe\Model\ArrayData;
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\Control\Controller;
-use SilverStripe\View\ArrayData;
 use WeDevelop\AdminToolbar\Menus\Page\PageMenu;
 use WeDevelop\AdminToolbar\Models\AdminToolbarMenuItem;
 use WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface;
@@ -26,7 +26,7 @@ class EditMenuItem extends AdminToolbarMenuItem implements AdminToolbarMenuItemP
 
     public function getLink(): ArrayData
     {
-        if (!Controller::has_curr() || !($controller = Controller::curr()) instanceof ContentController) {
+        if (Controller::curr() === null || !($controller = Controller::curr()) instanceof ContentController) {
             return ArrayData::create();
         }
 
