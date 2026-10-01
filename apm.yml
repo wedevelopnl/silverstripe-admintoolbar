@@ -1,0 +1,8 @@
+name: silverstripe-admintoolbar
+version: 1.0.0
+description: "Silverstripe Admin Toolbar — frontend admin toolbar for Silverstripe CMS 6"
+author: "Erik Fr\xE8rejean"
+dependencies:
+  apm: []
+  mcp: []
+scripts: {}
