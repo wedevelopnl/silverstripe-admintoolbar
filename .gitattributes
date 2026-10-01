@@ -24,7 +24,6 @@
 # Dev and test directories
 /client/src              export-ignore
 /docs                    export-ignore
-/phpstan                 export-ignore
 /tests                   export-ignore
 
 # Dev and build config files

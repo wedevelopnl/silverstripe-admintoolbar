@@ -17,3 +17,9 @@ applyTo: "**/*"
 
 - **`ModuleResourceLoader::resolveURL()` throws on missing files** — check `resolveResource($path)->exists()` first.
 - **FunctionalTest login**: after `$memberId = $this->logInWithPermission(...)`, also `$this->session()->set('loggedInAs', $memberId)` or `$this->get()` runs anonymously.
+- **`TestOnly` fixture components ship with `enabled: false`** — the test kernel puts them in the manifest, so an enabled fixture would render in every functional test. Enable them per test with `Config::modify()`.
+- **Versioned 3 has no `canArchive()`** — archive permission is `canDelete($member)`.
+- **`FunctionalTest` disables CSRF tokens in `setUp()`** — call `SecurityToken::enable()` in a test that exercises token checks.
+- **`SapphireTest` loads fixtures before it logs in its default admin** — a fixture record's version author is whichever member the previous test left logged in. Write the version inside the test when its author matters.
+- **The Injector caches each service's config spec across tests** — after `Config::modify()` on `Injector`, give the test injector a fresh `SilverStripeServiceConfigurationLocator`.
+- **silverstan already stubs `SilverStripe\Versioned\Versioned`** — a second stub for the same class is a non-ignorable PHPStan error.

@@ -87,8 +87,21 @@ final class PageMenuTest extends SapphireTest
 
     public function testUnknownAuthorLabel(): void
     {
-        // Fixture pages are written without a logged-in member: their versions carry AuthorID 0.
+        // A version written while nobody is logged in carries AuthorID 0.
+        $this->logOut();
+        $page = $this->fixturePage('draft');
+        $page->Title = 'Edited anonymously';
+        $page->write();
+
         $menu = $this->menu($this->fixturePage('draft'), $this->admin);
+
+        $this->assertSame('Unknown author', $menu->getAuthorName());
+        $this->assertNull($menu->getAuthorLink());
+    }
+
+    public function testNoAuthorWithoutAPage(): void
+    {
+        $menu = $this->menu(null, $this->admin);
 
         $this->assertSame('Unknown author', $menu->getAuthorName());
         $this->assertNull($menu->getAuthorLink());

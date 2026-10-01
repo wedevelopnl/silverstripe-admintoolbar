@@ -1,5 +1,0 @@
-# TEMPORARY: pre-redesign code (2.x API ported by Rector). Phase 2 rewrites
-# src/ and deletes this file together with its include in phpstan.neon.dist.
-# Never add entries to it.
-parameters:
-	ignoreErrors: []

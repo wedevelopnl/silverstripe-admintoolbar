@@ -93,6 +93,27 @@ tasks:
     cmds:
       - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist --testsuite functional"
 
+  coverage:
+    desc: Run all PHP tests with coverage (HTML + Clover in coverage/)
+    deps: [ensure-up]
+    cmds:
+      - >-
+        {{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist
+        --coverage-html coverage/html
+        --coverage-clover coverage/clover.xml
+
+  coverage-check:
+    desc: Check PHP coverage meets the 90% minimum
+    deps: [coverage]
+    cmds:
+      - "{{.EXEC}} vendor/bin/coverage-check coverage/clover.xml 90"
+
+  mutate:
+    desc: Run PHP mutation testing (Infection) — slow; run deliberately
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} php -d memory_limit=1G vendor/bin/infection --configuration=/harness/infection.json5 --threads=4"
+
   # --- Dependency lock ------------------------------------------------------
 
   relock:
@@ -181,7 +202,7 @@ tasks:
       - qa-analyse-php85
       - qa-rector
       - qa-class-leak
-      - qa-test
+      - qa-coverage
 
   qa-analyse:
     internal: true
@@ -211,9 +232,9 @@ tasks:
       - "{{.EXEC}} {{.CLASS_LEAK}}"
       - 'echo "==> [class-leak] done"'
 
-  qa-test:
+  qa-coverage:
     internal: true
     cmds:
-      - 'echo "==> [test] running PHPUnit..."'
-      - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist"
-      - 'echo "==> [test] done"'
+      - 'echo "==> [coverage] running PHPUnit with coverage..."'
+      - task: coverage-check
+      - 'echo "==> [coverage] done"'
