@@ -12,6 +12,9 @@ applyTo: "**/*"
 - **Composer does not re-check a path package's requires when installing from a lock.** Adding a `require` to the module's `composer.json` without `task relock` installs nothing and exits 0; `task verify-lock` (a CI gate) catches it.
 - **`config.platform.php` in `.docker/app/composer.json` is pinned to `8.3.0`** — one lock serves the 8.3/8.4/8.5 matrix, so it must hold a set installable on the lowest.
 - **vendor-plugin cannot expose a path-repo module outside `/app`** (realpath breaks the relative path). `.docker/entrypoint.sh` symlinks `_resources/vendor/wedevelopnl/silverstripe-admintoolbar/client/dist` by hand.
+- **PHPUnit config schema path must be relative** (`../app/vendor/...`) — Infection prepends the config dir to it.
+- **Infection ignores only i18n-key concatenation** (`Concat`/`ConcatOperandRemoval` on `_t(self::class . '.KEY', …)` lines, `.docker/app/infection.json5`). Any other escape: delete the dead code, else kill it with a test, else suppress the narrowest scope with an inline equivalence proof.
+- **Vitest is pinned to 4** — `@stryker-mutator/vitest-runner` 10.0.0 runs 0 tests per mutant under Vitest 5 (every mutant survives). Dependabot ignores the major; lift both once a runner release supports Vitest 5.
 
 ## Frontend
 
