@@ -27,6 +27,9 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     css: false,
     coverage: {
+      // `coverage/` belongs to PHPUnit (bind-mounted into the container); Vitest
+      // empties its reports directory on every run.
+      reportsDirectory: 'reports/coverage',
       include: ['client/src/ts/**/*.ts'],
       exclude: [
         'client/src/ts/toolbar.ts',

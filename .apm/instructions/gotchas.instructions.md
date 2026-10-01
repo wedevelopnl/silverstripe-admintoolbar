@@ -13,6 +13,13 @@ applyTo: "**/*"
 - **`config.platform.php` in `.docker/app/composer.json` is pinned to `8.3.0`** — one lock serves the 8.3/8.4/8.5 matrix, so it must hold a set installable on the lowest.
 - **vendor-plugin cannot expose a path-repo module outside `/app`** (realpath breaks the relative path). `.docker/entrypoint.sh` symlinks `_resources/vendor/wedevelopnl/silverstripe-admintoolbar/client/dist` by hand.
 
+## Frontend
+
+- **Tailwind 4 prefixes are letters only** — `ssat`, never `ss-at`.
+- **Never run a build while a browser test, the dev server or the PHP functional suite reads `client/dist`** — Vite empties it first.
+- **Same-property utilities sort alphabetically** — `ssat:hidden` beats `ssat:flex` and `ssat:btn` but loses to `ssat:inline-flex`/`ssat:inline-block`; don't pair those with a script-toggled `ssat:hidden`.
+- **Deleting and recreating `client/dist` orphans the container's bind mount** — `docker compose -f .docker/compose.yml restart app`.
+
 ## SilverStripe 6
 
 - **`ModuleResourceLoader::resolveURL()` throws on missing files** — check `resolveResource($path)->exists()` first.

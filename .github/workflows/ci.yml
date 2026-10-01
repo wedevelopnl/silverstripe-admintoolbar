@@ -124,3 +124,39 @@ jobs:
           name: PHPUnit Results (PHP ${{ matrix.php }})
           path: coverage/junit.xml
           reporter: java-junit
+
+  js-qa:
+    name: JavaScript QA
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npx vitest run --coverage --reporter=default --reporter=junit --outputFile.junit=reports/vitest-junit.xml
+      - name: Verify the built bundle is committed
+        run: |
+          npm run build
+          git diff --exit-code -- client/dist
+          untracked="$(git status --porcelain --untracked-files=all -- client/dist | grep '^??' || true)"
+          if [ -n "$untracked" ]; then
+            echo "Untracked build output — run npm run build and commit client/dist:"
+            echo "$untracked"
+            exit 1
+          fi
+      # A fork PR's token is read-only whatever `permissions` asks for, so the
+      # check run cannot be written; the job result still reflects Vitest.
+      - uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
+        if: always() && !github.event.pull_request.head.repo.fork
+        with:
+          name: Vitest Results
+          path: reports/vitest-junit.xml
+          reporter: java-junit

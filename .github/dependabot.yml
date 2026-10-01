@@ -1,6 +1,30 @@
 version: 2
 
 updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+    # Peer-locked families must move as a unit: bumped one package at a time,
+    # each PR fails `npm ci` with ERESOLVE against the rest of its family.
+    groups:
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      stryker:
+        patterns:
+          - "@stryker-mutator/*"
+      tailwind:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
+    ignore:
+      # Hold on TypeScript 6.x until the toolchain (Biome,
+      # @stryker-mutator/typescript-checker) is verified against 7.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+
   - package-ecosystem: composer
     directory: /
     schedule:

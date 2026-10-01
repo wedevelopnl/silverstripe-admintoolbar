@@ -70,10 +70,11 @@ tasks:
   # --- Tests ----------------------------------------------------------------
 
   test:
-    desc: Run all PHP test suites
+    desc: Run all PHP test suites, then the JavaScript tests
     deps: [ensure-up]
     cmds:
       - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist"
+      - task: test-js
 
   test-unit:
     desc: Run PHP unit tests (no database)
@@ -93,6 +94,11 @@ tasks:
     cmds:
       - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist --testsuite functional"
 
+  test-js:
+    desc: Run JavaScript tests (Vitest)
+    cmds:
+      - npm run test
+
   coverage:
     desc: Run all PHP tests with coverage (HTML + Clover in coverage/)
     deps: [ensure-up]
@@ -108,11 +114,21 @@ tasks:
     cmds:
       - "{{.EXEC}} vendor/bin/coverage-check coverage/clover.xml 90"
 
+  coverage-js:
+    desc: Run JavaScript tests with coverage (thresholds enforced)
+    cmds:
+      - npm run coverage
+
   mutate:
     desc: Run PHP mutation testing (Infection) — slow; run deliberately
     deps: [ensure-up]
     cmds:
       - "{{.EXEC}} php -d memory_limit=1G vendor/bin/infection --configuration=/harness/infection.json5 --threads=4"
+
+  mutate-js:
+    desc: Run JavaScript mutation testing (Stryker) — maintainer-run; slow
+    cmds:
+      - npm run mutate
 
   # --- Dependency lock ------------------------------------------------------
 
@@ -189,11 +205,23 @@ tasks:
 
   # --- QA -------------------------------------------------------------------
 
+  # The build runs after the parallel checks: Vite empties client/dist first, and
+  # the PHP functional tests resolve the toolbar assets from it.
   qa:
-    desc: Run the full QA suite (all checks in parallel)
+    desc: Run the full QA suite (checks in parallel, then the build)
     cmds:
       - task: ensure-up
       - task: qa-checks
+      - task: qa-build
+
+  qa-js:
+    desc: Run JavaScript QA (lint + format + typecheck + test + build, in parallel)
+    deps:
+      - qa-lint
+      - qa-format
+      - qa-typecheck
+      - qa-test-js
+      - qa-build
 
   qa-checks:
     internal: true
@@ -203,6 +231,10 @@ tasks:
       - qa-rector
       - qa-class-leak
       - qa-coverage
+      - qa-lint
+      - qa-format
+      - qa-typecheck
+      - qa-test-js
 
   qa-analyse:
     internal: true
@@ -238,3 +270,38 @@ tasks:
       - 'echo "==> [coverage] running PHPUnit with coverage..."'
       - task: coverage-check
       - 'echo "==> [coverage] done"'
+
+  qa-lint:
+    internal: true
+    cmds:
+      - 'echo "==> [lint] running Biome..."'
+      - npm run lint
+      - 'echo "==> [lint] done"'
+
+  qa-format:
+    internal: true
+    cmds:
+      - 'echo "==> [format] running Biome format check..."'
+      - npm run format:check
+      - 'echo "==> [format] done"'
+
+  qa-typecheck:
+    internal: true
+    cmds:
+      - 'echo "==> [typecheck] running tsc..."'
+      - npm run typecheck
+      - 'echo "==> [typecheck] done"'
+
+  qa-test-js:
+    internal: true
+    cmds:
+      - 'echo "==> [test-js] running Vitest with coverage..."'
+      - npm run coverage
+      - 'echo "==> [test-js] done"'
+
+  qa-build:
+    internal: true
+    cmds:
+      - 'echo "==> [build] building client/dist..."'
+      - npm run build
+      - 'echo "==> [build] done"'
