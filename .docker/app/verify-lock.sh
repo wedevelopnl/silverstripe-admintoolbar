@@ -14,8 +14,15 @@
 set -e
 
 cp /app/composer.lock /tmp/composer.lock.committed
-composer update wedevelopnl/silverstripe-admintoolbar \
-    --no-install --no-scripts --no-interaction --quiet
+# Without -W the module cannot move any other locked package, so a tightened
+# constraint fails to resolve here. That is a stale lock too: show composer's
+# reasons, then the remedy.
+if ! composer update wedevelopnl/silverstripe-admintoolbar \
+    --no-install --no-scripts --no-interaction >/tmp/composer-update.log 2>&1; then
+    cat /tmp/composer-update.log >&2
+    printf '\nThe committed lock cannot satisfy the module'\''s current requirements.\nRun `task relock` and commit the result.\n' >&2
+    exit 1
+fi
 cp /app/composer.lock /tmp/composer.lock.resolved
 cp /tmp/composer.lock.committed /app/composer.lock
 
