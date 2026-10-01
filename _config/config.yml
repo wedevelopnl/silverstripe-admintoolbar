@@ -1,29 +1,22 @@
 ---
 Name: admintoolbar
 ---
-
-SilverStripe\CMS\Model\SiteTree:
+SilverStripe\CMS\Controllers\ContentController:
   extensions:
-    - WeDevelop\AdminToolbar\Extensions\SiteTreeExtension
+    - WeDevelop\AdminToolbar\Extension\ContentControllerExtension
 
 SilverStripe\Security\Member:
   extensions:
     - WeDevelop\AdminToolbar\Extensions\MemberExtension
 
-WeDevelop\AdminToolbar\AdminToolbar:
-  disabled_menus:
-  disabled_menu_items:
-  disabled_buttons:
-  disabled_toggles:
-
 ---
+Name: admintoolbar-live
 Only:
   environment: 'live'
 ---
-WeDevelop\AdminToolbar\AdminToolbar:
-  disabled_menus:
-  disabled_menu_items:
-  disabled_buttons:
-    - 'Queries'
-  disabled_toggles:
-    - 'Queries'
+# Query logging and its timing round-trip are development aids.
+WeDevelop\AdminToolbar\Button\QueriesButton:
+  enabled: false
+
+WeDevelop\AdminToolbar\Toggle\QueriesToggle:
+  enabled: false

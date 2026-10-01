@@ -12,17 +12,16 @@ vars:
   EXEC: docker compose -f .docker/compose.yml exec -T app
   EXEC_TTY: docker compose -f .docker/compose.yml exec app
   # class-leak only parses PHP, so every class SilverStripe reaches by config
-  # (YAML routes, extensions) or by type discovery (ClassInfo::implementorsOf)
+  # (YAML routes, extensions) or by type discovery (Component::discover, ClassInfo::implementorsOf)
   # reads as unused. Skip types are resolved with is_a(), so this must run where
   # the framework autoloads — inside the container.
   CLASS_LEAK: >-
     vendor/bin/class-leak check /module/src
     --skip-type='SilverStripe\Control\Controller'
     --skip-type='SilverStripe\Core\Extension'
-    --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarButtonProviderInterface'
+    --skip-type='WeDevelop\AdminToolbar\Model\Component'
     --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarMenuItemProviderInterface'
     --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarMenuProviderInterface'
-    --skip-type='WeDevelop\AdminToolbar\Providers\AdminToolbarToggleProviderInterface'
 
 tasks:
   # --- Docker environment ---------------------------------------------------
@@ -77,6 +76,18 @@ tasks:
     deps: [ensure-up]
     cmds:
       - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist"
+
+  test-unit:
+    desc: Run PHP unit tests (no database)
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist --testsuite unit"
+
+  test-functional:
+    desc: Run PHP functional tests (HTTP)
+    deps: [ensure-up]
+    cmds:
+      - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist --testsuite functional"
 
   # --- Dependency lock ------------------------------------------------------
 

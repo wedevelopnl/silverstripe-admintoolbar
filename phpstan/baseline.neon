@@ -4,48 +4,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Cannot access offset ''hide_cache_button'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/AdminToolbar.php
-
-		-
-			message: '#^Cannot access offset ''hide_edit_button'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/AdminToolbar.php
-
-		-
-			message: '#^Cannot access offset ''hide_stage_button'' on mixed\.$#'
-			identifier: offsetAccess.nonOffsetAccessible
-			count: 1
-			path: ../src/AdminToolbar.php
-
-		-
-			message: '#^Cannot call method canEdit\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: ../src/AdminToolbar.php
-
-		-
-			message: '#^Cannot call static method create\(\) on mixed\.$#'
-			identifier: staticMethod.nonObject
-			count: 3
-			path: ../src/AdminToolbar.php
-
-		-
-			message: '#^Expression on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.expr
-			count: 3
-			path: ../src/AdminToolbar.php
-
-		-
-			message: '#^Strict comparison using \!\=\= between true and ''0'' will always evaluate to true\.$#'
-			identifier: notIdentical.alwaysTrue
-			count: 1
-			path: ../src/AdminToolbar.php
-
-		-
 			message: '#^Cannot access offset ''action'' on mixed\.$#'
 			identifier: offsetAccess.nonOffsetAccessible
 			count: 1
@@ -82,19 +40,13 @@ parameters:
 			path: ../src/Extensions/MemberExtension.php
 
 		-
-			message: '#^Class WeDevelop\\AdminToolbar\\Extensions\\SiteTreeExtension extends generic class SilverStripe\\Core\\Extension but does not specify its types\: T$#'
-			identifier: missingType.generics
-			count: 1
-			path: ../src/Extensions/SiteTreeExtension.php
-
-		-
 			message: '#^Method WeDevelop\\AdminToolbar\\Menus\\CMSMenu\\CMSMenu\:\:getItems\(\) return type with generic class SilverStripe\\Model\\List\\ArrayList does not specify its types\: T$#'
 			identifier: missingType.generics
 			count: 1
 			path: ../src/Menus/CMSMenu/CMSMenu.php
 
 		-
-			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			message: '#^Out of 9 possible constant types, only 3 \- 33\.3 %% actually have it\. Add more constant types to get over 100 %%$#'
 			identifier: typeCoverage.constantTypeCoverage
 			count: 1
 			path: ../src/Menus/CMSMenu/CMSMenu.php
@@ -118,7 +70,7 @@ parameters:
 			path: ../src/Menus/Page/MenuItems/ArchiveMenuItem.php
 
 		-
-			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			message: '#^Out of 9 possible constant types, only 3 \- 33\.3 %% actually have it\. Add more constant types to get over 100 %%$#'
 			identifier: typeCoverage.constantTypeCoverage
 			count: 1
 			path: ../src/Menus/Page/MenuItems/ArchiveMenuItem.php
@@ -154,7 +106,7 @@ parameters:
 			path: ../src/Menus/Page/MenuItems/UnpublishAndArchiveMenuItem.php
 
 		-
-			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			message: '#^Out of 9 possible constant types, only 3 \- 33\.3 %% actually have it\. Add more constant types to get over 100 %%$#'
 			identifier: typeCoverage.constantTypeCoverage
 			count: 1
 			path: ../src/Menus/Page/MenuItems/UnpublishAndArchiveMenuItem.php
@@ -178,13 +130,13 @@ parameters:
 			path: ../src/Menus/Page/MenuItems/UnpublishMenuItem.php
 
 		-
-			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			message: '#^Out of 9 possible constant types, only 3 \- 33\.3 %% actually have it\. Add more constant types to get over 100 %%$#'
 			identifier: typeCoverage.constantTypeCoverage
 			count: 1
 			path: ../src/Menus/Page/MenuItems/UnpublishMenuItem.php
 
 		-
-			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			message: '#^Out of 9 possible constant types, only 3 \- 33\.3 %% actually have it\. Add more constant types to get over 100 %%$#'
 			identifier: typeCoverage.constantTypeCoverage
 			count: 1
 			path: ../src/Menus/Page/PageMenu.php
@@ -214,22 +166,10 @@ parameters:
 			path: ../src/Menus/User/MenuItems/EditUserMenuItem.php
 
 		-
-			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			message: '#^Out of 9 possible constant types, only 3 \- 33\.3 %% actually have it\. Add more constant types to get over 100 %%$#'
 			identifier: typeCoverage.constantTypeCoverage
 			count: 1
 			path: ../src/Menus/User/UserMenu.php
-
-		-
-			message: '#^Expression on left side of \?\? is not nullable\.$#'
-			identifier: nullCoalesce.expr
-			count: 1
-			path: ../src/Models/AdminToolbarButton.php
-
-		-
-			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Models\\AdminToolbarButton\:\:\$order through self\:\:\. Use self\:\:config\(\)\-\>get\(''order''\) instead\.$#'
-			identifier: silverstan.configurationProperty.unsafe
-			count: 1
-			path: ../src/Models/AdminToolbarButton.php
 
 		-
 			message: '#^Cannot call static method create\(\) on mixed\.$#'
