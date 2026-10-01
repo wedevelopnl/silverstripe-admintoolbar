@@ -1,0 +1,7 @@
+---
+Name: admintoolbar-grid
+Only:
+  moduleexists: wedevelopnl/silverstripe-grid
+---
+WeDevelop\AdminToolbar\Integration\Grid\GridMenu:
+  enabled: true

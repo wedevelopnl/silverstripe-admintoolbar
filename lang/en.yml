@@ -4,7 +4,7 @@ en:
     CLOSE: 'Close'
     COLLAPSE: 'Show or hide the toolbar'
     EDIT_PAGE: 'Edit page'
-    GRID: 'Grid'
+    GRID_ZONE: 'Zone: {name}'
     LAST_EDITED_BY: 'Last edited by'
     LAST_EDITED_ON: 'Last edited on'
     LOGGED_IN_AS: 'Logged in as'
@@ -23,6 +23,8 @@ en:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Button\TimingButton:
     TITLE: 'Timing'
+  WeDevelop\AdminToolbar\Integration\Grid\GridMenu:
+    TITLE: 'Grid'
   WeDevelop\AdminToolbar\Menu\CMSMenu:
     TITLE: 'Menu'
   WeDevelop\AdminToolbar\Menu\Page\ArchivePageItem:

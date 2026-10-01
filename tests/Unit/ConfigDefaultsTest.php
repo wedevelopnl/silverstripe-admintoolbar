@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Tests\Unit;
 
+use ReflectionProperty;
 use RuntimeException;
 use SilverStripe\Core\Manifest\Module;
 use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Dev\SapphireTest;
 use Symfony\Component\Yaml\Yaml;
+use WeDevelop\AdminToolbar\Integration\Grid\GridMenu;
 
 /**
  * `Only:` blocks cannot be switched at runtime, so the module's YAML is read as data.
@@ -18,6 +20,7 @@ final class ConfigDefaultsTest extends SapphireTest
     public function testLiveEnvironmentDisablesTheQueriesButtonAndToggle(): void
     {
         $live = $this->documentWhere(
+            'config.yml',
             static fn (array $header): bool => ($header['Only'] ?? null) === ['environment' => 'live'],
         );
 
@@ -27,7 +30,7 @@ final class ConfigDefaultsTest extends SapphireTest
 
     public function testContentControllerAndMemberExtensionsAreRegistered(): void
     {
-        $base = $this->documentWhere(static fn (array $header): bool => ($header['Name'] ?? null) === 'admintoolbar');
+        $base = $this->documentWhere('config.yml', static fn (array $header): bool => ($header['Name'] ?? null) === 'admintoolbar');
 
         $this->assertSame(
             ['extensions' => ['WeDevelop\AdminToolbar\Extension\ContentControllerExtension']],
@@ -39,16 +42,27 @@ final class ConfigDefaultsTest extends SapphireTest
         );
     }
 
+    public function testGridMenuIsEnabledOnlyWhenTheGridModuleExists(): void
+    {
+        $grid = $this->documentWhere(
+            'grid.yml',
+            static fn (array $header): bool => ($header['Only'] ?? null) === ['moduleexists' => 'wedevelopnl/silverstripe-grid'],
+        );
+
+        $this->assertSame([GridMenu::class => ['enabled' => true]], $grid);
+        $this->assertFalse((new ReflectionProperty(GridMenu::class, 'enabled'))->getDefaultValue());
+    }
+
     /**
      * @param callable(array<mixed>): bool $matchesHeader
      * @return array<mixed>
      */
-    private function documentWhere(callable $matchesHeader): array
+    private function documentWhere(string $file, callable $matchesHeader): array
     {
         $module = ModuleLoader::getModule('wedevelopnl/silverstripe-admintoolbar');
         $this->assertInstanceOf(Module::class, $module);
 
-        $contents = file_get_contents($module->getPath() . '/_config/config.yml');
+        $contents = file_get_contents($module->getPath() . '/_config/' . $file);
         $this->assertIsString($contents);
 
         // ['', header1, body1, header2, body2, …]
@@ -66,6 +80,6 @@ final class ConfigDefaultsTest extends SapphireTest
             }
         }
 
-        throw new RuntimeException('No matching document in _config/config.yml');
+        throw new RuntimeException('No matching document in _config/' . $file);
     }
 }
