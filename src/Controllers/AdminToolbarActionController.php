@@ -10,9 +10,6 @@ use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Security\SecurityToken;
 use SilverStripe\Versioned\Versioned;
-use WeDevelop\AdminToolbar\Menus\Page\MenuItems\ArchiveMenuItem;
-use WeDevelop\AdminToolbar\Menus\Page\MenuItems\UnpublishAndArchiveMenuItem;
-use WeDevelop\AdminToolbar\Menus\Page\MenuItems\UnpublishMenuItem;
 
 class AdminToolbarActionController extends Controller
 {
@@ -31,25 +28,25 @@ class AdminToolbarActionController extends Controller
      * @var array<string>
      */
     private static array $unpublishActions = [
-        UnpublishMenuItem::ACTION,
-        UnpublishAndArchiveMenuItem::ACTION,
+        'unpublish',
+        'unpublishAndArchive',
     ];
 
     /**
      * @var array<string>
      */
     private static array $archiveActions = [
-        UnpublishAndArchiveMenuItem::ACTION,
-        ArchiveMenuItem::ACTION,
+        'unpublishAndArchive',
+        'archive',
     ];
 
     /**
      * @var array<string, string>
      */
     private static array $successMessages = [
-        UnpublishMenuItem::ACTION => 'Page succesfully unpublished',
-        ArchiveMenuItem::ACTION => 'Page succesfully archived',
-        UnpublishAndArchiveMenuItem::ACTION => 'Page succesfully unpublished and archived',
+        'unpublish' => 'Page succesfully unpublished',
+        'archive' => 'Page succesfully archived',
+        'unpublishAndArchive' => 'Page succesfully unpublished and archived',
     ];
 
     public function pageAction(HTTPRequest $request): HTTPResponse

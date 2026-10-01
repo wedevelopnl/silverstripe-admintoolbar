@@ -1,1 +1,0 @@
-Current logged in user: $CurrentMember.Name

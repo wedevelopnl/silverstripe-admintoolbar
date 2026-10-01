@@ -11,6 +11,7 @@ use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Injector\SilverStripeServiceConfigurationLocator;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Security\Member;
+use SilverStripe\Security\Security;
 use SilverStripe\View\Requirements;
 use WeDevelop\AdminToolbar\Button\QueriesButton;
 use WeDevelop\AdminToolbar\Model\Button;
@@ -182,7 +183,11 @@ final class ComponentDiscoveryTest extends SapphireTest
 
     private function context(): ToolbarContext
     {
-        return new ToolbarContext(null, Member::create(), new HTTPRequest('GET', '/'));
+        $member = Member::create();
+        // The toolbar only renders for the logged-in member, and built-in menu items rely on that.
+        Security::setCurrentUser($member);
+
+        return new ToolbarContext(null, $member, new HTTPRequest('GET', '/'));
     }
 
     /**

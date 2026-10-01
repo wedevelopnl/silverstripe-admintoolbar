@@ -6,7 +6,7 @@ namespace WeDevelop\AdminToolbar\Model;
 
 abstract class MenuItem extends Component
 {
-    /** @var class-string<Menu>|'' the menu this item belongs to (also attaches to its subclasses) */
+    /** Class name of the Menu this item belongs to (it also attaches to that menu's subclasses); '' for none. */
     private static string $menu = '';
 
     public function getMenu(): string

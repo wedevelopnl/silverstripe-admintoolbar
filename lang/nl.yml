@@ -1,16 +1,12 @@
 nl:
   AdminToolbar:
-    LOGGED_IN_AS: 'Ingelogd als'
-    LOGOUT: 'Loguit'
-    ADMIN: 'Admin'
-    EDIT: 'Bewerk'
-    CLEAR_CACHE: 'Leeg cache'
-    SWITCH_TO_LIVE: 'Switch naar live'
-    SWITCH_TO_STAGE: 'Switch naar stage'
-    LAST_EDITED_ON: 'Laatst bewerkt op'
-    LAST_EDITED_BY: 'Laatst bewerkt door'
-    TOGGLES: 'Toggles'
     COLLAPSE: 'Toolbar tonen of verbergen'
+    EDIT_PAGE: 'Pagina bewerken'
+    LAST_EDITED_BY: 'Laatst bewerkt door'
+    LAST_EDITED_ON: 'Laatst bewerkt op'
+    LOGGED_IN_AS: 'Ingelogd als'
+    LOGOUT: 'Uitloggen'
+    TOGGLES: 'Toggles'
   SilverStripe\Security\Member:
     db_DisableAdminToolbar: 'Schakel admin toolbar uit'
     db_AdminToolbarDefaultCollapsed: 'Admin toolbar standaard ingeklaped'
@@ -22,6 +18,29 @@ nl:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Button\TimingButton:
     TITLE: 'Timing'
+  WeDevelop\AdminToolbar\Menu\CMSMenu:
+    TITLE: 'Menu'
+  WeDevelop\AdminToolbar\Menu\Page\ArchivePageItem:
+    SUCCESS: 'Pagina gearchiveerd'
+    TITLE: 'Archiveren'
+  WeDevelop\AdminToolbar\Menu\Page\PublishState:
+    ARCHIVED: 'Gearchiveerd'
+    DRAFT: 'Concept'
+    MODIFIED: 'Gewijzigd'
+    PUBLISHED: 'Gepubliceerd'
+  WeDevelop\AdminToolbar\Menu\Page\UnpublishAndArchivePageItem:
+    SUCCESS: 'Pagina gedepubliceerd en gearchiveerd'
+    TITLE: 'Depubliceren en archiveren'
+  WeDevelop\AdminToolbar\Menu\Page\UnpublishPageItem:
+    SUCCESS: 'Pagina gedepubliceerd'
+    TITLE: 'Depubliceren'
+  WeDevelop\AdminToolbar\Menu\PageMenu:
+    TITLE: 'Pagina'
+    UNKNOWN_AUTHOR: 'Onbekende auteur'
+  WeDevelop\AdminToolbar\Menu\User\EditUserItem:
+    TITLE: 'Profiel bewerken'
+  WeDevelop\AdminToolbar\Menu\UserMenu:
+    TITLE: 'Gebruiker'
   WeDevelop\AdminToolbar\Toggle\QueriesToggle:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Toggle\TimingToggle:

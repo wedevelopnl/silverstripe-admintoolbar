@@ -1,20 +1,13 @@
 en:
   AdminToolbar:
-    LOGGED_IN_AS: 'Logged in as'
-    LOGOUT: 'Logout'
-    ADMIN: 'Admin'
-    USER: 'User'
-    PAGE: 'Page'
-    MENU: 'Menu'
-    GRID: 'Grid'
-    EDIT: 'Edit'
-    CLEAR_CACHE: 'Clear cache'
-    SWITCH_TO_LIVE: 'Switch to live'
-    SWITCH_TO_STAGE: 'Switch to stage'
-    LAST_EDITED_ON: 'Last edited on'
-    LAST_EDITED_BY: 'Last edited by'
-    TOGGLES: 'Toggles'
     COLLAPSE: 'Show or hide the toolbar'
+    EDIT_PAGE: 'Edit page'
+    GRID: 'Grid'
+    LAST_EDITED_BY: 'Last edited by'
+    LAST_EDITED_ON: 'Last edited on'
+    LOGGED_IN_AS: 'Logged in as'
+    LOGOUT: 'Log out'
+    TOGGLES: 'Toggles'
   SilverStripe\Security\Member:
     db_DisableAdminToolbar: 'Disable admin toolbar'
     db_AdminToolbarDefaultCollapsed: 'Admin toolbar default collapsed'
@@ -26,6 +19,29 @@ en:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Button\TimingButton:
     TITLE: 'Timing'
+  WeDevelop\AdminToolbar\Menu\CMSMenu:
+    TITLE: 'Menu'
+  WeDevelop\AdminToolbar\Menu\Page\ArchivePageItem:
+    SUCCESS: 'Page archived'
+    TITLE: 'Archive'
+  WeDevelop\AdminToolbar\Menu\Page\PublishState:
+    ARCHIVED: 'Archived'
+    DRAFT: 'Draft'
+    MODIFIED: 'Modified'
+    PUBLISHED: 'Published'
+  WeDevelop\AdminToolbar\Menu\Page\UnpublishAndArchivePageItem:
+    SUCCESS: 'Page unpublished and archived'
+    TITLE: 'Unpublish and archive'
+  WeDevelop\AdminToolbar\Menu\Page\UnpublishPageItem:
+    SUCCESS: 'Page unpublished'
+    TITLE: 'Unpublish'
+  WeDevelop\AdminToolbar\Menu\PageMenu:
+    TITLE: 'Page'
+    UNKNOWN_AUTHOR: 'Unknown author'
+  WeDevelop\AdminToolbar\Menu\User\EditUserItem:
+    TITLE: 'Edit profile'
+  WeDevelop\AdminToolbar\Menu\UserMenu:
+    TITLE: 'User'
   WeDevelop\AdminToolbar\Toggle\QueriesToggle:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Toggle\TimingToggle:
