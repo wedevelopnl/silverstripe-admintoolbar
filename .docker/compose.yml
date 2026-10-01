@@ -20,6 +20,10 @@ services:
       - ../lang:/module/lang
       - ../templates:/module/templates:ro
       - ../coverage:/app/coverage
+      # QA configs are read live, so a host edit applies without a rebuild. A
+      # directory mount, not per-file ones: a file mount pins the inode, and an
+      # editor's or git's replace-on-save leaves the container reading the old one.
+      - ./app:/harness:ro
       - vendor:/app/vendor
     # Bring a crashed app back so one fault does not fail every later request;
     # capped so a container that cannot start still fails the job promptly.

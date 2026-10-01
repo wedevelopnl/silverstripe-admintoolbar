@@ -76,7 +76,7 @@ tasks:
     desc: Run all PHP test suites
     deps: [ensure-up]
     cmds:
-      - "{{.EXEC}} vendor/bin/phpunit"
+      - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist"
 
   # --- Dependency lock ------------------------------------------------------
 
@@ -111,25 +111,25 @@ tasks:
     desc: Run PHPStan static analysis
     deps: [ensure-up]
     cmds:
-      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan.neon.dist --memory-limit=512M"
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c /harness/phpstan.neon.dist --memory-limit=512M"
 
   analyse-php85:
     desc: Run PHPStan with the analysis target pinned to PHP 8.5
     deps: [ensure-up]
     cmds:
-      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan-php85.neon.dist --memory-limit=512M"
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c /harness/phpstan-php85.neon.dist --memory-limit=512M"
 
   rector:
     desc: Run Rector refactoring (applies changes)
     deps: [ensure-up]
     cmds:
-      - "{{.EXEC}} vendor/bin/rector process"
+      - "{{.EXEC}} vendor/bin/rector process --config /harness/rector.php"
 
   rector-dry:
     desc: Run Rector in dry-run mode (preview only)
     deps: [ensure-up]
     cmds:
-      - "{{.EXEC}} vendor/bin/rector process --dry-run --no-progress-bar"
+      - "{{.EXEC}} vendor/bin/rector process --config /harness/rector.php --dry-run --no-progress-bar"
 
   class-leak:
     desc: Find classes in src/ that nothing references (class-leak)
@@ -172,21 +172,21 @@ tasks:
     internal: true
     cmds:
       - 'echo "==> [analyse] running PHPStan..."'
-      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan.neon.dist --memory-limit=512M --no-progress"
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c /harness/phpstan.neon.dist --memory-limit=512M --no-progress"
       - 'echo "==> [analyse] done"'
 
   qa-analyse-php85:
     internal: true
     cmds:
       - 'echo "==> [analyse-php85] running PHPStan (PHP 8.5 analysis target)..."'
-      - "{{.EXEC}} vendor/bin/phpstan analyse -c phpstan-php85.neon.dist --memory-limit=512M --no-progress"
+      - "{{.EXEC}} vendor/bin/phpstan analyse -c /harness/phpstan-php85.neon.dist --memory-limit=512M --no-progress"
       - 'echo "==> [analyse-php85] done"'
 
   qa-rector:
     internal: true
     cmds:
       - 'echo "==> [rector] running Rector (dry-run)..."'
-      - "{{.EXEC}} vendor/bin/rector process --dry-run --no-progress-bar"
+      - "{{.EXEC}} vendor/bin/rector process --config /harness/rector.php --dry-run --no-progress-bar"
       - 'echo "==> [rector] done"'
 
   qa-class-leak:
@@ -200,5 +200,5 @@ tasks:
     internal: true
     cmds:
       - 'echo "==> [test] running PHPUnit..."'
-      - "{{.EXEC}} vendor/bin/phpunit"
+      - "{{.EXEC}} vendor/bin/phpunit -c /harness/phpunit.xml.dist"
       - 'echo "==> [test] done"'

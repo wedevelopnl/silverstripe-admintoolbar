@@ -99,7 +99,7 @@ jobs:
       - name: Start services
         run: $COMPOSE up -d --wait app
       - name: Run tests
-        run: $COMPOSE exec -T app vendor/bin/phpunit --log-junit coverage/junit.xml
+        run: $COMPOSE exec -T app vendor/bin/phpunit -c /harness/phpunit.xml.dist --log-junit coverage/junit.xml
       - name: Container diagnostics
         if: failure()
         uses: ./.github/actions/container-diagnostics
