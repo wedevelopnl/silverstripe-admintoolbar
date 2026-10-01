@@ -1,0 +1,6 @@
+---
+Name: app-grid
+---
+Page:
+  extensions:
+    - WeDevelop\Grid\Extensions\GridPageExtension
