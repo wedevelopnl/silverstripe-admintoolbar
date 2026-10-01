@@ -22,17 +22,14 @@ export function initTiming(
   iframe.tabIndex = -1
 
   const start = now()
-  iframe.addEventListener(
-    'load',
-    () => {
-      const label = button.querySelector('[data-button-label]')
-      if (label) {
-        label.textContent = format(button.dataset.summary ?? '', { ms: Math.round(now() - start) })
-      }
-      iframe.remove()
-    },
-    { once: true },
-  )
+  // A removed iframe never loads again, so the listener runs once.
+  iframe.addEventListener('load', () => {
+    const label = button.querySelector('[data-button-label]')
+    if (label) {
+      label.textContent = format(button.dataset.summary ?? '', { ms: Math.round(now() - start) })
+    }
+    iframe.remove()
+  })
   iframe.src = url.toString()
   document.body.append(iframe)
 }

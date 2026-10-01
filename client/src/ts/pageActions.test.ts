@@ -105,6 +105,36 @@ describe('initPageActions', () => {
     expect(reload).not.toHaveBeenCalled()
   })
 
+  it('shows an empty message when an overridden template renders no fallback', async () => {
+    delete container('a').dataset.errorMessage
+    fetchMock.mockRejectedValue(new TypeError('Failed to fetch'))
+
+    actionButton('a').click()
+    await settle()
+
+    expect(message('a').textContent).toBe('')
+    expect(message('a').classList.contains('ssat:hidden')).toBe(false)
+  })
+
+  it('posts to the current page when an overridden template renders no endpoint', async () => {
+    delete container('a').dataset.endpoint
+    fetchMock.mockResolvedValue(jsonResponse(200, {}))
+
+    actionButton('a').click()
+    await settle()
+
+    expect(fetchMock.mock.calls[0]?.[0]).toBe('')
+  })
+
+  it('prevents the default action of the clicked button', () => {
+    fetchMock.mockReturnValue(new Promise<Response>(() => undefined))
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true })
+
+    actionButton('a').dispatchEvent(event)
+
+    expect(event.defaultPrevented).toBe(true)
+  })
+
   it('disables the button while the request is pending', () => {
     fetchMock.mockReturnValue(new Promise<Response>(() => undefined))
 
@@ -151,6 +181,19 @@ describe('initPageActions', () => {
     await settle()
 
     expect(message('a').textContent).toBe('Gone')
+  })
+
+  it('reloads the page the browser is on by default', async () => {
+    const browserReload = vi.fn<() => void>()
+    vi.stubGlobal('location', { ...window.location, reload: browserReload })
+    document.body.innerHTML = actions('a')
+    initPageActions()
+    fetchMock.mockResolvedValue(jsonResponse(200, { message: 'Page unpublished' }))
+
+    actionButton('a').click()
+    await settle()
+
+    expect(browserReload).toHaveBeenCalledTimes(1)
   })
 
   it('sends an empty token when an overridden template renders none', async () => {

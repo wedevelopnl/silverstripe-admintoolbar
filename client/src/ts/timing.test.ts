@@ -40,6 +40,8 @@ describe('initTiming', () => {
     expect(button().classList.contains('ssat:hidden')).toBe(false)
     const iframe = document.querySelector('iframe') as HTMLIFrameElement
     expect(iframe.classList.contains('ssat:hidden')).toBe(true)
+    expect(iframe.getAttribute('aria-hidden')).toBe('true')
+    expect(iframe.tabIndex).toBe(-1)
     const url = new URL(iframe.src)
     expect(url.pathname).toBe('/about/')
     expect(url.searchParams.get('stage')).toBe('Live')
@@ -60,6 +62,16 @@ describe('initTiming', () => {
 
     expect(new URL(iframe.src).origin).toBe(window.location.origin)
     expect(byHook('data-button-label').textContent).toMatch(/^\d+ ms$/)
+  })
+
+  it('empties the label when an overridden template renders no summary', () => {
+    localStorage.setItem('[data-timing-toggle]', 'true')
+    delete button().dataset.summary
+
+    initTiming(document, fakeLocation(), () => 0)
+    document.querySelector('iframe')?.dispatchEvent(new Event('load'))
+
+    expect(byHook('data-button-label').textContent).toBe('')
   })
 
   it('cleans up the iframe when an overridden template has no label element', () => {

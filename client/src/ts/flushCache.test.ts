@@ -1,4 +1,4 @@
-import { byHook, fakeLocation, requestedUrl, textResponse } from './testing/dom'
+import { byHook, fakeLocation, PAGE_URL, requestedUrl, textResponse } from './testing/dom'
 import { initFlushCache } from './flushCache'
 
 const button = () => byHook<HTMLButtonElement>('data-flush-cache-button')
@@ -28,6 +28,7 @@ describe('initFlushCache', () => {
     expect(url.searchParams.get('stage')).toBe('Live')
     expect(url.searchParams.get('flush')).toBe('1')
     expect(url.searchParams.get('AdminToolbarDisabled')).toBe('1')
+    expect(fetchMock.mock.calls[0]?.[1]).toMatchObject({ credentials: 'same-origin' })
   })
 
   it('re-enables the button without reloading when the request fails', async () => {
@@ -55,5 +56,18 @@ describe('initFlushCache', () => {
     await vi.waitFor(() => expect(button().disabled).toBe(false))
 
     expect(requestedUrl(fetchMock).origin).toBe(window.location.origin)
+  })
+
+  it('reloads the page the browser is on by default', async () => {
+    const browserReload = vi.fn<() => void>()
+    vi.stubGlobal('location', { href: PAGE_URL, reload: browserReload })
+    document.body.innerHTML = '<button type="button" data-flush-cache-button>Flush</button>'
+    initFlushCache()
+    fetchMock.mockResolvedValue(textResponse(200, ''))
+
+    button().click()
+
+    await vi.waitFor(() => expect(browserReload).toHaveBeenCalledTimes(1))
+    expect(requestedUrl(fetchMock).pathname).toBe('/about/')
   })
 })

@@ -1,9 +1,7 @@
 type MessageBody = { readonly message: string }
 
 const isMessageBody = (value: unknown): value is MessageBody =>
-  typeof value === 'object' &&
-  value !== null &&
-  typeof (value as { message?: unknown }).message === 'string'
+  typeof (value as { message?: unknown } | null | undefined)?.message === 'string'
 
 export function initPageActions(
   root: ParentNode = document,
@@ -26,30 +24,29 @@ async function run(
   button: HTMLButtonElement,
   reload: () => void,
 ): Promise<void> {
-  const fallback = container.dataset.errorMessage ?? ''
   button.disabled = true
-  try {
-    const response = await fetch(container.dataset.endpoint ?? '', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-SecurityID':
-          container.querySelector<HTMLInputElement>('input[name="SecurityID"]')?.value ?? '',
-      },
-      body: JSON.stringify({ page_id: button.dataset.pageId, action: button.dataset.action }),
-    })
-    if (response.ok) {
-      reload()
-      return
-    }
-    const body: unknown = await response.json().catch(() => null)
-    showError(container, isMessageBody(body) ? body.message : fallback)
-  } catch {
-    showError(container, fallback)
-  } finally {
-    button.disabled = false
+  const response = await fetch(container.dataset.endpoint ?? '', {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-SecurityID':
+        container.querySelector<HTMLInputElement>('input[name="SecurityID"]')?.value ?? '',
+    },
+    body: JSON.stringify({ page_id: button.dataset.pageId, action: button.dataset.action }),
+  }).catch(() => undefined)
+
+  if (response?.ok) {
+    reload()
+  } else {
+    // A network failure leaves no response, a non-JSON error page no body.
+    const body: unknown = await response?.json().catch(() => undefined)
+    showError(
+      container,
+      isMessageBody(body) ? body.message : (container.dataset.errorMessage ?? ''),
+    )
   }
+  button.disabled = false
 }
 
 function showError(container: HTMLElement, message: string): void {

@@ -24,6 +24,13 @@ updates:
       # @stryker-mutator/typescript-checker) is verified against 7.
       - dependency-name: typescript
         update-types: ["version-update:semver-major"]
+      # Hold on Vitest 4: Stryker 10.0.0's vitest-runner runs no tests per mutant
+      # under Vitest 5 (every mutant survives). Drop this ignore once a runner
+      # release supports Vitest 5.
+      - dependency-name: vitest
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@vitest/*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: composer
     directory: /

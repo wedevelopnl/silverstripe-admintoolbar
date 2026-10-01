@@ -13,6 +13,7 @@ export function initDialogs(doc: Document = document): void {
     const trigger = target.closest<HTMLElement>('[data-toggle-dialog]')
     if (trigger) {
       event.preventDefault()
+      // Stryker disable next-line StringLiteral: unreachable — closest('[data-toggle-dialog]') matched, so the attribute exists
       toggle(doc, trigger.dataset.toggleDialog ?? '')
     } else if (target instanceof HTMLDialogElement && target.open) {
       target.close()
