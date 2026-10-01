@@ -34,7 +34,7 @@ final class ConfigDefaultsTest extends SapphireTest
             $base['SilverStripe\CMS\Controllers\ContentController'] ?? null,
         );
         $this->assertSame(
-            ['extensions' => ['WeDevelop\AdminToolbar\Extensions\MemberExtension']],
+            ['extensions' => ['WeDevelop\AdminToolbar\Extension\MemberExtension']],
             $base['SilverStripe\Security\Member'] ?? null,
         );
     }
