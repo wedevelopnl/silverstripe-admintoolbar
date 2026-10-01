@@ -5,6 +5,9 @@ on:
     branches: ['6']
   pull_request:
     branches: ['6']
+  # relock.yml dispatches CI on its branch: its GITHUB_TOKEN push and PR start
+  # no pull_request run.
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
