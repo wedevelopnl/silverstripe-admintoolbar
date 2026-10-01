@@ -1,0 +1,6 @@
+# Superpowers local artifacts.
+/superpowers/
+
+# Audit reports are a local working artifact — they pin findings to a commit and
+# go stale as soon as the findings are addressed.
+/audits/
