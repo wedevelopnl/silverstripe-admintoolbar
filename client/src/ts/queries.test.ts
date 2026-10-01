@@ -8,11 +8,18 @@ const TOOLBAR = `
     </button>
   </div>`
 
+// As `Database::displayQuery()` prints them through `Debug::message()`.
 const QUERY_PAGE = `<html><body>
-  <p class="alert alert-warning">0001: SELECT * FROM "SiteTree" WHERE "Sort" > 1.5
-0.0012s</p>
-  <p class="alert alert-warning">0002: SELECT '&lt;script&gt;alert(1)&lt;/script&gt;'
-0.0030s</p>
+  <p class="alert alert-warning">
+
+0001: SELECT * FROM "SiteTree" WHERE "Sort" > 1.5
+0.0012s
+</p>
+  <p class="alert alert-warning">
+
+0002: SELECT '&lt;script&gt;alert(1)&lt;/script&gt;'
+0.0030s
+</p>
   <p class="alert alert-info">Not a query 9.9s</p>
   <main>Page</main>
 </body></html>`
@@ -31,6 +38,19 @@ describe('parseQueries', () => {
   it('reads 0 seconds when a query has no timing', () => {
     expect(parseQueries('<p class="alert alert-warning">SELECT 1</p>')).toEqual([
       { sql: 'SELECT 1', seconds: 0 },
+    ])
+  })
+
+  it('reads whole-second and multi-second timings at the end of the query only', () => {
+    expect(
+      parseQueries(`
+        <p class="alert alert-warning">0003: SELECT '3s'
+12.5s</p>
+        <p class="alert alert-warning">0004: SELECT 1
+2s</p>`),
+    ).toEqual([
+      { sql: "0003: SELECT '3s'\n12.5s", seconds: 12.5 },
+      { sql: '0004: SELECT 1\n2s', seconds: 2 },
     ])
   })
 
@@ -80,7 +100,17 @@ describe('initQueries', () => {
       expect(url.searchParams.get('stage')).toBe('Live')
       expect(url.searchParams.get('showqueries')).toBe('inline')
       expect(url.searchParams.get('AdminToolbarDisabled')).toBe('1')
+      expect(fetchMock.mock.calls[0]?.[1]).toMatchObject({ credentials: 'same-origin' })
       expect(label().textContent).toBe('4 ms (2 queries)')
+    })
+
+    it('empties the label when an overridden template renders no summary', async () => {
+      delete button().dataset.summary
+      fetchMock.mockResolvedValue(textResponse(200, QUERY_PAGE))
+
+      await initQueries(document, fakeLocation())
+
+      expect(label().textContent).toBe('')
     })
 
     it('opens a dialog inside the toolbar listing each query as text', async () => {
@@ -127,6 +157,7 @@ describe('initQueries', () => {
       button().click()
 
       expect(document.querySelectorAll('#admin-toolbar dialog li')).toHaveLength(2)
+      expect(document.querySelector('#admin-toolbar dialog')?.getAttribute('aria-label')).toBe('')
     })
 
     it('keeps the original label when the page answers an error', async () => {

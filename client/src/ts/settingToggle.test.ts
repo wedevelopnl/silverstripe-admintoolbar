@@ -64,4 +64,14 @@ describe.each(HOOKS)('initSettingToggle(%s)', (hook) => {
 
     expect(checkbox().checked).toBe(true)
   })
+
+  it('reloads the page the browser is on by default', () => {
+    const browserReload = vi.fn<() => void>()
+    vi.stubGlobal('location', { ...window.location, reload: browserReload })
+    initSettingToggle(hook)
+
+    checkbox().click()
+
+    expect(browserReload).toHaveBeenCalledTimes(1)
+  })
 })

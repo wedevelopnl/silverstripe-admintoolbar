@@ -4,7 +4,7 @@ import { isSettingEnabled } from './settingToggle'
 export type Query = { readonly sql: string; readonly seconds: number }
 
 /** `Database::displayQuery()` ends each query with its duration, e.g. `0.0012s`. */
-const DURATION = /(\d+(?:\.\d+)?)s\s*$/
+const DURATION = /(\d+(?:\.\d+)?)s$/
 
 /** Reads the queries Silverstripe prints for `?showqueries=inline`. */
 export function parseQueries(html: string): Query[] {
@@ -44,7 +44,7 @@ export async function initQueries(
   }
 
   const label = button.querySelector('[data-button-label]')
-  const dialog = createDialog(queries, label?.textContent.trim() ?? '')
+  const dialog = createDialog(queries, label?.textContent ?? '')
   const seconds = queries.reduce((sum, query) => sum + query.seconds, 0)
   if (label) {
     label.textContent = format(button.dataset.summary ?? '', {
