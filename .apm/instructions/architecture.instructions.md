@@ -15,6 +15,7 @@ applyTo: "**/*"
 | `src/Menu/Page/` | `PublishState` enum; `PageActionItem` and its Unpublish, Archive, UnpublishAndArchive items |
 | `src/Menu/User/` | `UsernameItem`, `EditUserItem` |
 | `src/Controller/PageActionController.php` | `admintoolbaraction/pageAction` — page-action endpoint |
+| `src/Integration/Grid/` | `GridMenu` — the only code referencing `WeDevelop\Grid\*`; enabled by `_config/grid.yml` (`Only: moduleexists`) |
 | `src/Extension/` | `ContentControllerExtension` (`$AdminToolbar` template hook), `MemberExtension` (per-member settings) |
 | `templates/WeDevelop/AdminToolbar/` | `.ss` templates mirroring the `src/` namespaces |
 | `client/src/ts/` → `client/dist/js/toolbar.js` | TypeScript behaviour modules, one IIFE bundle via Vite; tests beside each module |
@@ -26,6 +27,8 @@ applyTo: "**/*"
 | `.docker/app/` | Harness composer.json + committed lock, PHPStan/PHPUnit/Rector/Infection configs |
 | `tests/Unit/`, `tests/Integration/`, `tests/Functional/` | PHPUnit suites `unit` (no DB), `integration` (DB fixtures), `functional` (HTTP) |
 | `tests/Fixture/` | `TestOnly` components for discovery tests |
+| `tests/E2E/{specs,helpers,Fixture}` | Playwright specs, helpers, YAML fixtures; fixtures registered in `_config/dev.yml` (`Only: environment: dev`, export-ignored) |
+| `playwright.config.ts` | Base URL from `E2E_BASE_URL` or `.docker/.env`; setup project stores the admin session in `tests/E2E/.auth/` |
 
 - Permission `ADMIN_TOOLBAR` gates rendering; members can opt out via `DisableAdminToolbar`.
 - Components are discovered by type (`Component::discover()`): add one by declaring a concrete subclass, remove one with `enabled: false` YAML.
@@ -51,3 +54,4 @@ applyTo: "**/*"
 | `data-queries-toggle` / `data-timing-toggle` | Toggle checkboxes |
 | `data-queries-button` / `data-timing-button` + `data-summary` | Buttons rendered `ssat:hidden`; `data-summary` holds the `{ms}`/`{count}` label template |
 | `data-button-label` | Label `<span>` in `Model/Button.ss` |
+| `data-grid-zone="<name>"` / `data-grid-node="<kind>"` | `GridMenu` zone sections and tree nodes (`section`, `row`, `column`, `element`, `shared`) |

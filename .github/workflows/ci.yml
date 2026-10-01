@@ -137,6 +137,12 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      # The E2E typecheck resolves @wedevelop/e2e from vendor/wedevelopnl/silverstripe-e2e.
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2.37.2
+        with:
+          php-version: '8.3'
+          extensions: intl
+      - uses: ramsey/composer-install@26d8a556604053a9612623447203a691f406fbe6 # v4
       - run: npm ci
       - run: npm run lint
       - run: npm run format:check
@@ -160,3 +166,90 @@ jobs:
           name: Vitest Results
           path: reports/vitest-junit.xml
           reporter: java-junit
+
+  e2e:
+    name: E2E (${{ matrix.browser }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox]
+    env:
+      COMPOSE: docker compose -f .docker/compose.yml -f .docker/compose.ci.yml
+      COMPOSE_BAKE: 'true'
+      CACHE_SCOPE: app-php8.3
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Log in to Docker Hub
+        if: env.DOCKERHUB_USERNAME != ''
+        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: arduino/setup-task@c0bc642852239c2689f73f4ea6459c29405f3c52 # v3.0.0
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      # Playwright runs on the runner and imports the fixture client from
+      # vendor/wedevelopnl/silverstripe-e2e, so composer deps must exist on the
+      # runner (the Docker image's vendor volume is not visible to the host).
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2.37.2
+        with:
+          php-version: '8.3'
+          extensions: intl
+      - uses: ramsey/composer-install@26d8a556604053a9612623447203a691f406fbe6 # v4
+      - run: npm ci
+      - uses: actions/cache/restore@v6
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ matrix.browser }}-${{ hashFiles('package-lock.json') }}
+      # On a cache hit the browser binaries are already restored, so install
+      # without --with-deps to skip the apt-get of system libraries.
+      - if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install ${{ matrix.browser }}
+      - if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+      - uses: actions/cache/save@v6
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ matrix.browser }}-${{ hashFiles('package-lock.json') }}
+      - uses: ./.github/actions/setup-docker-mirror
+      - run: task docker-env
+      - name: Build image (GHA layer cache)
+        run: $COMPOSE build app
+      - name: Start services
+        run: $COMPOSE up -d --wait app
+      - name: Run Playwright
+        run: npx playwright test --project=${{ matrix.browser }} --reporter=html,junit
+        env:
+          CI: true
+          PLAYWRIGHT_JUNIT_OUTPUT_NAME: reports/playwright-junit.xml
+      - name: Container diagnostics
+        if: failure()
+        uses: ./.github/actions/container-diagnostics
+        with:
+          compose: ${{ env.COMPOSE }}
+      # A fork PR's token is read-only whatever `permissions` asks for, so the
+      # check run cannot be written; the job result still reflects Playwright.
+      - uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
+        if: always() && !github.event.pull_request.head.repo.fork
+        with:
+          name: E2E Results (${{ matrix.browser }})
+          path: reports/playwright-junit.xml
+          reporter: java-junit
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: playwright-report/
+          retention-days: 7

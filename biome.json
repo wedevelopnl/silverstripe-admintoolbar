@@ -12,7 +12,9 @@
       "!client/src/styles/icons.css",
       "vite.config.mts",
       "vitest.setup.ts",
-      "stryker.config.mjs"
+      "stryker.config.mjs",
+      "tests/E2E/**/*.ts",
+      "playwright.config.ts"
     ]
   },
   "formatter": {
@@ -130,6 +132,16 @@
         "noDuplicateSelectors": "error",
         "noExcessiveSelectorClasses": "error",
         "noInvalidPropertyInitValue": "error",
+        "noPlaywrightWaitForTimeout": "warn",
+        "noPlaywrightNetworkidle": "error",
+        "noPlaywrightForceOption": "error",
+        "noPlaywrightElementHandle": "error",
+        "noPlaywrightMissingAwait": "error",
+        "noPlaywrightWaitForSelector": "error",
+        "noPlaywrightWaitForNavigation": "error",
+        "noPlaywrightPagePause": "error",
+        "noPlaywrightEval": "error",
+        "noPlaywrightUselessAwait": "error",
         "useBaseline": {
           "level": "error",
           "options": {
@@ -171,7 +183,27 @@
       }
     },
     {
-      "includes": ["vite.config.mts", "vitest.setup.ts"],
+      "includes": ["tests/E2E/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNonNullAssertion": "off"
+          },
+          "performance": {
+            "noAwaitInLoops": "off"
+          },
+          "suspicious": {
+            "noMisplacedAssertion": "off",
+            "noSkippedTests": "off"
+          },
+          "nursery": {
+            "noConditionalExpect": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["vite.config.mts", "vitest.setup.ts", "playwright.config.ts"],
       "linter": {
         "rules": {
           "style": {
