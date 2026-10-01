@@ -46,10 +46,6 @@ RUN mkdir -p /app/src /app/_config \
     && printf '<?php\n\nuse SilverStripe\\CMS\\Controllers\\ContentController;\n\nclass PageController extends ContentController\n{\n}\n' > /app/src/PageController.php
 
 COPY app/templates/ /app/templates/
-COPY app/phpunit.xml.dist /app/phpunit.xml.dist
-COPY app/phpstan.neon.dist /app/phpstan.neon.dist
-COPY app/phpstan-php85.neon.dist /app/phpstan-php85.neon.dist
-COPY app/rector.php /app/rector.php
 COPY app/verify-lock.sh /app/verify-lock.sh
 RUN chmod +x /app/verify-lock.sh
 
