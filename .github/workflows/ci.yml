@@ -102,8 +102,10 @@ jobs:
         uses: ./.github/actions/container-diagnostics
         with:
           compose: ${{ env.COMPOSE }}
+      # A fork PR's token is read-only whatever `permissions` asks for, so the
+      # check run cannot be written; the job result still reflects PHPUnit.
       - uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
-        if: always()
+        if: always() && !github.event.pull_request.head.repo.fork
         with:
           name: PHPUnit Results (PHP ${{ matrix.php }})
           path: coverage/junit.xml
