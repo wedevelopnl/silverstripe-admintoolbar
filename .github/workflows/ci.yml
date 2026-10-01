@@ -73,7 +73,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.3', '8.4', '8.5']
+        include:
+          - { php: '8.3', coverage: true }
+          - { php: '8.4', coverage: false }
+          - { php: '8.5', coverage: false }
     env:
       PHP_VERSION: ${{ matrix.php }}
       COMPOSE: docker compose -f .docker/compose.yml -f .docker/compose.ci.yml
@@ -99,7 +102,15 @@ jobs:
       - name: Start services
         run: $COMPOSE up -d --wait app
       - name: Run tests
+        if: ${{ !matrix.coverage }}
         run: $COMPOSE exec -T app vendor/bin/phpunit -c /harness/phpunit.xml.dist --log-junit coverage/junit.xml
+      # One leg owns coverage: the gate measures the same code on every PHP version.
+      - name: Run tests with coverage
+        if: ${{ matrix.coverage }}
+        run: $COMPOSE exec -T app vendor/bin/phpunit -c /harness/phpunit.xml.dist --log-junit coverage/junit.xml --coverage-clover coverage/clover.xml
+      - name: Check coverage (90% minimum)
+        if: ${{ matrix.coverage }}
+        run: $COMPOSE exec -T app vendor/bin/coverage-check coverage/clover.xml 90
       - name: Container diagnostics
         if: failure()
         uses: ./.github/actions/container-diagnostics

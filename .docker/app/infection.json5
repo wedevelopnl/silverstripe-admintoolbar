@@ -1,0 +1,22 @@
+{
+    $schema: "/app/vendor/infection/infection/resources/schema.json",
+    source: {
+        directories: ["/module/src"],
+    },
+    phpUnit: {
+        configDir: "/harness",
+    },
+    // /harness is read-only; logs land in the host-mounted coverage dir.
+    tmpDir: "/tmp/infection",
+    logs: {
+        text: "/app/coverage/infection/infection.log",
+        json: "/app/coverage/infection/infection.json",
+    },
+    timeout: 30,
+    mutators: {
+        "@default": true,
+    },
+    // minMsi equals minCoveredMsi on purpose: minMsi also counts uncovered mutants.
+    minMsi: 99,
+    minCoveredMsi: 99,
+}

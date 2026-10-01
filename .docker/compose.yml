@@ -15,7 +15,6 @@ services:
       - ../src:/module/src
       - ../tests:/module/tests:ro
       - ../_config:/module/_config:ro
-      - ../phpstan:/module/phpstan
       - ../client/dist:/module/client/dist:ro
       - ../lang:/module/lang
       - ../templates:/module/templates:ro

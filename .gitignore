@@ -14,6 +14,9 @@ phpunit.xml
 .phpunit.cache/
 coverage/
 
+# Infection
+infection/
+
 # Source maps (never commit — they can leak original source on a misconfigured build)
 *.map
 
