@@ -1,2 +1,295 @@
+# TEMPORARY: pre-redesign code (2.x API ported by Rector). Phase 2 rewrites
+# src/ and deletes this file together with its include in phpstan.neon.dist.
+# Never add entries to it.
 parameters:
-    ignoreErrors: []
+	ignoreErrors:
+		-
+			message: '#^Cannot access offset ''hide_cache_button'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/AdminToolbar.php
+
+		-
+			message: '#^Cannot access offset ''hide_edit_button'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/AdminToolbar.php
+
+		-
+			message: '#^Cannot access offset ''hide_stage_button'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/AdminToolbar.php
+
+		-
+			message: '#^Cannot call method canEdit\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/AdminToolbar.php
+
+		-
+			message: '#^Cannot call static method create\(\) on mixed\.$#'
+			identifier: staticMethod.nonObject
+			count: 3
+			path: ../src/AdminToolbar.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 3
+			path: ../src/AdminToolbar.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between true and ''0'' will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: ../src/AdminToolbar.php
+
+		-
+			message: '#^Cannot access offset ''action'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/Controllers/AdminToolbarActionController.php
+
+		-
+			message: '#^Cannot access offset ''page_id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: ../src/Controllers/AdminToolbarActionController.php
+
+		-
+			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Controllers\\AdminToolbarActionController\:\:\$archiveActions through self\:\:\. Use self\:\:config\(\)\-\>get\(''archiveActions''\) instead\.$#'
+			identifier: silverstan.configurationProperty.unsafe
+			count: 2
+			path: ../src/Controllers/AdminToolbarActionController.php
+
+		-
+			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Controllers\\AdminToolbarActionController\:\:\$successMessages through self\:\:\. Use self\:\:config\(\)\-\>get\(''successMessages''\) instead\.$#'
+			identifier: silverstan.configurationProperty.unsafe
+			count: 1
+			path: ../src/Controllers/AdminToolbarActionController.php
+
+		-
+			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Controllers\\AdminToolbarActionController\:\:\$unpublishActions through self\:\:\. Use self\:\:config\(\)\-\>get\(''unpublishActions''\) instead\.$#'
+			identifier: silverstan.configurationProperty.unsafe
+			count: 3
+			path: ../src/Controllers/AdminToolbarActionController.php
+
+		-
+			message: '#^Class WeDevelop\\AdminToolbar\\Extensions\\MemberExtension extends generic class SilverStripe\\Core\\Extension but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../src/Extensions/MemberExtension.php
+
+		-
+			message: '#^Class WeDevelop\\AdminToolbar\\Extensions\\SiteTreeExtension extends generic class SilverStripe\\Core\\Extension but does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../src/Extensions/SiteTreeExtension.php
+
+		-
+			message: '#^Method WeDevelop\\AdminToolbar\\Menus\\CMSMenu\\CMSMenu\:\:getItems\(\) return type with generic class SilverStripe\\Model\\List\\ArrayList does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../src/Menus/CMSMenu/CMSMenu.php
+
+		-
+			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			identifier: typeCoverage.constantTypeCoverage
+			count: 1
+			path: ../src/Menus/CMSMenu/CMSMenu.php
+
+		-
+			message: '#^Cannot access property \$ID on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/ArchiveMenuItem.php
+
+		-
+			message: '#^Cannot call method canDelete\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/ArchiveMenuItem.php
+
+		-
+			message: '#^Cannot call method isPublished\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/ArchiveMenuItem.php
+
+		-
+			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			identifier: typeCoverage.constantTypeCoverage
+			count: 1
+			path: ../src/Menus/Page/MenuItems/ArchiveMenuItem.php
+
+		-
+			message: '#^Parameter \#1 \$siteTree of static method WeDevelop\\AdminToolbar\\URLTranslator\:\:getPageEditURL\(\) expects int\|SilverStripe\\CMS\\Model\\SiteTree, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/Menus/Page/MenuItems/EditMenuItem.php
+
+		-
+			message: '#^Cannot access property \$ID on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishAndArchiveMenuItem.php
+
+		-
+			message: '#^Cannot call method canDelete\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishAndArchiveMenuItem.php
+
+		-
+			message: '#^Cannot call method canUnpublish\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishAndArchiveMenuItem.php
+
+		-
+			message: '#^Cannot call method isPublished\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishAndArchiveMenuItem.php
+
+		-
+			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			identifier: typeCoverage.constantTypeCoverage
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishAndArchiveMenuItem.php
+
+		-
+			message: '#^Cannot access property \$ID on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishMenuItem.php
+
+		-
+			message: '#^Cannot call method canUnpublish\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishMenuItem.php
+
+		-
+			message: '#^Cannot call method isPublished\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishMenuItem.php
+
+		-
+			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			identifier: typeCoverage.constantTypeCoverage
+			count: 1
+			path: ../src/Menus/Page/MenuItems/UnpublishMenuItem.php
+
+		-
+			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			identifier: typeCoverage.constantTypeCoverage
+			count: 1
+			path: ../src/Menus/Page/PageMenu.php
+
+		-
+			message: '#^Parameter \#1 \$class of static method SilverStripe\\Versioned\\Versioned\:\:get_version\(\) expects class\-string\<SilverStripe\\ORM\\DataObject\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/Menus/Page/PageMenu.php
+
+		-
+			message: '#^Parameter \#2 \$id of static method SilverStripe\\Versioned\\Versioned\:\:get_version\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/Menus/Page/PageMenu.php
+
+		-
+			message: '#^Parameter \#3 \$version of static method SilverStripe\\Versioned\\Versioned\:\:get_version\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/Menus/Page/PageMenu.php
+
+		-
+			message: '#^Parameter \#1 \$member of static method WeDevelop\\AdminToolbar\\URLTranslator\:\:getUserEditURL\(\) expects SilverStripe\\Security\\Member, SilverStripe\\Security\\Member\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/Menus/User/MenuItems/EditUserMenuItem.php
+
+		-
+			message: '#^Out of 6 possible constant types, only 0 \- 0\.0 %% actually have it\. Add more constant types to get over 100 %%$#'
+			identifier: typeCoverage.constantTypeCoverage
+			count: 1
+			path: ../src/Menus/User/UserMenu.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: ../src/Models/AdminToolbarButton.php
+
+		-
+			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Models\\AdminToolbarButton\:\:\$order through self\:\:\. Use self\:\:config\(\)\-\>get\(''order''\) instead\.$#'
+			identifier: silverstan.configurationProperty.unsafe
+			count: 1
+			path: ../src/Models/AdminToolbarButton.php
+
+		-
+			message: '#^Cannot call static method create\(\) on mixed\.$#'
+			identifier: staticMethod.nonObject
+			count: 1
+			path: ../src/Models/AdminToolbarMenu.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: ../src/Models/AdminToolbarMenu.php
+
+		-
+			message: '#^Method WeDevelop\\AdminToolbar\\Models\\AdminToolbarMenu\:\:getItems\(\) return type with generic class SilverStripe\\Model\\List\\ArrayList does not specify its types\: T$#'
+			identifier: missingType.generics
+			count: 1
+			path: ../src/Models/AdminToolbarMenu.php
+
+		-
+			message: '#^Parameter \#2 \$haystack of function in_array expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: ../src/Models/AdminToolbarMenu.php
+
+		-
+			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Models\\AdminToolbarMenu\:\:\$order through self\:\:\. Use self\:\:config\(\)\-\>get\(''order''\) instead\.$#'
+			identifier: silverstan.configurationProperty.unsafe
+			count: 1
+			path: ../src/Models/AdminToolbarMenu.php
+
+		-
+			message: '#^Expression on left side of \?\? is not nullable\.$#'
+			identifier: nullCoalesce.expr
+			count: 1
+			path: ../src/Models/AdminToolbarMenuItem.php
+
+		-
+			message: '#^Unsafe access to configuration property WeDevelop\\AdminToolbar\\Models\\AdminToolbarMenuItem\:\:\$order through self\:\:\. Use self\:\:config\(\)\-\>get\(''order''\) instead\.$#'
+			identifier: silverstan.configurationProperty.unsafe
+			count: 1
+			path: ../src/Models/AdminToolbarMenuItem.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: ../src/URLTranslator.php
+
+		-
+			message: '''
+				#^Call to deprecated method CMSEditLink\(\) of class SilverStripe\\ORM\\DataObject\:
+				6\.0\.0 Use getCMSEditLink\(\) instead$#
+			'''
+			identifier: method.deprecated
+			count: 1
+			path: ../src/URLTranslator.php
+
+		-
+			message: '#^Method WeDevelop\\AdminToolbar\\URLTranslator\:\:getPageEditURL\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: ../src/URLTranslator.php
