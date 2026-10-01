@@ -12,6 +12,21 @@
     "commit-commands@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "php-lsp@claude-plugins-official": true
+    "php-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/qa-gate.sh",
+            "timeout": 300
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ]
   }
 }

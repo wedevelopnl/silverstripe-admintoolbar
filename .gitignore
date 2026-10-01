@@ -17,6 +17,10 @@ coverage/
 # Infection
 infection/
 
+# Stryker / Vitest reports
+reports/
+.stryker-tmp/
+
 # Source maps (never commit — they can leak original source on a misconfigured build)
 *.map
 
