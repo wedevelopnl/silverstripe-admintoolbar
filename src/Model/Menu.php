@@ -43,6 +43,6 @@ abstract class Menu extends Component
             fn (MenuItem $item): bool => $item->getMenu() !== '' && is_a($this, $item->getMenu()),
         );
 
-        return ArrayList::create(array_values($items));
+        return ArrayList::create($items);
     }
 }

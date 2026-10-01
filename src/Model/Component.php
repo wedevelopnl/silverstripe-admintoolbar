@@ -46,7 +46,7 @@ abstract class Component extends ModelData
         $found = [];
 
         /** @var array<string, class-string<T>> $classes */
-        $classes = ClassInfo::subclassesFor($baseClass, false);
+        $classes = ClassInfo::subclassesFor($baseClass);
 
         foreach ($classes as $class) {
             if ((new ReflectionClass($class))->isAbstract() || Config::inst()->get($class, 'enabled') !== true) {

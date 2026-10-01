@@ -59,10 +59,10 @@ final class PageActionController extends Controller
         }
 
         $payload = json_decode((string) $request->getBody(), true);
-        $pageId = is_array($payload)
-            ? filter_var($payload['page_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])
-            : false;
-        $action = is_array($payload) ? ($payload['action'] ?? null) : null;
+        // A body that is not a JSON object reads as an empty one and fails the check below.
+        $payload = is_array($payload) ? $payload : [];
+        $pageId = filter_var($payload['page_id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        $action = $payload['action'] ?? null;
 
         if ($pageId === false || !is_string($action)) {
             return $this->reply(400, _t(self::class . '.MALFORMED', 'The request could not be understood.'));

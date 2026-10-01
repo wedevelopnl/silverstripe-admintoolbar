@@ -57,10 +57,10 @@ class AdminToolbar extends ModelData implements PermissionProvider
 
     /**
      * @param list<Menu> $menus
-     * @return list<Menu>
+     * @return array<Menu>
      */
     private function menusAt(array $menus, string $placement): array
     {
-        return array_values(array_filter($menus, static fn (Menu $menu): bool => $menu->getPlacement() === $placement));
+        return array_filter($menus, static fn (Menu $menu): bool => $menu->getPlacement() === $placement);
     }
 }

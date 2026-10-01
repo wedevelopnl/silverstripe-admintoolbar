@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace WeDevelop\AdminToolbar\Tests\Functional;
 
 use Page;
+use SilverStripe\Admin\AdminRootController;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\Security\Member;
+use SilverStripe\Security\Permission;
+use WeDevelop\AdminToolbar\AdminToolbar;
 use WeDevelop\AdminToolbar\Button\FlushCacheButton;
 
 final class ToolbarRenderTest extends FunctionalTest
@@ -42,6 +45,40 @@ final class ToolbarRenderTest extends FunctionalTest
         $this->assertStringContainsString('client/dist/js/toolbar.js', $body);
         $this->assertStringContainsString('client/dist/css/toolbar.css', $body);
         $this->assertStringNotContainsString('client/dist/app.js', $body);
+    }
+
+    public function testToolbarLinksToTheCMSAndShowsItsVersion(): void
+    {
+        $this->logInAsMemberWith('ADMIN');
+        $toolbar = AdminToolbar::create();
+
+        $body = $this->assertToolbarPresent($this->get($this->page->Link()));
+
+        $this->assertSame(AdminRootController::admin_url(), $toolbar->getAdminURL());
+        $this->assertNotSame('', $toolbar->getCMSVersion());
+        $this->assertStringContainsString(sprintf('href="%s"', $toolbar->getAdminURL()), $body);
+        $this->assertStringContainsString($toolbar->getCMSVersion(), $body);
+    }
+
+    public function testMenusRenderOnceAtTheirPlacement(): void
+    {
+        $this->logInAsMemberWith('ADMIN');
+
+        $body = $this->assertToolbarPresent($this->get($this->page->Link()));
+
+        foreach (['PageMenu', 'CMSMenu', 'UserMenu'] as $menu) {
+            $this->assertSame(1, substr_count($body, sprintf('<dialog id="%s"', $menu)), $menu);
+        }
+
+        // Start menus precede the buttons; end menus follow the toggles.
+        $this->assertLessThan(strpos($body, 'data-flush-cache-button'), strpos($body, 'data-toggle-dialog="PageMenu"'));
+        $this->assertLessThan(strpos($body, 'data-flush-cache-button'), strpos($body, 'data-toggle-dialog="CMSMenu"'));
+        $this->assertGreaterThan(strpos($body, 'data-toggle-dialog="toggles"'), strpos($body, 'data-toggle-dialog="UserMenu"'));
+    }
+
+    public function testToolbarPermissionIsOfferedToAssign(): void
+    {
+        $this->assertArrayHasKey(AdminToolbar::PERMISSION, Permission::get_codes(false));
     }
 
     public function testToolbarIsAbsentForAnAnonymousVisitor(): void
