@@ -19,6 +19,7 @@
 /.nvmrc                  export-ignore
 
 # Dev and test directories
+/_config/dev.yml         export-ignore
 /client/fonts            export-ignore
 /client/src              export-ignore
 /docs                    export-ignore
@@ -33,6 +34,7 @@
 /Taskfile.yml            export-ignore
 /package.json            export-ignore
 /package-lock.json       export-ignore
+/playwright.config.ts    export-ignore
 /stryker.config.mjs      export-ignore
 /tsconfig.json           export-ignore
 /tsconfig.test.json      export-ignore

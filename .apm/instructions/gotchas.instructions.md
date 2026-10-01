@@ -14,12 +14,14 @@ applyTo: "**/*"
 - **vendor-plugin cannot expose a path-repo module outside `/app`** (realpath breaks the relative path). `.docker/entrypoint.sh` symlinks `_resources/vendor/wedevelopnl/silverstripe-admintoolbar/client/dist` by hand.
 - **PHPUnit config schema path must be relative** (`../app/vendor/...`) — Infection prepends the config dir to it.
 - **Infection ignores only i18n-key concatenation** (`Concat`/`ConcatOperandRemoval` on `_t(self::class . '.KEY', …)` lines, `.docker/app/infection.json5`). Any other escape: delete the dead code, else kill it with a test, else suppress the narrowest scope with an inline equivalence proof.
+- **Loading an E2E fixture wipes every `Page`, `GridElement` and `SharedBlock` in the dev DB** (FixtureLoader `purge_classes`) — warn before seeding a DB you work in.
+- **The `@wedevelop/e2e` client comes from a host-side `composer install`** (root `require-dev`), not from the container; `npm run typecheck` needs it too.
 - **Vitest is pinned to 4** — `@stryker-mutator/vitest-runner` 10.0.0 runs 0 tests per mutant under Vitest 5 (every mutant survives). Dependabot ignores the major; lift both once a runner release supports Vitest 5.
 
 ## Frontend
 
 - **Tailwind 4 prefixes are letters only** — `ssat`, never `ss-at`.
-- **Never run a build while a browser test, the dev server or the PHP functional suite reads `client/dist`** — Vite empties it first.
+- **Never run a build while Playwright, the dev server or the PHP functional suite reads `client/dist`** — the container serves it live and Vite empties it first.
 - **Same-property utilities sort alphabetically** — `ssat:hidden` beats `ssat:flex` and `ssat:btn` but loses to `ssat:inline-flex`/`ssat:inline-block`; don't pair those with a script-toggled `ssat:hidden`.
 - **Deleting and recreating `client/dist` orphans the container's bind mount** — `docker compose -f .docker/compose.yml restart app`.
 

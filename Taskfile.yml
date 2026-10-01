@@ -99,6 +99,38 @@ tasks:
     cmds:
       - npm run test
 
+  # Playwright runs on the host against the running harness. Never run a build
+  # meanwhile: the container serves client/dist live and Vite empties it first.
+  test-e2e:
+    desc: Run E2E tests (Playwright, against the running Docker harness)
+    deps: [ensure-up]
+    cmds:
+      - npx playwright test
+
+  test-e2e-ui:
+    desc: Run E2E tests with the interactive Playwright UI
+    deps: [ensure-up]
+    interactive: true
+    cmds:
+      - npx playwright test --ui
+
+  seed-fixture:
+    desc: Seed the dev database with an E2E fixture (override with FIXTURE=<name>; default toolbar-page)
+    # Hits the dev-only endpoint the Playwright suite uses. Loading purges every
+    # Page, GridElement and SharedBlock in the dev database first (FixtureLoader
+    # purge_classes). Fixture names are registered in _config/dev.yml. -k because
+    # the dev testbed serves a self-signed certificate.
+    deps: [ensure-up]
+    vars:
+      FIXTURE: '{{.FIXTURE | default "toolbar-page"}}'
+    cmds:
+      - 'echo "==> [seed] loading fixture: {{.FIXTURE}}"'
+      - >-
+        curl -sS -k --fail-with-body -X POST
+        -d "fixture={{.FIXTURE}}"
+        "https://localhost:$(grep WEB_PORT .docker/.env | cut -d= -f2)/dev/e2e-fixtures/load"
+      - 'printf "\n\n==> [seed] done — open https://localhost:%s/\n\n" "$(grep WEB_PORT .docker/.env | cut -d= -f2)"'
+
   coverage:
     desc: Run all PHP tests with coverage (HTML + Clover in coverage/)
     deps: [ensure-up]

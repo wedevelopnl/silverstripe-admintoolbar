@@ -1,0 +1,34 @@
+---
+Name: admintoolbar-dev
+Only:
+  environment: dev
+---
+# E2E fixtures for the Playwright suite, served by wedevelopnl/silverstripe-e2e
+# (dev-only endpoint; see that module before exposing anything). Export-ignored.
+WeDevelop\E2e\Fixtures\FixtureLoader:
+  purge_classes:
+    - Page
+    - WeDevelop\Grid\Model\GridElement
+    - WeDevelop\Grid\Model\SharedBlock
+  fixture_page_classes:
+    - Page
+    - App\MultiZonePage
+  config_overrides:
+    WeDevelop\Grid\Model\Section:
+      auto_scaffold: false
+    WeDevelop\Grid\Model\Row:
+      auto_scaffold: false
+  fixtures:
+    toolbar-page:
+      path: 'wedevelopnl/silverstripe-admintoolbar:tests/E2E/Fixture/ToolbarPage.yml'
+      post_actions:
+        - { action: publish_recursive, class: Page, identifier: e2e_published }
+    grid-page:
+      path: 'wedevelopnl/silverstripe-admintoolbar:tests/E2E/Fixture/GridPage.yml'
+      post_actions:
+        - { action: publish_recursive, class: Page, identifier: e2e_grid }
+        - { action: publish_recursive, class: 'WeDevelop\Grid\Model\SharedBlock', identifier: e2e_banner }
+    multi-zone:
+      path: 'wedevelopnl/silverstripe-admintoolbar:tests/E2E/Fixture/MultiZone.yml'
+      post_actions:
+        - { action: publish_recursive, class: 'App\MultiZonePage', identifier: e2e_multi_zone }

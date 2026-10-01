@@ -1,0 +1,13 @@
+# Toolbar specs: one published page (post-action) and one that is never published.
+# All pages use the 'e2e-' URLSegment prefix.
+Page:
+  e2e_published:
+    Title: 'E2E Published'
+    URLSegment: 'e2e-published'
+    UseGrid: 0
+    Content: '<p>Published content</p>'
+  e2e_draft:
+    Title: 'E2E Draft'
+    URLSegment: 'e2e-draft'
+    UseGrid: 0
+    Content: '<p>Draft content</p>'

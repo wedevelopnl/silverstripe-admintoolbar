@@ -17,6 +17,12 @@ coverage/
 # Infection
 infection/
 
+# Playwright
+tests/E2E/.auth/
+test-results/
+playwright-report/
+blob-report/
+
 # Stryker / Vitest reports
 reports/
 .stryker-tmp/

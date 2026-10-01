@@ -21,6 +21,9 @@ Run with [Task](https://taskfile.dev) (`task <name>`); everything PHP runs in Do
 | `task coverage` | All suites with coverage (HTML + Clover in `coverage/`) |
 | `task coverage-check` | Coverage, then fail below 90% |
 | `task test-js` | Vitest |
+| `task test-e2e` | Playwright against the running harness (Chromium locally; Firefox only with `CI` set) |
+| `task test-e2e-ui` | Playwright UI (interactive) |
+| `task seed-fixture` | Load an E2E fixture into the dev DB (`FIXTURE=<name>`, default `toolbar-page`) |
 | `task coverage-js` | Vitest with coverage (statements 90, branches 85, functions 90, lines 90) |
 | `task mutate` | Infection (MSI ≥ 99) — maintainer-run; slow |
 | `task mutate-js` | Stryker (break 75) — maintainer-run; slow |
@@ -43,8 +46,9 @@ Run with [Task](https://taskfile.dev) (`task <name>`); everything PHP runs in Do
 | `npm run build` | `build:js` (Vite) + `build:css` (Tailwind CLI) + `build:fonts` into `client/dist` |
 | `npm run dev` | Vite build in watch mode (JS only) |
 | `npm test` / `npm run test:watch` | Vitest |
+| `npm run test:e2e` / `test:e2e:ui` / `test:e2e:debug` | Playwright (harness must be up) |
 | `npm run coverage` | Vitest with the coverage thresholds |
-| `npm run typecheck` | `tsc` for sources and tests |
+| `npm run typecheck` | `tsc` for sources, unit tests and `tests/E2E` |
 | `npm run lint` / `lint:fix` | Biome lint |
 | `npm run format` / `format:check` | Biome format |
 | `npm run qa` | lint + format check + typecheck + coverage + build |
