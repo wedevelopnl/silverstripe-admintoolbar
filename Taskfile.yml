@@ -97,9 +97,13 @@ tasks:
 
   verify-lock:
     desc: Fail if the committed lock no longer covers the module's requirements
-    deps: [ensure-up]
+    deps: [docker-env]
+    # The image bakes the lock in, so a container started before the last
+    # `task relock` checks a stale copy. Rebuild (cached when nothing moved) and
+    # check in a throwaway container, leaving the running one alone.
     cmds:
-      - "{{.EXEC}} /app/verify-lock.sh"
+      - "{{.COMPOSE}} build app"
+      - "{{.COMPOSE}} run --rm --no-deps -T --entrypoint /app/verify-lock.sh app"
 
   # --- Static analysis ------------------------------------------------------
 
