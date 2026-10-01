@@ -1,8 +1,33 @@
-/node_modules/
-/**/*.js.map
-/**/*.css.map
-/.idea/
-/public/
-/vendor/
-/composer.lock
-/.php-cs-fixer.cache
+.DS_Store
+.idea/
+# The module is a library: pinning its consumers' dependency graph is not ours
+# to do. The Docker test harness underneath .docker/app is an application, and
+# its lock is what stops every container boot re-resolving against Packagist.
+composer.lock
+!/.docker/app/composer.lock
+node_modules/
+public/
+vendor/
+
+# PHPUnit
+phpunit.xml
+.phpunit.cache/
+coverage/
+
+# Source maps (never commit — they can leak original source on a misconfigured build)
+*.map
+
+# APM
+apm_modules/
+
+# Docker generated env (worktree-specific ports)
+.docker/.env
+
+# Claude Code local config (hookify rules are shared project config)
+.claude/*.local.md
+!.claude/hookify.*.local.md
+.claude/*.local.json
+.superpowers/
+
+# StoryFlow local config
+.storyflow/
