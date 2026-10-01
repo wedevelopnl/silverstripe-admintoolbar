@@ -29,7 +29,7 @@ class UnpublishAndArchivePageItem extends PageActionItem
     public function isAllowedFor(SiteTree $page, Member $member): bool
     {
         // @phpstan-ignore argument.type (versioned 3 documents $member as null; it takes the member to check)
-        return (bool) $page->canUnpublish($member) && (bool) $page->canDelete($member);
+        return $page->canUnpublish($member) && $page->canDelete($member);
     }
 
     public function perform(SiteTree $page): void

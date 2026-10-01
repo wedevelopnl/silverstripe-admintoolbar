@@ -15,6 +15,11 @@
     timeout: 30,
     mutators: {
         "@default": true,
+        // i18n key concatenation: _t(self::class . '.KEY', 'fallback') — a mutated key still
+        // returns the fallback string, so the mutant is undetectable without testing the i18n
+        // system itself.
+        Concat: { ignoreSourceCodeByRegex: [".*_t\\(.*", ".*::class\\s*\\.\\s*'\\.[A-Z_]+'.*"] },
+        ConcatOperandRemoval: { ignoreSourceCodeByRegex: [".*_t\\(.*", ".*::class\\s*\\.\\s*'\\.[A-Z_]+'.*"] },
     },
     // minMsi equals minCoveredMsi on purpose: minMsi also counts uncovered mutants.
     minMsi: 99,

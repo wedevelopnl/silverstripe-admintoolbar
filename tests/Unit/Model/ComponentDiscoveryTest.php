@@ -27,6 +27,7 @@ use WeDevelop\AdminToolbar\Tests\Fixture\ReplacementFixtureButton;
 use WeDevelop\AdminToolbar\Tests\Fixture\SameOrderFixtureButton;
 use WeDevelop\AdminToolbar\Tests\Fixture\SubFixtureMenu;
 use WeDevelop\AdminToolbar\Tests\Fixture\UnsupportedFixtureButton;
+use WeDevelop\AdminToolbar\Toggle\QueriesToggle;
 use WeDevelop\AdminToolbar\ToolbarContext;
 
 final class ComponentDiscoveryTest extends SapphireTest
@@ -74,8 +75,14 @@ final class ComponentDiscoveryTest extends SapphireTest
     public function testGetContextBeforeSetContextThrows(): void
     {
         $this->expectException(LogicException::class);
+        $this->expectExceptionMessage(FixtureButton::class . ' was used before the toolbar gave it a context.');
 
         FixtureButton::create()->getContext();
+    }
+
+    public function testComponentsAreSupportedByDefault(): void
+    {
+        $this->assertTrue(FixtureButton::create()->setContext($this->context())->isSupported());
     }
 
     public function testInjectorReplacementIsHonoured(): void
@@ -113,6 +120,7 @@ final class ComponentDiscoveryTest extends SapphireTest
         $this->assertFalse($fixture->isHiddenUntilEnabled());
         $this->assertSame('data-queries-button', $queries->getHook());
         $this->assertTrue($queries->isHiddenUntilEnabled());
+        $this->assertSame('data-queries-toggle', QueriesToggle::create()->getHook());
     }
 
     public function testRenderingRequiresTheComponentAssets(): void

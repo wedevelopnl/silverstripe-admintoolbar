@@ -9,6 +9,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Dev\SapphireTest;
+use SilverStripe\ORM\Queries\SQLDelete;
 use SilverStripe\Security\Member;
 use WeDevelop\AdminToolbar\Menu\Page\ArchivePageItem;
 use WeDevelop\AdminToolbar\Menu\Page\PublishState;
@@ -115,6 +116,36 @@ final class PageMenuTest extends SapphireTest
 
         $this->assertSame('Unknown author', $menu->getAuthorName());
         $this->assertNull($menu->getAuthorLink());
+    }
+
+    public function testUnknownAuthorWhenTheVersionRowIsGone(): void
+    {
+        $page = $this->authoredPage();
+        SQLDelete::create('"SiteTree_Versions"', ['"RecordID"' => $page->ID])->execute();
+
+        $menu = $this->menu($page, $this->admin);
+
+        $this->assertSame('Unknown author', $menu->getAuthorName());
+        $this->assertNull($menu->getAuthorLink());
+    }
+
+    public function testPageIsTheContextPage(): void
+    {
+        $page = $this->fixturePage('published');
+
+        $this->assertSame($page, $this->menu($page, $this->admin)->getPage());
+    }
+
+    public function testNoEditLinkAndADraftBadgeWithoutAPage(): void
+    {
+        $menu = $this->menu(null, $this->admin);
+        $badge = $menu->getPublishBadge();
+
+        $this->assertNull($menu->getEditLink());
+        $this->assertSame(
+            [PublishState::Draft->getLabel(), PublishState::Draft->getBadgeClasses()],
+            [$badge->Label, $badge->Classes],
+        );
     }
 
     public function testNoAuthorWithoutAPage(): void

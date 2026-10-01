@@ -32,7 +32,7 @@ abstract class PageActionItem extends MenuItem
     public static function forAction(string $action): ?self
     {
         /** @var array<string, class-string<PageActionItem>> $classes */
-        $classes = ClassInfo::subclassesFor(self::class, false);
+        $classes = ClassInfo::subclassesFor(self::class);
 
         foreach ($classes as $class) {
             if (

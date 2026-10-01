@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Tests\Integration\Menu\Page;
 
+use Page;
 use PHPUnit\Framework\Attributes\DataProvider;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\HTTPRequest;
@@ -16,6 +17,7 @@ use WeDevelop\AdminToolbar\Menu\Page\PageActionItem;
 use WeDevelop\AdminToolbar\Menu\Page\UnpublishAndArchivePageItem;
 use WeDevelop\AdminToolbar\Menu\Page\UnpublishPageItem;
 use WeDevelop\AdminToolbar\Tests\Integration\Fixture\FixturePages;
+use WeDevelop\AdminToolbar\Tests\Integration\Fixture\UndeletablePageExtension;
 use WeDevelop\AdminToolbar\ToolbarContext;
 
 final class PageActionItemTest extends SapphireTest
@@ -130,6 +132,23 @@ final class PageActionItemTest extends SapphireTest
         $this->assertSame(['Page unpublished and archived', true], [$both->getSuccessMessage(), $both->isDestructive()]);
     }
 
+    public function testUnpublishAndArchiveAlsoNeedsDeletePermission(): void
+    {
+        Page::add_extension(UndeletablePageExtension::class);
+        $context = $this->context($this->fixturePage('published'), $this->admin);
+
+        $this->assertTrue(UnpublishPageItem::create()->setContext($context)->isSupported());
+        $this->assertFalse(UnpublishAndArchivePageItem::create()->setContext($context)->isSupported());
+    }
+
+    public function testActionsComeFromConfig(): void
+    {
+        $this->assertSame(
+            ['unpublish', 'archive', 'unpublishAndArchive'],
+            [UnpublishPageItem::create()->getAction(), ArchivePageItem::create()->getAction(), UnpublishAndArchivePageItem::create()->getAction()],
+        );
+    }
+
     public function testPageIdComesFromTheContextPage(): void
     {
         $page = $this->fixturePage('published');
@@ -137,6 +156,11 @@ final class PageActionItemTest extends SapphireTest
         $item = UnpublishPageItem::create()->setContext($this->context($page, $this->admin));
 
         $this->assertSame($page->ID, $item->getPageID());
+    }
+
+    public function testPageIdIsZeroWithoutAPage(): void
+    {
+        $this->assertSame(0, UnpublishPageItem::create()->setContext($this->context(null, $this->admin))->getPageID());
     }
 
     private function context(?SiteTree $page, Member $member): ToolbarContext

@@ -84,18 +84,18 @@ final class PageActionControllerTest extends FunctionalTest
 
         $this->assertReply(403, $response);
         $this->assertTrue($this->isOnStage(Versioned::LIVE, $this->pageId('published')));
-        $this->assertDenialLogged('unauthenticated');
+        $this->assertDenialLogged('unauthenticated', null);
     }
 
     public function testMemberWithoutToolbarPermissionIsForbidden(): void
     {
-        $this->logInAsMemberWith('CMS_ACCESS_CMSMain');
+        $memberId = $this->logInAsMemberWith('CMS_ACCESS_CMSMain');
 
         $response = $this->postAction($this->json('unpublish', 'published'));
 
         $this->assertReply(403, $response);
         $this->assertTrue($this->isOnStage(Versioned::LIVE, $this->pageId('published')));
-        $this->assertDenialLogged('toolbar-permission');
+        $this->assertDenialLogged('toolbar-permission', $memberId);
     }
 
     public function testNonJsonBodyIsRejected(): void
@@ -163,13 +163,13 @@ final class PageActionControllerTest extends FunctionalTest
 
     public function testMemberWithoutPagePermissionIsForbidden(): void
     {
-        $this->logInAsMemberWith('ADMIN_TOOLBAR');
+        $memberId = $this->logInAsMemberWith('ADMIN_TOOLBAR');
 
         $response = $this->postAction($this->json('unpublish', 'published'));
 
         $this->assertReply(403, $response);
         $this->assertTrue($this->isOnStage(Versioned::LIVE, $this->pageId('published')));
-        $this->assertDenialLogged('page-permission');
+        $this->assertDenialLogged('page-permission', $memberId);
     }
 
     public function testUnpublishingAnUnpublishedPageConflicts(): void
@@ -328,7 +328,7 @@ final class PageActionControllerTest extends FunctionalTest
         }
     }
 
-    private function assertDenialLogged(string $reason): void
+    private function assertDenialLogged(string $reason, ?int $memberId): void
     {
         $records = $this->handler->getRecords();
 
@@ -336,5 +336,7 @@ final class PageActionControllerTest extends FunctionalTest
         $this->assertInstanceOf(LogRecord::class, $records[0]);
         $this->assertSame(Level::Warning, $records[0]->level);
         $this->assertSame($reason, $records[0]->context['reason'] ?? null);
+        $this->assertArrayHasKey('memberID', $records[0]->context);
+        $this->assertSame($memberId, $records[0]->context['memberID']);
     }
 }

@@ -30,6 +30,13 @@ final class UserMenuTest extends SapphireTest
         $this->assertSame(Security::logout_url(), UserMenu::create()->getLogoutLink());
     }
 
+    public function testMemberIsTheContextMember(): void
+    {
+        $member = $this->createMemberWithPermission('ADMIN_TOOLBAR');
+
+        $this->assertSame($member, UserMenu::create()->setContext($this->context($member))->getMember());
+    }
+
     public function testUsernameItemShowsTheMemberName(): void
     {
         $member = $this->createMemberWithPermission('ADMIN_TOOLBAR');
