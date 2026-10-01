@@ -19,6 +19,7 @@ jobs:
     name: Regenerate composer lock
     runs-on: ubuntu-latest
     permissions:
+      actions: write
       contents: write
       pull-requests: write
     env:
@@ -65,6 +66,9 @@ jobs:
             git fetch --depth=1 origin "+refs/heads/$branch:refs/remotes/origin/$branch"
           fi
           git push --force-with-lease origin "$branch"
+          # Events caused by GITHUB_TOKEN start no workflows except a dispatch,
+          # so run CI on the branch explicitly; its checks land on the PR's head.
+          gh workflow run ci.yml --ref "$branch"
 
           if [ -n "$(gh pr list --head "$branch" --base 6 --json number --jq '.[].number')" ]; then
             echo "Updated the open relock PR."
