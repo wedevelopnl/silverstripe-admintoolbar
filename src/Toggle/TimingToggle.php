@@ -15,9 +15,4 @@ class TimingToggle extends Toggle
     private static string $icon = 'font-icon-menu-clock';
 
     private static string $hook = 'data-timing-toggle';
-
-    /** @var list<string> */
-    private static array $javascript = [
-        'wedevelopnl/silverstripe-admintoolbar:client/dist/timing-toggle.js',
-    ];
 }

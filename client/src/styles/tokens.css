@@ -1,0 +1,9 @@
+@theme {
+  --color-primary: hsl(216 100% 44%);
+  --color-silverstripe-100: #f4f6f8;
+  --color-silverstripe-200: #e1e5ec;
+  --color-silverstripe-300: #ced5e1;
+  --color-silverstripe: #005ae1;
+  --color-text: #1d242f;
+  --font-sans: 'Roboto', ui-sans-serif, system-ui, sans-serif;
+}

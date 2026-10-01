@@ -1,5 +1,7 @@
 en:
   AdminToolbar:
+    ACTION_FAILED: 'The action could not be completed. Reload the page and try again.'
+    CLOSE: 'Close'
     COLLAPSE: 'Show or hide the toolbar'
     EDIT_PAGE: 'Edit page'
     GRID: 'Grid'
@@ -7,6 +9,8 @@ en:
     LAST_EDITED_ON: 'Last edited on'
     LOGGED_IN_AS: 'Logged in as'
     LOGOUT: 'Log out'
+    QUERIES_SUMMARY: '{ms} ms ({count} queries)'
+    TIMING_SUMMARY: '{ms} ms'
     TOGGLES: 'Toggles'
   SilverStripe\Security\Member:
     db_DisableAdminToolbar: 'Disable admin toolbar'

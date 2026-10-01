@@ -1,0 +1,38 @@
+:where(#admin-toolbar, #admin-toolbar *, #admin-toolbar ::before, #admin-toolbar ::after) {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+}
+
+:where(#admin-toolbar) {
+  font-family: var(--ssat-font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(#admin-toolbar) :where(ul, ol) {
+  list-style: none;
+}
+
+:where(#admin-toolbar) :where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+:where(#admin-toolbar) :where(button, input) {
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+
+:where(#admin-toolbar) :where(button) {
+  cursor: pointer;
+}
+
+/* The blanket `margin: 0` above would pin modal dialogs to the top-left corner. */
+:where(#admin-toolbar) :where(dialog) {
+  margin: auto;
+  max-width: none;
+  max-height: none;
+}

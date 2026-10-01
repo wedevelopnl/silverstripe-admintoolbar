@@ -1,7 +1,7 @@
-<a href="#"
-   class="ss-at-flex ss-at-items-center ss-at-font-medium <% if $IsDestructive %>ss-at-text-red-600 hover:ss-at-text-red-700<% else %>ss-at-text-black hover:ss-at-text-primary<% end_if %>"
-   data-pageid="$PageID"
+<button type="button"
+   class="ssat:flex ssat:items-center ssat:font-medium <% if $IsDestructive %>ssat:text-red-600 ssat:hover:text-red-700<% else %>ssat:text-black ssat:hover:text-primary<% end_if %>"
+   data-page-id="$PageID"
    data-action="$Action">
-    <span class="ss-at-flex ss-at-items-center ss-at-mr-2 $Icon"></span>
+    <span class="ssat:flex ssat:items-center ssat:mr-2 $Icon" aria-hidden="true"></span>
     $Title
-</a>
+</button>

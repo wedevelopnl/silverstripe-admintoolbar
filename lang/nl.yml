@@ -1,11 +1,15 @@
 nl:
   AdminToolbar:
+    ACTION_FAILED: 'De actie kon niet worden uitgevoerd. Herlaad de pagina en probeer het opnieuw.'
+    CLOSE: 'Sluiten'
     COLLAPSE: 'Toolbar tonen of verbergen'
     EDIT_PAGE: 'Pagina bewerken'
     LAST_EDITED_BY: 'Laatst bewerkt door'
     LAST_EDITED_ON: 'Laatst bewerkt op'
     LOGGED_IN_AS: 'Ingelogd als'
     LOGOUT: 'Uitloggen'
+    QUERIES_SUMMARY: '{ms} ms ({count} queries)'
+    TIMING_SUMMARY: '{ms} ms'
     TOGGLES: 'Toggles'
   SilverStripe\Security\Member:
     db_DisableAdminToolbar: 'Schakel admin toolbar uit'

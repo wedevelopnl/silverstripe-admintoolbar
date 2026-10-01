@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "node"]
+  },
+  "include": ["client/src/ts/**/*", "vitest.setup.ts", "vite.config.mts", "stryker.config.mjs"],
+  "exclude": []
+}

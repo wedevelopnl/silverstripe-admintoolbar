@@ -1,12 +1,12 @@
-<div class="admin-toolbar-menu">
-    <button type="button" class="ss-at-btn" data-toggle-dialog="$DialogId">
-        <span class="ss-at-h-3.5 $Icon"></span>
-        <span class="ss-at-btn-content max-lg:ss-at-hidden ss-at-ms-2">$Title</span>
+<div>
+    <button type="button" class="ssat:btn" data-toggle-dialog="$DialogId">
+        <span class="ssat:h-3.5 $Icon" aria-hidden="true"></span>
+        <span class="ssat:max-lg:hidden ssat:ms-2">$Title</span>
     </button>
-    <dialog id="$DialogId" class="ss-at-w-6/12 ss-at-bg-transparent">
-        <div class="dialog-inner ss-at-relative ss-at-bg-white ss-at-p-6 ss-at-rounded-lg">
+    <dialog id="$DialogId" aria-labelledby="$DialogId-title" class="ssat:w-6/12 ssat:bg-transparent">
+        <div class="dialog-inner ssat:relative ssat:bg-white ssat:p-6 ssat:rounded-lg">
             <% include WeDevelop\AdminToolbar\Includes\DialogHeader Title=$Title %>
-            <ul class="ss-at-space-y-3">
+            <ul class="ssat:space-y-3">
                 <% loop $Items %>
                     <li>$Me</li>
                 <% end_loop %>
@@ -14,4 +14,3 @@
         </div>
     </dialog>
 </div>
-

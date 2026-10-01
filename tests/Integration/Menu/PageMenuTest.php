@@ -6,10 +6,12 @@ namespace WeDevelop\AdminToolbar\Tests\Integration\Menu;
 
 use SilverStripe\Admin\SecurityAdmin;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Control\Director;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Security\Member;
 use WeDevelop\AdminToolbar\Menu\Page\ArchivePageItem;
+use WeDevelop\AdminToolbar\Menu\Page\PublishState;
 use WeDevelop\AdminToolbar\Menu\Page\UnpublishAndArchivePageItem;
 use WeDevelop\AdminToolbar\Menu\Page\UnpublishPageItem;
 use WeDevelop\AdminToolbar\Menu\PageMenu;
@@ -48,11 +50,27 @@ final class PageMenuTest extends SapphireTest
 
     public function testPublishBadgeFollowsThePageState(): void
     {
-        foreach (['published' => ['Published', 'green'], 'modified' => ['Modified', 'orange'], 'draft' => ['Draft', 'blue']] as $page => $expected) {
+        $expectations = [
+            'published' => PublishState::Published,
+            'modified' => PublishState::Modified,
+            'draft' => PublishState::Draft,
+        ];
+
+        foreach ($expectations as $page => $state) {
             $badge = $this->menu($this->fixturePage($page), $this->admin)->getPublishBadge();
 
-            $this->assertSame($expected, [$badge->Label, $badge->Color], $page);
+            $this->assertSame([$state->getLabel(), $state->getBadgeClasses()], [$badge->Label, $badge->Classes], $page);
         }
+    }
+
+    public function testActionEndpointIsBaseUrlAware(): void
+    {
+        Director::config()->set('alternate_base_url', 'https://example.com/sub/');
+
+        $endpoint = $this->menu($this->fixturePage('published'), $this->admin)->getActionEndpoint();
+
+        $this->assertStringEndsWith('admintoolbaraction/pageAction', $endpoint);
+        $this->assertStringContainsString('/sub/', $endpoint);
     }
 
     public function testEditLinkForAnEditor(): void

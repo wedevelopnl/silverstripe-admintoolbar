@@ -1,18 +1,18 @@
-<label class="ss-at-relative ss-at-inline-flex ss-at-items-center ss-at-cursor-pointer">
-    <input type="checkbox" $Hook class="ss-at-sr-only ss-at-peer">
-    <div class="ss-at-mr-2 ss-at-w-7 ss-at-h-5 ss-at-bg-white ss-at-border-2 ss-at-border-solid ss-at-border-primary ss-at-rounded-full
-    peer-checked:ss-at-bg-primary
-    peer-checked:after:ss-at-translate-x-[calc(100%_-_4px)]
-    peer-checked:after:ss-at-bg-white
-    after:ss-at-content-['']
-    after:ss-at-absolute
-    after:ss-at-top-1/2
-    after:ss-at-left-[4px]
-    after:ss-at--translate-y-1/2
-    after:ss-at-bg-primary
-    after:ss-at-rounded-full
-    after:ss-at-h-3
-    after:ss-at-w-3
-    after:ss-at-transition-all"></div>
+<label class="ssat:relative ssat:inline-flex ssat:items-center ssat:cursor-pointer">
+    <input type="checkbox" $Hook class="ssat:sr-only ssat:peer">
+    <div class="ssat:mr-2 ssat:w-7 ssat:h-5 ssat:bg-white ssat:border-2 ssat:border-solid ssat:border-primary ssat:rounded-full
+    ssat:peer-checked:bg-primary
+    ssat:peer-checked:after:translate-x-[calc(100%_-_4px)]
+    ssat:peer-checked:after:bg-white
+    ssat:after:content-['']
+    ssat:after:absolute
+    ssat:after:top-1/2
+    ssat:after:left-[4px]
+    ssat:after:-translate-y-1/2
+    ssat:after:bg-primary
+    ssat:after:rounded-full
+    ssat:after:h-3
+    ssat:after:w-3
+    ssat:after:transition-all"></div>
     <span>$Title</span>
 </label>
