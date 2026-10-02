@@ -2,7 +2,7 @@
     <div class="ssat:flex ssat:items-center">
         <button type="button" class="ssat:btn ssat:rounded-r-none" data-toggle-dialog="$DialogId">
             <span class="ssat:h-3.5 $Icon" aria-hidden="true"></span>
-            <span class="ssat:max-lg:hidden ssat:ms-2">$Member.Name</span>
+            <span class="ssat:max-lg:hidden ssat:ms-2 ssat:me-1">$Member.Name</span>
         </button>
         <a href="$LogoutLink" aria-label="<%t AdminToolbar.LOGOUT 'Log out' %>" class="ssat:btn ssat:bg-silverstripe ssat:text-white ssat:rounded-l-none">
             <span class="ssat:h-3.5 font-icon-logout" aria-hidden="true"></span>
