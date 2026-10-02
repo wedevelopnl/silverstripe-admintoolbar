@@ -1,6 +1,8 @@
 import { expect, type Page, test } from '@playwright/test'
-import { type FixtureLoadResponse, loadFixture } from '../helpers/fixtures'
+import { createFixtureClient, type FixtureLoadResponse } from '@wedevelop/e2e'
 import { anonymousContext, openMenu } from '../helpers/toolbar'
+
+const fixtures = createFixtureClient()
 
 const PUBLISHED_URL = '/e2e-published'
 const DRAFT_URL = '/e2e-draft'
@@ -8,7 +10,7 @@ const DRAFT_URL = '/e2e-draft'
 let fixture: FixtureLoadResponse
 
 test.beforeEach(async ({ page }) => {
-  fixture = await loadFixture(page.request, 'toolbar-page')
+  fixture = await fixtures.load(page.request, 'toolbar-page')
 })
 
 function pageId(identifier: string): number {

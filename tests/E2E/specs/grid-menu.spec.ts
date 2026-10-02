@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test'
-import { type FixtureLoadResponse, loadFixture } from '../helpers/fixtures'
+import { createFixtureClient, type FixtureLoadResponse } from '@wedevelop/e2e'
 import { openMenu } from '../helpers/toolbar'
+
+const fixtures = createFixtureClient()
 
 const CONTENT_ELEMENT = 'WeDevelop\\Grid\\Model\\ContentElement'
 const SHARED_BLOCK = 'WeDevelop\\Grid\\Model\\SharedBlock'
@@ -9,7 +11,7 @@ test.describe('grid page', () => {
   let fixture: FixtureLoadResponse
 
   test.beforeEach(async ({ page }) => {
-    fixture = await loadFixture(page.request, 'grid-page')
+    fixture = await fixtures.load(page.request, 'grid-page')
     await page.goto('/e2e-grid')
   })
 
@@ -69,7 +71,7 @@ test.describe('grid page', () => {
 })
 
 test('a multi-zone page lists every zone under its own heading', async ({ page }) => {
-  await loadFixture(page.request, 'multi-zone')
+  await fixtures.load(page.request, 'multi-zone')
   await page.goto('/e2e-multi-zone')
 
   const menu = await openMenu(page, 'GridMenu')
