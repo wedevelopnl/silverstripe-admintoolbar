@@ -15,7 +15,7 @@ applyTo: "**/*"
 - **PHPUnit config schema path must be relative** (`../app/vendor/...`) — Infection prepends the config dir to it.
 - **Infection ignores only i18n-key concatenation** (`Concat`/`ConcatOperandRemoval` on `_t(self::class . '.KEY', …)` lines, `.docker/app/infection.json5`). Any other escape: delete the dead code, else kill it with a test, else suppress the narrowest scope with an inline equivalence proof.
 - **Loading an E2E fixture wipes every `Page` in the dev DB** (FixtureLoader `purge_classes`) — warn before seeding a DB you work in.
-- **The `@wedevelop/e2e` client comes from a host-side `composer install`** (root `require-dev`), not from the container; `npm run typecheck` needs it too.
+- **The `@wedevelop/e2e` client comes from a host-side `composer install`** (root `require-dev` `wedevelopnl/silverstripe-e2e`, aliased in `tests/E2E/tsconfig.json`), not from the container; `npm run typecheck` needs it too.
 - **Vitest is pinned to 4** — `@stryker-mutator/vitest-runner` 10.0.0 runs 0 tests per mutant under Vitest 5 (every mutant survives). Dependabot ignores the major; lift both once a runner release supports Vitest 5.
 
 ## Frontend

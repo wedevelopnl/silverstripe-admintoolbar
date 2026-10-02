@@ -20,3 +20,5 @@ Package: `wedevelopnl/silverstripe-admintoolbar` (type: `silverstripe-vendormodu
 |---|---|
 | `6` | Silverstripe 6 — target of every PR |
 | `main` | Silverstripe 5 / 2.x maintenance |
+
+- User-facing change → entry under `## [Unreleased]` in `CHANGELOG.md` (Keep a Changelog); a change to component config or behaviour also updates README "Adding a component".
