@@ -6,7 +6,7 @@ applyTo: "**/*"
 # Docker Dev Environment
 
 - `task up` auto-generates `.docker/.env` if missing
-- `.docker/.env` holds `COMPOSE_PROJECT_NAME`, `WEB_PORT`, `DB_PORT` (deterministic, hashed from the directory name — worktree-safe) and `SS_GRID_ADAPTER=tailwind`
+- `.docker/.env` holds `COMPOSE_PROJECT_NAME`, `WEB_PORT` and `DB_PORT` (deterministic, hashed from the directory name — worktree-safe)
 - Regenerate after renaming/copying a worktree: `rm .docker/.env && task up`
 - Testbed: `https://localhost:<WEB_PORT>`; admin login `admin` / `admin`
 - The module is mounted piecewise at `/module`; `src/` and `lang/` are writable from the container, the rest is read-only
