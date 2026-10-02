@@ -40,28 +40,37 @@ class GridMenu extends Menu
 
     public GridAdapterInterface $gridAdapter;
 
+    /** @var ArrayList<ArrayData>|null */
+    private ?ArrayList $zones = null;
+
+    /** Shown only when the dialog would list a node the member can view. */
     public function isSupported(): bool
     {
-        $page = $this->getContext()->page;
-
-        return $page !== null
-            && $page->hasExtension(GridPageExtension::class)
-            && $page->UseGrid
-            && $page->GridRoots()->exists();
+        return $this->getZones()->exists();
     }
 
     /**
-     * Zones in display order: `main` first, the rest alphabetically. Roots
-     * without a zone predate zones and are not listed.
+     * Zones in display order: `main` first, the rest alphabetically. A zone
+     * without a root the member can view is left out, as are zone-less roots
+     * (invalid in grid, wedevelopnl/silverstripe-grid#490). Built once per
+     * menu, which lives for one toolbar render.
      *
      * @return ArrayList<ArrayData>
      */
     public function getZones(): ArrayList
     {
+        return $this->zones ??= $this->buildZones();
+    }
+
+    /**
+     * @return ArrayList<ArrayData>
+     */
+    private function buildZones(): ArrayList
+    {
         $page = $this->getContext()->page;
         $member = $this->getContext()->member;
 
-        if ($page === null || !$page->hasExtension(GridPageExtension::class)) {
+        if ($page === null || !$page->hasExtension(GridPageExtension::class) || !$page->UseGrid) {
             return ArrayList::create();
         }
 
@@ -71,18 +80,21 @@ class GridMenu extends Menu
         $names = array_unique(array_filter($zones));
         usort($names, static fn (string $a, string $b): int => [$a !== 'main', $a] <=> [$b !== 'main', $b]);
 
-        return ArrayList::create(array_map(
-            function (string $name) use ($page, $member, $names): ArrayData {
-                /** @var ArrayList<GridElement> $roots */
-                $roots = $page->GridZone($name);
+        $visible = [];
 
-                return ArrayData::create([
-                    'Name' => $name,
-                    'ShowHeading' => count($names) > 1,
-                    'Nodes' => $this->nodes($roots, $member),
-                ]);
-            },
-            $names,
+        foreach ($names as $name) {
+            /** @var ArrayList<GridElement> $roots */
+            $roots = $page->GridZone($name);
+            $nodes = $this->nodes($roots, $member);
+
+            if ($nodes->exists()) {
+                $visible[] = ['Name' => $name, 'Nodes' => $nodes];
+            }
+        }
+
+        return ArrayList::create(array_map(
+            static fn (array $zone): ArrayData => ArrayData::create($zone + ['ShowHeading' => count($visible) > 1]),
+            $visible,
         ));
     }
 

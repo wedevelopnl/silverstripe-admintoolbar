@@ -13,6 +13,10 @@ Page:
     Title: 'Empty Grid Page'
     URLSegment: empty-grid-page
     UseGrid: 1
+  unzoned_grid_page:
+    Title: 'Unzoned Grid Page'
+    URLSegment: unzoned-grid-page
+    UseGrid: 1
 
 App\MultiZonePage:
   multi_page:
@@ -36,6 +40,12 @@ WeDevelop\Grid\Model\Section:
     Sort: 1
     Zone: ''
     Parent: =>Page.grid_page
+  # Zone-less roots are invalid in grid (wedevelopnl/silverstripe-grid#490) but exist in older data.
+  only_unzoned:
+    Title: 'Only Unzoned'
+    Sort: 1
+    Zone: ''
+    Parent: =>Page.unzoned_grid_page
   # The shared block's own subtree; a placement never expands into it.
   banner_section:
     Title: 'Banner Section'
