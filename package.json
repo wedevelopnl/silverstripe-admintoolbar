@@ -42,5 +42,10 @@
     "vite": "^8.2.2",
     "vitest": "^4.1.11",
     "vitest-fail-on-console": "^0.10.1"
+  },
+  "overrides": {
+    "typed-rest-client": {
+      "qs": "^6.15.2"
+    }
   }
 }

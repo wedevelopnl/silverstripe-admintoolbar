@@ -17,6 +17,7 @@ applyTo: "**/*"
 - **Loading an E2E fixture wipes every `Page` in the dev DB** (FixtureLoader `purge_classes`) — warn before seeding a DB you work in.
 - **The `@wedevelop/e2e` client comes from a host-side `composer install`** (root `require-dev` `wedevelopnl/silverstripe-e2e`, aliased in `tests/E2E/tsconfig.json`), not from the container; `npm run typecheck` needs it too.
 - **Vitest is pinned to 4** — `@stryker-mutator/vitest-runner` 10.0.0 runs 0 tests per mutant under Vitest 5 (every mutant survives). Dependabot ignores the major; lift both once a runner release supports Vitest 5.
+- **`package.json` overrides `qs` under `typed-rest-client`** — Stryker 10.0.0 allows only `typed-rest-client ~2.3.0`, whose 2.3.1 pins `qs` 6.15.1 (GHSA-q8mj-m7cp-5q26). Drop the override once Stryker's range resolves a patched `qs`.
 
 ## Frontend
 
