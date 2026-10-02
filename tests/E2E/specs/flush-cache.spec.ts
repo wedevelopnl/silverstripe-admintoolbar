@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test'
-import { loadFixture } from '../helpers/fixtures'
+import { createFixtureClient } from '@wedevelop/e2e'
 import { toolbar } from '../helpers/toolbar'
 
+const fixtures = createFixtureClient()
+
 test.beforeEach(async ({ page }) => {
-  await loadFixture(page.request, 'toolbar-page')
+  await fixtures.load(page.request, 'toolbar-page')
 })
 
 test('flushing the cache requests a flush and reloads the page', async ({ page }) => {

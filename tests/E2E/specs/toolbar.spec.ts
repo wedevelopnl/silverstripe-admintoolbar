@@ -1,11 +1,13 @@
 import { expect, test } from '@playwright/test'
-import { loadFixture } from '../helpers/fixtures'
+import { createFixtureClient } from '@wedevelop/e2e'
 import { anonymousContext, toolbar } from '../helpers/toolbar'
+
+const fixtures = createFixtureClient()
 
 const PAGE_URL = '/e2e-published'
 
 test.beforeEach(async ({ page }) => {
-  await loadFixture(page.request, 'toolbar-page')
+  await fixtures.load(page.request, 'toolbar-page')
 })
 
 test('renders on a published page with the CMS version linking to the admin', async ({ page }) => {
