@@ -55,8 +55,9 @@ abstract class Component extends ModelData
 
             $component = $class::create()->setContext($context);
 
+            // An Injector replacement is created both for the class it replaces and as its own subclass.
             if ($component->isSupported()) {
-                $found[] = $component;
+                $found[$component::class] = $component;
             }
         }
 
