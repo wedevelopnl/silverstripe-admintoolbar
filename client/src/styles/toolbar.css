@@ -2,8 +2,9 @@
 @import './icons.css';
 @import 'tailwindcss/theme.css' prefix(ssat);
 @import './tokens.css';
-@import 'tailwindcss/utilities.css';
+/* Before the utilities: both are zero-specificity `:where()`, so source order decides and `space-*` must win. */
 @import './reset.css';
+@import 'tailwindcss/utilities.css';
 
 @source '../../../templates';
 @source '../../../src';

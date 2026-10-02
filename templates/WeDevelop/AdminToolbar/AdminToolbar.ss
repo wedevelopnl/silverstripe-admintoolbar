@@ -1,5 +1,5 @@
 <div id="admin-toolbar" data-admin-toolbar class="ssat:max-md:hidden ssat:relative ssat:text-text">
-    <div id="admin-toolbar-panel" data-toolbar-panel class="ssat:hidden ssat:font-sans ssat:text-base ssat:fixed ssat:flex ssat:z-10 ssat:items-center ssat:bottom-0 ssat:left-0 ssat:right-0 ssat:py-2 ssat:px-3 ssat:bg-silverstripe-100 ssat:border-t ssat:border-silverstripe-300 ssat:pr-12">
+    <div id="admin-toolbar-panel" data-toolbar-panel class="ssat:hidden ssat:font-sans ssat:text-base ssat:fixed ssat:flex ssat:z-10 ssat:items-center ssat:bottom-0 ssat:left-0 ssat:right-0 ssat:py-2 ssat:px-3 ssat:bg-silverstripe-100 ssat:border-t ssat:border-silverstripe-300 ssat:pr-13">
         <div class="ssat:flex ssat:items-center">
             <div class="ssat:pr-3 ssat:border-r ssat:border-silverstripe-300 ssat:mr-3">
                 <a href="$AdminURL" target="_blank" class="cms-icon ssat:text-silverstripe ssat:hover:text-primary ssat:flex ssat:items-center">
@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div class="ssat:ml-auto ssat:flex ssat:items-center">
-            <div class="ssat:flex ssat:items-center ssat:space-x-1">
+            <div class="ssat:flex ssat:items-center ssat:space-x-2">
                 <div class="ssat:relative ssat:z-10" data-dialog-anchor>
                     <dialog id="toggles" aria-label="<%t AdminToolbar.TOGGLES 'Toggles' %>" class="ssat:mb-5 ssat:-translate-y-full ssat:fixed ssat:bg-silverstripe-100 ssat:border ssat:border-solid ssat:border-silverstripe-300 ssat:p-3 ssat:rounded-lg">
                         <ul class="admin-toolbar-menu-items ssat:leading-none ssat:space-y-2">

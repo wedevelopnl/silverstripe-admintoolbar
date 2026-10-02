@@ -5,7 +5,7 @@
             <% if $Icon %>
                 <span class="ssat:flex ssat:items-center font-icon-edit" aria-hidden="true"></span>
             <% end_if %>
-            <span class="ssat:ms-2 ssat:max-lg:hidden"><%t AdminToolbar.EDIT_PAGE 'Edit page' %></span>
+            <span class="ssat:ms-2 ssat:me-1 ssat:max-lg:hidden"><%t AdminToolbar.EDIT_PAGE 'Edit page' %></span>
         </a>
         <% end_if %>
         <button type="button" class="ssat:btn ssat:bg-white/25 ssat:text-white ssat:rounded-l-none" data-toggle-dialog="$DialogId" aria-label="$Title">
