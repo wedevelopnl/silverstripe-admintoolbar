@@ -117,13 +117,11 @@ class GridMenu extends Menu
 
     private function node(GridElement $element, Member $member): ArrayData
     {
-        $columns = $this->gridAdapter->getColumnCount();
-
         $kind = match (true) {
             $element instanceof SharedBlockReference => ['Kind' => 'shared', 'Link' => $this->blockLink($element, $member)],
             $element instanceof Section => ['Kind' => 'section'],
-            $element instanceof Row => ['Kind' => 'row', 'Of' => $columns],
-            $element instanceof Column => ['Kind' => 'column', 'Span' => $element->getGridSettings()->default->width, 'Of' => $columns],
+            $element instanceof Row => ['Kind' => 'row', 'Of' => $this->gridAdapter->getColumnCount()],
+            $element instanceof Column => ['Kind' => 'column', 'Span' => $element->getGridSettings()->default->width],
             default => ['Kind' => 'element'],
         };
 
