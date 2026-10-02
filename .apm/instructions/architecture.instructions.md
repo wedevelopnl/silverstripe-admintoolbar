@@ -53,3 +53,5 @@ applyTo: "**/*"
 | `data-queries-toggle` / `data-timing-toggle` | Toggle checkboxes |
 | `data-queries-button` / `data-timing-button` + `data-summary` | Buttons rendered `ssat:hidden`; `data-summary` holds the `{ms}`/`{count}` label template |
 | `data-button-label` | Label `<span>` in `Model/Button.ss` |
+
+- The flush/queries/timing hooks live in each component's `hook` config (the full attribute name), printed as `$Hook` by `Model/Button.ss` / `Model/Toggle.ss` — grep `src/`, not `templates/`.
