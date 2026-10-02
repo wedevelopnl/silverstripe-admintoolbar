@@ -98,6 +98,18 @@ final class ComponentDiscoveryTest extends SapphireTest
         );
     }
 
+    public function testEnabledInjectorReplacementIsDiscoveredOnce(): void
+    {
+        $this->enable(FixtureButton::class, ReplacementFixtureButton::class);
+        Config::modify()->merge(Injector::class, FixtureButton::class, ['class' => ReplacementFixtureButton::class]);
+        Injector::inst()->setConfigLocator(new SilverStripeServiceConfigurationLocator());
+
+        $this->assertSame(
+            [ReplacementFixtureButton::class],
+            $this->fixtureClasses(Component::discover(Button::class, $this->context())),
+        );
+    }
+
     public function testTitleIsTranslatedFromConfigDefault(): void
     {
         $this->assertSame('Fixture', FixtureButton::create()->getTitle());
