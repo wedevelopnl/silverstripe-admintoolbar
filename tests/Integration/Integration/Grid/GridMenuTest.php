@@ -19,6 +19,7 @@ use WeDevelop\AdminToolbar\ToolbarContext;
 use WeDevelop\Grid\Adapter\TailwindAdapter;
 use WeDevelop\Grid\Contract\GridAdapterInterface;
 use WeDevelop\Grid\Model\ContentElement;
+use WeDevelop\Grid\Model\GridElement;
 use WeDevelop\Grid\Model\Row;
 use WeDevelop\Grid\Model\SharedBlock;
 
@@ -29,7 +30,7 @@ final class GridMenuTest extends SapphireTest
     protected static $fixture_file = 'grid.yml';
 
     protected static $required_extensions = [
-        ContentElement::class => [HiddenElementExtension::class],
+        GridElement::class => [HiddenElementExtension::class],
     ];
 
     private Member $admin;
@@ -71,6 +72,25 @@ final class GridMenuTest extends SapphireTest
         $this->assertTrue($this->menu($this->page('grid_page'))->isSupported());
     }
 
+    public function testUnsupportedWhenEveryRootLacksAZone(): void
+    {
+        $this->assertFalse($this->menu($this->page('unzoned_grid_page'))->isSupported());
+    }
+
+    public function testUnsupportedWhenTheMemberCanViewNoZonedRoot(): void
+    {
+        Config::modify()->set(HiddenElementExtension::class, 'hidden_titles', ['Hero', 'Banner']);
+
+        $this->assertFalse($this->menu($this->page('grid_page'))->isSupported());
+    }
+
+    public function testZonesAreBuiltOncePerMenu(): void
+    {
+        $menu = $this->menu($this->page('grid_page'));
+
+        $this->assertSame($menu->getZones(), $menu->getZones());
+    }
+
     public function testNoZonesWithoutAGridPage(): void
     {
         $this->assertSame(0, $this->menu(null)->getZones()->count());
@@ -94,6 +114,26 @@ final class GridMenuTest extends SapphireTest
         $this->assertSame(['main', 'banner', 'sidebar'], $zones->column('Name'));
         $this->assertSame([true, true, true], $zones->column('ShowHeading'));
         $this->assertSame([['section', 'Main']], $this->kindsAndTitles($this->zoneNodes($zones, 'main')));
+    }
+
+    public function testZoneTheMemberCannotViewIsOmitted(): void
+    {
+        Config::modify()->set(HiddenElementExtension::class, 'hidden_titles', ['Sidebar']);
+
+        $zones = $this->menu($this->objFromFixture(MultiZonePage::class, 'multi_page'))->getZones();
+
+        $this->assertSame(['main', 'banner'], $zones->column('Name'));
+        $this->assertSame([true, true], $zones->column('ShowHeading'));
+    }
+
+    public function testHeadingCountsOnlyTheZonesTheMemberCanView(): void
+    {
+        Config::modify()->set(HiddenElementExtension::class, 'hidden_titles', ['Sidebar', 'Top banner']);
+
+        $zones = $this->menu($this->objFromFixture(MultiZonePage::class, 'multi_page'))->getZones();
+
+        $this->assertSame(['main'], $zones->column('Name'));
+        $this->assertSame([false], $zones->column('ShowHeading'));
     }
 
     public function testTreeShape(): void
