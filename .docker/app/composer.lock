@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "984007b98c24d7976e53546ae5c54185",
+    "content-hash": "93c23fbb57c6c4a53db6476099636e67",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -6116,75 +6116,12 @@
             "time": "2026-09-26T06:31:10+00:00"
         },
         {
-            "name": "unclecheese/display-logic",
-            "version": "4.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/unclecheese/silverstripe-display-logic.git",
-                "reference": "e55feca3d98c2f61c2918181ef933005284b9569"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/unclecheese/silverstripe-display-logic/zipball/e55feca3d98c2f61c2918181ef933005284b9569",
-                "reference": "e55feca3d98c2f61c2918181ef933005284b9569",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.3",
-                "silverstripe/framework": "^6.0"
-            },
-            "replace": {
-                "silverstripe/display-logic": "*"
-            },
-            "require-dev": {
-                "silverstripe/behat-extension": "^6.0",
-                "silverstripe/recipe-testing": "^4.0"
-            },
-            "type": "silverstripe-vendormodule",
-            "extra": {
-                "expose": [
-                    "client"
-                ],
-                "installer-name": "display-logic"
-            },
-            "autoload": {
-                "psr-4": {
-                    "UncleCheese\\DisplayLogic\\": "src/",
-                    "UncleCheese\\DisplayLogic\\Tests\\": "tests/php/",
-                    "UncleCheese\\DisplayLogic\\Tests\\Behaviour\\": "tests/behat/src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Uncle Cheese",
-                    "email": "unclecheese@leftandmain.com"
-                }
-            ],
-            "description": "Allows assignment of conditions for display and hide of specific form fields based on client side behavior.",
-            "keywords": [
-                "Forms",
-                "cms",
-                "display",
-                "logic",
-                "silverstripe"
-            ],
-            "support": {
-                "issues": "https://github.com/unclecheese/silverstripe-display-logic/issues",
-                "source": "https://github.com/unclecheese/silverstripe-display-logic/tree/4.0.0"
-            },
-            "time": "2025-06-12T03:26:02+00:00"
-        },
-        {
             "name": "wedevelopnl/silverstripe-admintoolbar",
             "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "/module",
-                "reference": "a7b341339bce812dcdf4a6b80f63787060079c1c"
+                "reference": "a5828c1abd0cbe83162ad78fd3c5cff3c923fab1"
             },
             "require": {
                 "php": "^8.3",
@@ -6194,11 +6131,8 @@
                 "silverstripe/vendor-plugin": "^3.0",
                 "silverstripe/versioned": "^3.0"
             },
-            "conflict": {
-                "wedevelopnl/silverstripe-grid": "<6.0.0-beta.4"
-            },
-            "suggest": {
-                "wedevelopnl/silverstripe-grid": "Adds the Grid menu showing the page's section/row/column tree"
+            "require-dev": {
+                "wedevelopnl/silverstripe-e2e": "0.2.0"
             },
             "type": "silverstripe-vendormodule",
             "extra": {
@@ -6236,142 +6170,6 @@
                 "symlink": true,
                 "relative": false
             }
-        },
-        {
-            "name": "wedevelopnl/silverstripe-grid",
-            "version": "6.0.0-beta.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wedevelopnl/silverstripe-grid.git",
-                "reference": "b7ad98894b38d9e1ff7a6b1b5e6e994d24806566"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wedevelopnl/silverstripe-grid/zipball/b7ad98894b38d9e1ff7a6b1b5e6e994d24806566",
-                "reference": "b7ad98894b38d9e1ff7a6b1b5e6e994d24806566",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.3",
-                "silverstripe/admin": "^3.0",
-                "silverstripe/cms": "^6.0",
-                "silverstripe/framework": "^6.0",
-                "silverstripe/vendor-plugin": "^3.0",
-                "silverstripe/versioned": "^3.0",
-                "unclecheese/display-logic": "^4.0",
-                "wedevelopnl/silverstripe-media-field": "^6.0.0-rc3"
-            },
-            "conflict": {
-                "dnadesign/silverstripe-elemental": "*"
-            },
-            "require-dev": {
-                "cambis/silverstan": "^2.1",
-                "infection/infection": "^0.35",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "^2.1",
-                "phpstan/phpstan-deprecation-rules": "^2.0",
-                "phpunit/phpunit": "^12.0",
-                "tomasvotruba/type-coverage": "^2.0",
-                "wedevelopnl/silverstripe-e2e": "0.2.0",
-                "wernerkrauss/silverstripe-rector": "^1.0"
-            },
-            "suggest": {
-                "silverstripe/reports": "Enables the Grid Elements and Shared Blocks reports in CMS → Reports",
-                "tractorcow/silverstripe-fluent": "Required for multi-locale support with isolated element records per locale"
-            },
-            "type": "silverstripe-vendormodule",
-            "extra": {
-                "expose": [
-                    "client/dist",
-                    "client/js",
-                    "client/images",
-                    "client/lang",
-                    "lang"
-                ]
-            },
-            "autoload": {
-                "psr-4": {
-                    "WeDevelop\\Grid\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "WeDevelop",
-                    "email": "development@wedevelop.nl"
-                }
-            ],
-            "description": "Grid-based content block system for SilverStripe",
-            "homepage": "https://wedevelop.nl",
-            "keywords": [
-                "Content Blocks",
-                "grid",
-                "layout",
-                "silverstripe"
-            ],
-            "support": {
-                "issues": "https://github.com/wedevelopnl/silverstripe-grid/issues",
-                "source": "https://github.com/wedevelopnl/silverstripe-grid/tree/6.0.0-beta.4"
-            },
-            "time": "2026-08-25T13:56:15+00:00"
-        },
-        {
-            "name": "wedevelopnl/silverstripe-media-field",
-            "version": "6.0.0-RC3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wedevelopnl/silverstripe-media-field.git",
-                "reference": "6aa80aa37a916bc5e9533d283dc76576c316da18"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wedevelopnl/silverstripe-media-field/zipball/6aa80aa37a916bc5e9533d283dc76576c316da18",
-                "reference": "6aa80aa37a916bc5e9533d283dc76576c316da18",
-                "shasum": ""
-            },
-            "require": {
-                "embed/embed": "^4.0",
-                "php": "^8.3",
-                "silverstripe/asset-admin": "^3.0",
-                "silverstripe/cms": "^6",
-                "unclecheese/display-logic": "^4.0"
-            },
-            "require-dev": {
-                "cambis/silverstan": "^2.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "6.x-dev"
-                },
-                "installer-name": "silverstripe-media-field"
-            },
-            "autoload": {
-                "psr-4": {
-                    "WeDevelop\\MediaField\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "WeDevelop",
-                    "email": "development@wedevelop.nl"
-                }
-            ],
-            "description": "Media field module",
-            "keywords": [
-                "field",
-                "media",
-                "silverstripe"
-            ],
-            "support": {
-                "issues": "https://github.com/wedevelopnl/silverstripe-media-field/issues",
-                "source": "https://github.com/wedevelopnl/silverstripe-media-field/tree/6.0.0-RC3"
-            },
-            "time": "2026-04-28T14:57:14+00:00"
         }
     ],
     "packages-dev": [

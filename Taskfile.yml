@@ -117,8 +117,7 @@ tasks:
   seed-fixture:
     desc: Seed the dev database with an E2E fixture (override with FIXTURE=<name>; default toolbar-page)
     # Hits the dev-only endpoint the Playwright suite uses. Loading purges every
-    # Page, GridElement and SharedBlock in the dev database first (FixtureLoader
-    # purge_classes). Fixture names are registered in _config/dev.yml. -k because
+    # Page in the dev database first (FixtureLoader purge_classes). Fixture names are registered in _config/dev.yml. -k because
     # the dev testbed serves a self-signed certificate.
     deps: [ensure-up]
     vars:

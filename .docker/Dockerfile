@@ -45,10 +45,6 @@ RUN mkdir -p /app/src /app/_config \
     && printf '<?php\n\nuse SilverStripe\\CMS\\Model\\SiteTree;\n\nclass Page extends SiteTree\n{\n}\n' > /app/src/Page.php \
     && printf '<?php\n\nuse SilverStripe\\CMS\\Controllers\\ContentController;\n\nclass PageController extends ContentController\n{\n}\n' > /app/src/PageController.php
 
-# Harness-only page types and config; merges into the generated dirs above.
-COPY app/src/ /app/src/
-COPY app/_config/ /app/_config/
-
 COPY app/templates/ /app/templates/
 COPY app/verify-lock.sh /app/verify-lock.sh
 RUN chmod +x /app/verify-lock.sh

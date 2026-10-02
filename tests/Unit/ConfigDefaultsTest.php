@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace WeDevelop\AdminToolbar\Tests\Unit;
 
-use ReflectionProperty;
 use RuntimeException;
 use SilverStripe\Core\Manifest\Module;
 use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\Dev\SapphireTest;
 use Symfony\Component\Yaml\Yaml;
-use WeDevelop\AdminToolbar\Integration\Grid\GridMenu;
 
 /**
  * `Only:` blocks cannot be switched at runtime, so the module's YAML is read as data.
@@ -42,16 +40,6 @@ final class ConfigDefaultsTest extends SapphireTest
         );
     }
 
-    public function testGridMenuIsEnabledOnlyWhenTheGridModuleExists(): void
-    {
-        $grid = $this->documentWhere(
-            'grid.yml',
-            static fn (array $header): bool => ($header['Only'] ?? null) === ['moduleexists' => 'wedevelopnl/silverstripe-grid'],
-        );
-
-        $this->assertSame([GridMenu::class => ['enabled' => true]], $grid);
-        $this->assertFalse((new ReflectionProperty(GridMenu::class, 'enabled'))->getDefaultValue());
-    }
 
     /**
      * @param callable(array<mixed>): bool $matchesHeader

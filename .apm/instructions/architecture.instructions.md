@@ -15,7 +15,6 @@ applyTo: "**/*"
 | `src/Menu/Page/` | `PublishState` enum; `PageActionItem` and its Unpublish, Archive, UnpublishAndArchive items |
 | `src/Menu/User/` | `UsernameItem`, `EditUserItem` |
 | `src/Controller/PageActionController.php` | `admintoolbaraction/pageAction` — page-action endpoint |
-| `src/Integration/Grid/` | `GridMenu` — the only code referencing `WeDevelop\Grid\*`; enabled by `_config/grid.yml` (`Only: moduleexists`) |
 | `src/Extension/` | `ContentControllerExtension` (`$AdminToolbar` template hook), `MemberExtension` (per-member settings) |
 | `templates/WeDevelop/AdminToolbar/` | `.ss` templates mirroring the `src/` namespaces |
 | `client/src/ts/` → `client/dist/js/toolbar.js` | TypeScript behaviour modules, one IIFE bundle via Vite; tests beside each module |
@@ -54,4 +53,3 @@ applyTo: "**/*"
 | `data-queries-toggle` / `data-timing-toggle` | Toggle checkboxes |
 | `data-queries-button` / `data-timing-button` + `data-summary` | Buttons rendered `ssat:hidden`; `data-summary` holds the `{ms}`/`{count}` label template |
 | `data-button-label` | Label `<span>` in `Model/Button.ss` |
-| `data-grid-zone="<name>"` / `data-grid-node="<kind>"` | `GridMenu` zone sections and tree nodes (`section`, `row`, `column`, `element`, `shared`) |

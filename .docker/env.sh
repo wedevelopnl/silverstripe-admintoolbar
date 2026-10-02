@@ -18,11 +18,9 @@ cat > "$SCRIPT_DIR/.env" <<EOF
 COMPOSE_PROJECT_NAME=${PROJECT_NAME}
 WEB_PORT=${WEB_PORT}
 DB_PORT=${DB_PORT}
-SS_GRID_ADAPTER=tailwind
 EOF
 
 echo "Generated .docker/.env:"
 echo "  COMPOSE_PROJECT_NAME=${PROJECT_NAME}"
 echo "  WEB_PORT=${WEB_PORT}"
 echo "  DB_PORT=${DB_PORT}"
-echo "  SS_GRID_ADAPTER=tailwind"

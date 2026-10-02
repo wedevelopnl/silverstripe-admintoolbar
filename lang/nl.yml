@@ -4,7 +4,6 @@ nl:
     CLOSE: 'Sluiten'
     COLLAPSE: 'Toolbar tonen of verbergen'
     EDIT_PAGE: 'Pagina bewerken'
-    GRID_ZONE: 'Zone: {name}'
     LAST_EDITED_BY: 'Laatst bewerkt door'
     LAST_EDITED_ON: 'Laatst bewerkt op'
     LOGGED_IN_AS: 'Ingelogd als'
@@ -23,8 +22,6 @@ nl:
     TITLE: 'Queries'
   WeDevelop\AdminToolbar\Button\TimingButton:
     TITLE: 'Timing'
-  WeDevelop\AdminToolbar\Integration\Grid\GridMenu:
-    TITLE: 'Grid'
   WeDevelop\AdminToolbar\Menu\CMSMenu:
     TITLE: 'Menu'
   WeDevelop\AdminToolbar\Menu\Page\ArchivePageItem:
