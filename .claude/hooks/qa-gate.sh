@@ -68,8 +68,11 @@ if ! npm run build; then
   exit 2
 fi
 
-if ! git diff --quiet -- client/dist; then
+# Same condition as CI js-qa's "Verify the built bundle is committed".
+untracked="$(git status --porcelain --untracked-files=all -- client/dist | grep '^??' || true)"
+if ! git diff --quiet -- client/dist || [[ -n "$untracked" ]]; then
   echo "client/dist is out of sync with source — rebuild and commit before pushing." >&2
+  [[ -n "$untracked" ]] && echo "Untracked build output:"$'\n'"$untracked" >&2
   echo "Run: npm run build && git add client/dist && git commit" >&2
   exit 2
 fi
