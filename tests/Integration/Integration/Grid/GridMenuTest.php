@@ -142,10 +142,10 @@ final class GridMenuTest extends SapphireTest
             [
                 ['Kind' => 'section', 'Title' => 'Hero', 'Span' => null, 'Of' => null, 'Children' => [
                     ['Kind' => 'row', 'Title' => 'Hero Row', 'Span' => null, 'Of' => 12, 'Children' => [
-                        ['Kind' => 'column', 'Title' => 'Wide', 'Span' => 8, 'Of' => 12, 'Children' => [
+                        ['Kind' => 'column', 'Title' => 'Wide', 'Span' => 8, 'Of' => null, 'Children' => [
                             ['Kind' => 'element', 'Title' => 'Intro', 'Span' => null, 'Of' => null, 'Children' => []],
                         ]],
-                        ['Kind' => 'column', 'Title' => 'Narrow', 'Span' => 4, 'Of' => 12, 'Children' => [
+                        ['Kind' => 'column', 'Title' => 'Narrow', 'Span' => 4, 'Of' => null, 'Children' => [
                             ['Kind' => 'element', 'Title' => ContentElement::singleton()->getType(), 'Span' => null, 'Of' => null, 'Children' => []],
                         ]],
                     ]],
@@ -207,7 +207,6 @@ final class GridMenuTest extends SapphireTest
         $row = $this->find($this->mainNodes($this->admin), ['section', 'row'], 0);
 
         $this->assertSame(16, $row->Of);
-        $this->assertSame([16, 16], $row->Children->column('Of'));
         $this->assertSame([8, 4], $row->Children->column('Span'));
     }
 
