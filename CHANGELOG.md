@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Opening a menu no longer draws a focus ring around its close button in Safari: the dialog itself takes focus, and the first Tab reaches the close button.
+- Toolbar buttons and toggles show a focus ring when reached by keyboard. Every toolbar control now shares one ring in the toolbar's primary colour.
+
 ## [6.0.0-rc.1] - 2026-10-02
 
 The first release for Silverstripe 6, and a ground-up rewrite. The toolbar is now built from **components discovered by type**: a module or project adds a menu, menu item, button or toggle by declaring a class, and removes one with `enabled: false` in YAML. The provider interfaces and the name-based `disabled_*` lists of 2.x are gone. The version jumps from 2.0.6 to 6.0.0 so the package major matches the Silverstripe major, the scheme `wedevelopnl/silverstripe-grid` uses.

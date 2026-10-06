@@ -41,6 +41,17 @@
   }
 }
 
+/* After the utilities, so it also replaces the outline `btn` removes. */
+#admin-toolbar :focus-visible {
+  outline: 2px solid var(--ssat-color-primary);
+  outline-offset: 2px;
+}
+
+/* A dialog takes focus when it opens (dialogs.ts) but is no control. */
+#admin-toolbar dialog:focus-visible {
+  outline: none;
+}
+
 #admin-toolbar dialog#toggles {
   inset-block-end: unset;
   inset-inline-end: unset;

@@ -39,4 +39,8 @@ function toggle(doc: Document, id: string): void {
     dialog.style.left = `${left}px`
   }
   dialog.showModal()
+  // showModal() focuses the first control, and Safari (which never focuses a clicked button)
+  // rings it as :focus-visible. Focus the dialog itself; the first Tab reaches that control.
+  dialog.tabIndex = -1
+  dialog.focus()
 }
