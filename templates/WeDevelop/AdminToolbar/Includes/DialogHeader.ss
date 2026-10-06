@@ -5,7 +5,7 @@
             $Badge.Label
         </span>
     <% end_if %>
-    <button type="button" class="ssat:ml-auto ssat:text-xl ssat:flex ssat:items-center ssat:hover:rotate-90 ssat:origin-center ssat:transition-all ssat:cursor-pointer" data-toggle-dialog="$DialogId" aria-label="<%t AdminToolbar.CLOSE 'Close' %>">
+    <button type="button" class="ssat:ml-auto ssat:text-xl ssat:rounded-md ssat:flex ssat:items-center ssat:hover:rotate-90 ssat:origin-center ssat:transition-all ssat:cursor-pointer" data-toggle-dialog="$DialogId" aria-label="<%t AdminToolbar.CLOSE 'Close' %>">
         <span class="font-icon-cross-mark ssat:inline-flex ssat:items-center ssat:h-[1em] ssat:leading-none" aria-hidden="true"></span>
     </button>
 </div>

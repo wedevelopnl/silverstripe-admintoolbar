@@ -2,6 +2,9 @@
     <input type="checkbox" $Hook class="ssat:sr-only ssat:peer">
     <div class="ssat:mr-2 ssat:w-7 ssat:h-5 ssat:bg-white ssat:border-2 ssat:border-solid ssat:border-primary ssat:rounded-full
     ssat:peer-checked:bg-primary
+    ssat:peer-focus-visible:outline-2
+    ssat:peer-focus-visible:outline-offset-2
+    ssat:peer-focus-visible:outline-primary
     ssat:peer-checked:after:translate-x-[calc(100%_-_4px)]
     ssat:peer-checked:after:bg-white
     ssat:after:content-['']

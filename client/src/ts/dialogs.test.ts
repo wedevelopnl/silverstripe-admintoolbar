@@ -45,6 +45,13 @@ describe('initDialogs', () => {
     expect(dialog('PageMenu').open).toBe(false)
   })
 
+  it('focuses the opened dialog itself, outside the Tab order, instead of its first control', () => {
+    click(byHook('data-trigger-icon'))
+
+    expect(document.activeElement).toBe(dialog('PageMenu'))
+    expect(dialog('PageMenu').tabIndex).toBe(-1)
+  })
+
   it('prevents the trigger default action', () => {
     expect(click(byHook('data-trigger-icon')).defaultPrevented).toBe(true)
   })
