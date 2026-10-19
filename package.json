@@ -35,7 +35,7 @@
     "@stryker-mutator/vitest-runner": "^10.0.0",
     "@tailwindcss/cli": "^4.3.3",
     "@types/node": "^26.6.1",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.12",
     "jsdom": "^30.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
